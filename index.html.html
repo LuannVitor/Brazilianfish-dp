@@ -1,0 +1,2123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrazilianFish — DP Sistema</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{
+  --pr:#0a0a0a;--pr2:#111;--pr3:#181818;--pr4:#212121;--pr5:#2a2a2a;
+  --ou:#C9A227;--ou2:#e0b94a;--ou3:#f0cc75;
+  --oub:rgba(201,162,39,.10);--oubr:rgba(201,162,39,.26);
+  --vd:#22c55e;--vdb:rgba(34,197,94,.12);
+  --vm:#ef4444;--vmb:rgba(239,68,68,.12);
+  --az:#3b82f6;--azb:rgba(59,130,246,.12);
+  --rx:#a855f7;--rxb:rgba(168,85,247,.12);
+  --la:#f97316;--lab:rgba(249,115,22,.12);
+  --nav:0px;--hdr:56px;--chipbar:44px;--r:9px;--rsm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d0d0d;color:#ddd;min-height:100vh;font-size:13px;}
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-thumb{background:#333;border-radius:2px;}
+#toast{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;}
+.tst{padding:10px 16px;border-radius:8px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:8px;animation:tIn .2s ease;min-width:200px;border:1px solid;}
+.tst.ok{background:#0a1a0a;border-color:var(--vd);color:#86efac;}
+.tst.er{background:#1a0a0a;border-color:var(--vm);color:#fca5a5;}
+.tst.wn{background:#1a1100;border-color:var(--ou);color:var(--ou3);}
+@keyframes tIn{from{transform:translateX(16px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+
+/* LOGO BF FISH SVG (used everywhere) */
+.bf-logo-mark{display:inline-flex;align-items:center;justify-content:center;}
+
+/* LOGIN */
+#pgLogin{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#070707;position:relative;overflow:hidden;}
+.lg-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 60%,rgba(201,162,39,.06),transparent 55%),radial-gradient(ellipse at 80% 20%,rgba(201,162,39,.04),transparent 45%);pointer-events:none;}
+.lg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,162,39,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(201,162,39,.03) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;}
+.lg-box{position:relative;z-index:1;display:flex;border-radius:18px;overflow:hidden;width:840px;max-width:96vw;box-shadow:0 40px 90px rgba(0,0,0,.85),0 0 0 1px var(--oubr);}
+.lg-l{width:330px;flex-shrink:0;background:linear-gradient(165deg,#120d00,#0c0c0c 55%,#101010);padding:42px 32px;display:flex;flex-direction:column;border-right:1px solid var(--oubr);}
+.brand{display:flex;flex-direction:column;align-items:center;margin-bottom:30px;}
+.bn{font-size:19px;font-weight:900;color:#fff;letter-spacing:-.3px;margin-top:10px;}
+.bn span{color:var(--ou);}
+.bdv{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--ou),transparent);margin:10px 0 10px;}
+.btg-tag{font-size:9px;font-weight:600;color:#444;letter-spacing:2.2px;text-transform:uppercase;text-align:center;}
+.feats{display:flex;flex-direction:column;gap:6px;margin-top:auto;}
+.feat{display:flex;align-items:center;gap:8px;font-size:11px;color:#444;padding:6px 8px;border-radius:6px;border:1px solid transparent;transition:all .15s;cursor:default;}
+.feat:hover{background:var(--oub);border-color:var(--oubr);color:var(--ou3);}
+.fic{width:22px;height:22px;border-radius:5px;background:var(--oub);border:1px solid var(--oubr);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;}
+.lg-copy{font-size:9px;color:#2a2a2a;text-align:center;margin-top:14px;}
+.lg-r{flex:1;background:#161616;padding:42px 38px;display:flex;flex-direction:column;justify-content:center;}
+.lg-r h2{font-size:20px;font-weight:800;color:#fff;margin-bottom:3px;}
+.lg-r .sub{font-size:12px;color:#555;margin-bottom:24px;}
+.frm{margin-bottom:13px;}
+.frm label{font-size:9px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.8px;display:block;margin-bottom:4px;}
+.iw{position:relative;}
+.iico{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none;}
+.iw input{width:100%;padding:11px 12px 11px 36px;background:#1c1c1c;border:1.5px solid #2a2a2a;border-radius:7px;font-size:13px;color:#fff;outline:none;font-family:inherit;transition:border-color .15s;}
+.iw input:focus{border-color:var(--ou);}
+.iw input::placeholder{color:#444;}
+.btnl{width:100%;padding:12px;background:linear-gradient(135deg,var(--ou),var(--ou2));color:#000;border:none;border-radius:7px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;margin-top:6px;transition:all .15s;}
+.btnl:hover{box-shadow:0 4px 22px rgba(201,162,39,.4);}
+.l-err{display:none;color:#fca5a5;font-size:11px;margin-top:8px;padding:8px 12px;background:var(--vmb);border-radius:6px;border:1px solid rgba(239,68,68,.3);}
+.l-hint{margin-top:16px;padding:10px 12px;background:var(--oub);border-radius:6px;border:1px solid var(--oubr);font-size:11px;color:var(--ou3);}
+
+/* APP */
+#app{display:none;min-height:100vh;}
+header{background:#080808;height:var(--hdr);display:flex;align-items:center;justify-content:space-between;padding:0 20px 0 0;position:fixed;top:0;left:0;right:0;z-index:300;border-bottom:1px solid var(--oubr);}
+.h-logo{width:var(--nav);padding:0 16px;display:flex;align-items:center;gap:9px;height:100%;border-right:1px solid var(--oubr);flex-shrink:0;}
+.h-mid{flex:1;padding:0 16px;}
+.bc{font-size:11px;color:#444;}
+.bc b{color:var(--ou3);font-weight:700;}
+.h-r{display:flex;align-items:center;gap:10px;}
+.uch{display:flex;align-items:center;gap:8px;padding:5px 12px;border-radius:20px;background:#1a1a1a;border:1px solid var(--oubr);}
+.uav{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--ou),var(--ou2));display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#000;}
+.unm{font-size:11px;color:#fff;font-weight:600;}
+.uro{font-size:9px;color:var(--ou);}
+.btnout{background:#1a1a1a;border:1px solid #2a2a2a;color:#666;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:11px;font-family:inherit;transition:all .15s;}
+.btnout:hover{border-color:var(--oubr);color:var(--ou3);}
+
+/* CHIP NAV BAR */
+.chipbar{position:fixed;top:var(--hdr);left:0;right:0;height:var(--chipbar);background:#0a0a0a;border-bottom:1px solid #1e1e1e;z-index:200;display:flex;align-items:center;padding:0 16px;gap:6px;overflow-x:auto;}
+.chipbar::-webkit-scrollbar{height:0;}
+.cnav{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid #2a2a2a;background:none;color:#555;font-family:inherit;white-space:nowrap;transition:all .12s;}
+.cnav:hover{border-color:#3a3a3a;color:#aaa;}
+.cnav.on{background:var(--oub);border-color:var(--oubr);color:var(--ou);font-weight:700;}
+.cnav-sep{width:1px;height:18px;background:#222;margin:0 2px;flex-shrink:0;}
+
+.main{margin-top:calc(var(--hdr) + var(--chipbar));min-height:calc(100vh - var(--hdr) - var(--chipbar));}
+.page{display:none;padding:22px 28px;max-width:1320px;}
+.page.active{display:block;}
+.pghdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.pghdr h1{font-size:20px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+.pghdr .sub{font-size:11px;color:#555;margin-top:2px;}
+.acts{display:flex;gap:8px;flex-wrap:wrap;}
+
+.card{background:#181818;border-radius:var(--r);border:1px solid #232323;padding:16px 20px;margin-bottom:14px;}
+.chdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;flex-wrap:wrap;gap:8px;}
+.ctit{font-size:13px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;}
+.ci{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.cig{background:var(--oub);border:1px solid var(--oubr);}
+.cib{background:var(--azb);}
+.cio{background:var(--lab);}
+.cip{background:var(--rxb);}
+.cigr{background:var(--vdb);}
+
+.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px;}
+.kpi{background:#181818;border:1px solid #232323;border-radius:var(--r);padding:14px 16px;display:flex;align-items:flex-start;gap:10px;transition:border-color .15s;}
+.kpi:hover{border-color:var(--oubr);}
+.kico{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.kn{font-size:22px;font-weight:900;color:#fff;line-height:1;}
+.kl{font-size:10px;color:#555;margin-top:3px;}
+
+.btn{padding:7px 14px;border-radius:var(--rsm);font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .12s;display:inline-flex;align-items:center;gap:5px;font-family:inherit;white-space:nowrap;}
+.btn:active{transform:scale(.98);}
+.btg{background:linear-gradient(135deg,var(--ou),var(--ou2));color:#000;}
+.btg:hover{box-shadow:0 4px 16px rgba(201,162,39,.4);}
+.bto{background:transparent;color:var(--ou);border:1.5px solid var(--oubr);}
+.bto:hover{background:var(--oub);}
+.btgh{background:transparent;color:#888;border:1.5px solid #2a2a2a;}
+.btgh:hover{border-color:#555;color:#ccc;}
+.btdk{background:var(--vmb);color:var(--vm);border:1px solid rgba(239,68,68,.3);}
+.btdk:hover{background:var(--vm);color:#fff;}
+.btn-sm{padding:4px 10px;font-size:11px;}
+
+.tw{overflow-x:auto;border-radius:var(--rsm);border:1px solid #232323;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+thead{background:#1e1e1e;}
+th{padding:8px 11px;text-align:left;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:#555;border-bottom:1px solid #232323;white-space:nowrap;}
+td{padding:9px 11px;border-bottom:1px solid #1a1a1a;vertical-align:middle;}
+tbody tr:hover td{background:#1e1e1e;}
+tbody tr:last-child td{border-bottom:none;}
+.trtot td{background:rgba(201,162,39,.08)!important;color:var(--ou);font-weight:700;border-top:1px solid var(--oubr);}
+
+.b{display:inline-flex;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;}
+.bg{background:var(--oub);color:var(--ou);border:1px solid var(--oubr);}
+.bgr{background:var(--vdb);color:var(--vd);}
+.br{background:var(--vmb);color:var(--vm);}
+.bb{background:var(--azb);color:var(--az);}
+.bgy{background:#1e1e1e;color:#777;}
+.bp{background:var(--rxb);color:var(--rx);}
+.bo{background:var(--lab);color:var(--la);}
+.sp{display:inline-flex;background:#1e1e1e;color:#777;border:1px solid #2a2a2a;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:600;margin:1px;}
+
+.flts{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;margin-bottom:12px;}
+.flbl{font-size:9px;font-weight:700;color:#444;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:4px;}
+.flts select,.flts input,.fld select,.fld input,.fld textarea{background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:6px;padding:7px 10px;font-size:12px;color:#ddd;outline:none;font-family:inherit;transition:border-color .15s;}
+.flts select:focus,.flts input:focus,.fld select:focus,.fld input:focus{border-color:var(--ou);}
+.sw{position:relative;}
+.si{position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:12px;pointer-events:none;}
+.sw input{padding-left:28px;}
+
+.fld{margin-bottom:12px;}
+.fld label{font-size:9px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.6px;display:block;margin-bottom:4px;}
+.fld input,.fld select,.fld textarea{width:100%;}
+
+.al{padding:9px 13px;border-radius:6px;font-size:11px;margin-bottom:12px;display:flex;align-items:flex-start;gap:7px;border:1px solid;}
+.alg{background:var(--oub);color:var(--ou3);border-color:var(--oubr);}
+.alok{background:var(--vdb);color:#86efac;border-color:rgba(34,197,94,.3);}
+.ale{background:var(--vmb);color:#fca5a5;border-color:rgba(239,68,68,.3);}
+.alwn{background:rgba(249,115,22,.1);color:#fb923c;border-color:rgba(249,115,22,.3);}
+
+.upz{border:2px dashed #2a2a2a;border-radius:var(--r);padding:32px 20px;text-align:center;cursor:pointer;transition:all .15s;background:#161616;}
+.upz:hover,.upz.drag{border-color:var(--ou);background:var(--oub);}
+.upz input[type=file]{display:none;}
+
+.vi{width:120px;padding:6px 9px;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:6px;font-size:12px;text-align:right;outline:none;font-family:inherit;color:#ddd;transition:border-color .15s;}
+.vi:focus{border-color:var(--ou);}
+.vi.ok{border-color:var(--vd);background:var(--vdb);color:var(--vd);font-weight:700;}
+
+.prg-w{min-width:160px;}
+.prg-i{display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:4px;}
+.prg-b{height:3px;background:#2a2a2a;border-radius:2px;overflow:hidden;}
+.prg-f{height:100%;background:linear-gradient(90deg,var(--ou),var(--ou2));border-radius:2px;transition:width .4s;}
+
+.chip{display:inline-flex;background:var(--oub);color:var(--ou);border:1px solid var(--oubr);border-radius:5px;padding:3px 10px;font-size:10px;font-weight:700;}
+
+.setor-hdr{background:#1e1e1e;border-left:3px solid var(--ou);padding:8px 14px;margin:14px 0 0;border-radius:0 6px 6px 0;display:flex;align-items:center;justify-content:space-between;}
+.setor-hdr span{font-size:12px;font-weight:700;color:var(--ou3);}
+.setor-hdr small{font-size:10px;color:#555;}
+
+.nota-bom{background:var(--vdb);color:var(--vd);border:1px solid rgba(34,197,94,.3);border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;}
+.nota-medio{background:rgba(201,162,39,.12);color:var(--ou);border:1px solid var(--oubr);border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;}
+.nota-ruim{background:var(--vmb);color:var(--vm);border:1px solid rgba(239,68,68,.3);border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;}
+
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.mo.open{display:flex;}
+.mdl{background:#181818;border-radius:14px;padding:24px 28px;width:520px;max-width:96vw;max-height:90vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,.8),0 0 0 1px var(--oubr);animation:mIn .2s ease;}
+@keyframes mIn{from{transform:translateY(10px) scale(.97);opacity:0;}to{transform:translateY(0) scale(1);opacity:1;}}
+.mhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.mhdr h3{font-size:15px;font-weight:800;color:#fff;}
+.mclose{background:none;border:none;font-size:16px;cursor:pointer;color:#555;padding:3px;border-radius:5px;}
+.mclose:hover{background:#222;color:#fff;}
+.mft{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;padding-top:16px;border-top:1px solid #222;}
+
+.empty{text-align:center;padding:44px 20px;color:#555;}
+.empty .ei{font-size:32px;margin-bottom:10px;opacity:.4;}
+.empty h4{font-size:13px;font-weight:600;color:#777;margin-bottom:4px;}
+
+.carta{background:#0f0f0f;border:1px solid var(--oubr);border-radius:var(--r);padding:24px;position:relative;overflow:hidden;}
+.carta::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ou),var(--ou2),var(--ou));}
+.ct-title{font-size:16px;font-weight:900;color:var(--ou);text-align:center;margin:12px 0;}
+.ct-body{font-size:12px;color:#bbb;line-height:1.7;}
+.gdv{height:1px;background:linear-gradient(90deg,transparent,var(--ou),transparent);margin:10px 0;}
+.aslin{width:130px;height:1px;background:#333;margin-bottom:5px;}
+.asn{font-size:11px;font-weight:600;color:#ccc;}
+.asc{font-size:10px;color:#555;}
+
+.pb{height:5px;background:#2a2a2a;border-radius:2px;overflow:hidden;width:55px;}
+.pf{height:100%;border-radius:2px;}
+
+/* DEPT CHIP FILTER BAR (style like image 1) */
+.dept-chipbar{display:flex;flex-wrap:wrap;gap:5px;padding:10px 0 2px;}
+.dept-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:16px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid #2a2a2a;background:#161616;color:#555;transition:all .12s;white-space:nowrap;}
+.dept-chip:hover{border-color:#3a3a3a;color:#aaa;}
+.dept-chip.on{background:var(--oub);border-color:var(--oubr);color:var(--ou);font-weight:700;}
+.dept-chip .dcc{display:inline-flex;align-items:center;justify-content:center;background:#1e1e1e;border-radius:10px;min-width:18px;height:18px;padding:0 5px;font-size:10px;font-weight:700;color:#555;}
+.dept-chip.on .dcc{background:rgba(201,162,39,.2);color:var(--ou);}
+
+
+.dep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;}
+.dep-card{background:#181818;border:1px solid #232323;border-radius:var(--r);padding:16px;cursor:pointer;transition:all .15s;position:relative;overflow:hidden;}
+.dep-card:hover{border-color:var(--oubr);background:#1c1c1c;transform:translateY(-1px);}
+.dep-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--ou);opacity:0;transition:opacity .15s;}
+.dep-card:hover::before{opacity:1;}
+.dep-card-name{font-size:13px;font-weight:700;color:#fff;margin-bottom:8px;line-height:1.3;min-height:34px;}
+.dep-card-stats{display:flex;align-items:center;justify-content:space-between;}
+.dep-card-cnt{font-size:20px;font-weight:900;color:var(--ou);}
+.dep-card-lbl{font-size:9px;color:#555;text-transform:uppercase;letter-spacing:.5px;}
+.dep-card-prog{margin-top:10px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ou);cursor:pointer;font-weight:600;padding:6px 0;margin-bottom:10px;}
+.back-btn:hover{color:var(--ou3);}
+
+/* DASHBOARD */
+.dash-filters{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;}
+.dash-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-top:16px;}
+.bar-chart{display:flex;flex-direction:column;gap:8px;}
+.bar-row{display:flex;align-items:center;gap:10px;}
+.bar-lbl{font-size:11px;color:#999;width:160px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bar-track{flex:1;height:18px;background:#1e1e1e;border-radius:4px;overflow:hidden;position:relative;}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--ou),var(--ou2));border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;transition:width .5s ease;}
+.bar-fill span{font-size:10px;font-weight:700;color:#000;}
+.donut-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.legend{display:flex;flex-direction:column;gap:6px;margin-top:12px;width:100%;}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:11px;color:#999;}
+.legend-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
+
+code{font-family:'Courier New',monospace;background:#1e1e1e;color:var(--ou3);padding:1px 5px;border-radius:3px;font-size:11px;}
+
+@media(max-width:700px){:root{--nav:0px;--hdr:52px;--chipbar:40px;}.page{padding:14px;}.lg-l{display:none;}}
+</style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<!-- LOGIN -->
+<div id="pgLogin">
+<div class="lg-bg"></div><div class="lg-grid"></div>
+<div class="lg-box">
+  <div class="lg-l">
+    <div class="brand">
+      <div class="bf-logo-mark"><svg width="160" height="80" viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="lgGlow" cx="60%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#f5d76e"/>
+      <stop offset="60%" stop-color="#C9A227"/>
+      <stop offset="100%" stop-color="#8a6c10"/>
+    </radialGradient>
+    <radialGradient id="lgBodyGrad" cx="55%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </radialGradient>
+    <filter id="lgGlowF" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- Body -->
+  <ellipse cx="175" cy="80" rx="90" ry="52" fill="url(#lgBodyGrad)" stroke="url(#lgGlow)" stroke-width="2.5"/>
+  <!-- Dorsal fin -->
+  <path d="M140 30 C150 10,180 8,200 28" fill="none" stroke="url(#lgGlow)" stroke-width="2" stroke-linecap="round"/>
+  <!-- Ventral fin -->
+  <path d="M155 132 C165 150,185 152,200 132" fill="none" stroke="url(#lgGlow)" stroke-width="2" stroke-linecap="round"/>
+  <!-- Tail -->
+  <path d="M88 80 L52 44 C44 36,36 50,48 56 L60 62 L48 68 C36 74,44 122,52 116 L88 80Z" fill="none" stroke="url(#lgGlow)" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Tail accent lines -->
+  <line x1="88" y1="80" x2="52" y2="44" stroke="url(#lgGlow)" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+  <line x1="88" y1="80" x2="52" y2="116" stroke="url(#lgGlow)" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+  <!-- Gill line -->
+  <path d="M145 42 Q138 80 145 118" fill="none" stroke="#C9A227" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+  <!-- Scale details -->
+  <path d="M165 62 Q175 56 185 62" fill="none" stroke="#C9A227" stroke-width="1" opacity="0.4"/>
+  <path d="M175 72 Q185 66 195 72" fill="none" stroke="#C9A227" stroke-width="1" opacity="0.4"/>
+  <path d="M160 82 Q170 76 180 82" fill="none" stroke="#C9A227" stroke-width="1" opacity="0.4"/>
+  <!-- Eye -->
+  <circle cx="228" cy="68" r="9" fill="#0a0a0a" stroke="url(#lgGlow)" stroke-width="2"/>
+  <circle cx="228" cy="68" r="4" fill="url(#lgGlow)"/>
+  <circle cx="230" cy="66" r="1.5" fill="#fff" opacity="0.8"/>
+  <!-- BF text -->
+  <text x="183" y="89" font-family="Arial Black,Arial,sans-serif" font-size="36" font-weight="900" fill="url(#lgGlow)" text-anchor="middle" filter="url(#lgGlowF)" letter-spacing="-1">BF</text>
+  <!-- Pectoral fin -->
+  <path d="M200 80 Q215 60 230 78" fill="none" stroke="url(#lgGlow)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+</svg></div>
+      <div class="bn">Brazilian<span>Fish</span></div>
+      <div class="bdv"></div>
+      <div class="btg-tag">Sistema de Gestão DP</div>
+    </div>
+    <div class="feats">
+      <div class="feat"><div class="fic">📊</div>Dashboard por filial e setor</div>
+      <div class="feat"><div class="fic">📋</div>Importar FoRelaFunc2</div>
+      <div class="feat"><div class="fic">💰</div>Verbas lançadas por departamento</div>
+      <div class="feat"><div class="fic">🤝</div>Coparticipação de Planos</div>
+      <div class="feat"><div class="fic">🎯</div>Carta de Metas por departamento</div>
+      <div class="feat"><div class="fic">🏆</div>Carta de Premiação</div>
+      <div class="feat"><div class="fic">🏦</div>Abertura de Conta — Admissões</div>
+    </div>
+    <div class="lg-copy">BrazilianFish © 2026 — DP v5.0</div>
+  </div>
+  <div class="lg-r">
+    <h2>Bem-vindo ao sistema</h2>
+    <p class="sub">Acesse com suas credenciais do Departamento Pessoal.</p>
+    <div class="frm"><label>Usuário</label><div class="iw"><span class="iico">👤</span><input type="text" id="loginUser" placeholder="seu.usuario" autocomplete="off"></div></div>
+    <div class="frm"><label>Senha</label><div class="iw"><span class="iico">🔒</span><input type="password" id="loginPass" placeholder="••••••"></div></div>
+    <button class="btnl" onclick="fazerLogin()">Entrar no Sistema</button>
+    <div class="l-err" id="loginErr">⚠️ Usuário ou senha incorretos.</div>
+
+  </div>
+</div>
+</div>
+
+<!-- APP -->
+<div id="app">
+<header>
+  <div class="h-logo">
+    <div class="bf-logo-mark"><svg width="36" height="36" viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="hGlow" cx="60%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#f5d76e"/>
+      <stop offset="60%" stop-color="#C9A227"/>
+      <stop offset="100%" stop-color="#8a6c10"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="175" cy="80" rx="90" ry="52" fill="#111" stroke="url(#hGlow)" stroke-width="2.5"/>
+  <path d="M140 30 C150 10,180 8,200 28" fill="none" stroke="url(#hGlow)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M155 132 C165 150,185 152,200 132" fill="none" stroke="url(#hGlow)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M88 80 L52 44 C44 36,36 50,48 56 L60 62 L48 68 C36 74,44 122,52 116 L88 80Z" fill="none" stroke="url(#hGlow)" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M145 42 Q138 80 145 118" fill="none" stroke="#C9A227" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+  <circle cx="228" cy="68" r="9" fill="#0a0a0a" stroke="url(#hGlow)" stroke-width="2"/>
+  <circle cx="228" cy="68" r="4" fill="url(#hGlow)"/>
+  <circle cx="230" cy="66" r="1.5" fill="#fff" opacity="0.8"/>
+  <text x="183" y="89" font-family="Arial Black,Arial,sans-serif" font-size="36" font-weight="900" fill="url(#hGlow)" text-anchor="middle" letter-spacing="-1">BF</text>
+</svg></div>
+    <span class="bn" style="font-size:14px;margin-top:0">Brazilian<span>Fish</span></span>
+  </div>
+  <div class="h-mid"><div class="bc">DP &rsaquo; <b id="hPg">Dashboard</b></div></div>
+  <div class="h-r">
+    <div class="uch"><div class="uav" id="uAv">RH</div><div><div class="unm" id="uNm">—</div><div class="uro" id="uRo">—</div></div></div>
+    <button class="btnout" onclick="logout()">⎋ Sair</button>
+  </div>
+</header>
+
+<!-- CHIP NAV BAR -->
+<div class="chipbar">
+  <button class="cnav" onclick="go('dash')" id="nb-dash">📊 Dashboard</button>
+  <button class="cnav" onclick="go('base')" id="nb-base">📂 Base FoRelaFunc2</button>
+  <button class="cnav on" onclick="go('lanc')" id="nb-lanc">✏️ Lançar Verbas</button>
+  <div class="cnav-sep"></div>
+  <button class="cnav" onclick="go('coprt')" id="nb-coprt">🤝 Coparticipação</button>
+  <button class="cnav" onclick="go('metas')" id="nb-metas">🎯 Carta de Metas</button>
+  <button class="cnav" onclick="go('premiacao')" id="nb-premiacao">🏆 Carta de Premiação</button>
+  <button class="cnav" onclick="go('conta')" id="nb-conta">🏦 Abertura de Conta</button>
+  <button class="cnav" onclick="go('hist')" id="nb-hist">📋 Histórico</button>
+  <div class="cnav-sep"></div>
+  <button class="cnav rh-only" onclick="go('mix')" id="nb-mix">📤 Exportar MIX</button>
+  <button class="cnav rh-only" onclick="go('usuarios')" id="nb-usuarios">👥 Usuários</button>
+</div>
+
+<div class="main">
+
+<!-- DASHBOARD -->
+<div class="page active" id="p-dash">
+  <div class="pghdr"><div><h1>Dashboard</h1><div class="sub">Visão geral por filial e departamento.</div></div></div>
+  <div class="card">
+    <div class="dash-filters">
+      <div><span class="flbl">Filial</span><select id="dFil" onchange="renderDash()" style="min-width:240px"><option value="">Todas as filiais</option></select></div>
+      <div><span class="flbl">Departamento</span><select id="dDep" onchange="renderDash()" style="min-width:240px"><option value="">Todos os departamentos</option></select></div>
+    </div>
+  </div>
+  <div class="kgrid" id="dashKpi"></div>
+  <div class="dash-grid">
+    <div class="card">
+      <div class="chdr"><div class="ctit"><div class="ci cig">📁</div>Colaboradores por Departamento</div></div>
+      <div class="bar-chart" id="dashBarDep"></div>
+    </div>
+    <div class="card">
+      <div class="chdr"><div class="ctit"><div class="ci cib">🏢</div>Colaboradores por Filial</div></div>
+      <div class="bar-chart" id="dashBarFil"></div>
+    </div>
+  </div>
+  <div id="dashEmpty" class="empty" style="display:none"><div class="ei">📊</div><h4>Importe a base FoRelaFunc2</h4><p>O dashboard será preenchido automaticamente.</p></div>
+</div>
+
+<!-- BASE -->
+<div class="page" id="p-base">
+  <div class="pghdr"><div><h1>Base de Funcionários — FoRelaFunc2</h1><div class="sub">Importe o relatório FoRelaFunc2 (.xlsx).</div></div></div>
+  <div id="kpiA" style="display:none"><div class="kgrid" id="kpiG"></div></div>
+  <div class="card rh-only">
+    <div class="chdr"><div class="ctit"><div class="ci cig">📤</div>Importar FoRelaFunc2</div></div>
+    <div class="upz" id="upz" onclick="document.getElementById('fi').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="onDrop(event)">
+      <div style="font-size:30px;opacity:.4;margin-bottom:8px">📋</div>
+      <h4 style="color:#fff;font-size:13px;margin-bottom:4px">Arraste ou clique para selecionar o FoRelaFunc2</h4>
+      <p style="color:#555;font-size:11px">Arquivo .xlsx exportado do sistema de folha</p>
+      <input type="file" id="fi" accept=".xlsx,.xls" onchange="importarBase(this.files[0])">
+    </div>
+    <div id="impSt" style="margin-top:10px;display:none"></div>
+  </div>
+  <div class="card">
+    <div class="chdr"><div class="ctit"><div class="ci cig">👥</div>Colaboradores <span id="cntF" style="font-size:11px;font-weight:400;color:#555"></span></div></div>
+    <div class="flts">
+      <div><span class="flbl">Buscar</span><div class="sw"><span class="si">🔍</span><input type="text" id="busca" placeholder="Nome ou chapa..." oninput="renderBase()" style="min-width:200px"></div></div>
+      <div><span class="flbl">Filial</span><select id="fFil" onchange="renderBase()"><option value="">Todas</option></select></div>
+      <div><span class="flbl">Departamento</span><select id="fDep" onchange="renderBase()"><option value="">Todos</option></select></div>
+    </div>
+    <div class="tw"><table><thead><tr><th>Chapa</th><th>Referência</th><th>Nome</th><th>Cargo</th><th>Departamento</th><th>Filial</th></tr></thead><tbody id="bBase"></tbody></table></div>
+    <div id="eBase" class="empty"><div class="ei">📂</div><h4>Nenhuma base importada</h4><p>Importe o FoRelaFunc2 para começar.</p></div>
+  </div>
+</div>
+
+<!-- LANÇAMENTO VERBAS -->
+<div class="page active" id="p-lanc">
+  <div class="pghdr">
+    <div><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><h1>Lançamento de Verbas</h1><span class="chip" id="chipComp">—</span></div><div class="sub">Todos os departamentos. Selecione o seu setor para preencher.</div></div>
+    <div class="acts"><button class="btn btgh" onclick="limparLanc()">🗑️ Limpar</button><button class="btn btg" onclick="salvarLanc()">💾 Salvar</button></div>
+  </div>
+  <div class="card" style="padding:12px 16px">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:end">
+      <div><span class="flbl">Mês</span><select id="selMes" onchange="atualizarComp()" style="width:100%"><option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Março</option><option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option><option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select></div>
+      <div><span class="flbl">Ano</span><input type="number" id="selAno" value="2026" style="width:100%" oninput="atualizarComp()"></div>
+      <div><span class="flbl">Cód. Verba</span><input type="text" id="selVerba" value="573" style="width:100%"></div>
+      <button class="btn bto" onclick="renderLanc()" style="height:34px">Aplicar</button>
+    </div>
+  </div>
+  <div class="card" style="padding:10px 16px">
+    <div class="flts" style="margin-bottom:6px">
+      <div><span class="flbl">Buscar colaborador</span><div class="sw"><span class="si">🔍</span><input type="text" id="lBsk" placeholder="Nome..." oninput="renderLanc()" style="min-width:180px"></div></div>
+      <button class="btn btgh btn-sm" onclick="togPre()" id="bPre" style="margin-top:auto">Só preenchidos</button>
+    </div>
+    <div><span class="flbl">Filtrar Departamento</span>
+    <div class="dept-chipbar" id="lancDeptChips"></div></div>
+  </div>
+  <div class="card" style="padding:10px 0 0;display:none" id="lancContentCard">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:0 16px 10px">
+      <div class="prg-w"><div class="prg-i"><span id="lPrg">0 de 0</span></div><div class="prg-b"><div class="prg-f" id="pFill" style="width:0%"></div></div></div>
+    </div>
+    <div id="bLancWrap"></div>
+    <div id="eLanc" class="empty" style="display:none"><div class="ei">👥</div><h4>Nenhum colaborador</h4></div>
+  </div>
+</div>
+
+<!-- COPARTICIPAÇÃO -->
+<div class="page" id="p-coprt">
+  <div class="pghdr">
+    <div><h1>Coparticipação</h1><div class="sub">Desconto de plano de saúde e benefícios por colaborador.</div></div>
+    <div class="acts"><button class="btn btgh" onclick="expCoprt()">📥 Exportar</button><button class="btn btg" onclick="savCoprt()">💾 Salvar</button></div>
+  </div>
+  <div class="card" style="padding:12px 16px">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px">
+      <div><span class="flbl">Mês</span><select id="cMes" style="width:100%" onchange="renderCoprt()"><option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Março</option><option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option><option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select></div>
+      <div><span class="flbl">Ano</span><input type="number" id="cAno" value="2026" style="width:100%" oninput="renderCoprt()"></div>
+      <div><span class="flbl">Tipo de Plano</span><select id="cTipo" style="width:100%" onchange="renderCoprt()"><option value="saude">Plano de Saúde</option><option value="dental">Plano Dental</option><option value="farmacia">Farmácia</option><option value="vida">Seguro de Vida</option></select></div>
+      <div><span class="flbl">Departamento</span><select id="cDep" style="width:100%" onchange="renderCoprt()"><option value="">Todos</option></select></div>
+    </div>
+    <div style="margin-top:10px"><span class="flbl">Buscar colaborador</span><div class="sw"><span class="si">🔍</span><input type="text" id="cBsk" placeholder="Nome ou chapa..." oninput="renderCoprt()" style="min-width:220px"></div></div>
+  </div>
+  <div class="kgrid" id="copKpi"></div>
+  <div id="bCoprtWrap"></div>
+  <div id="eCoprt" class="empty" style="display:none"><div class="ei">🤝</div><h4>Nenhum registro</h4></div>
+</div>
+
+<!-- CARTA DE METAS — agora navegação por cards de departamento -->
+<div class="page" id="p-metas">
+  <div class="pghdr">
+    <div><h1>Carta de Metas</h1><div class="sub">Selecione o departamento para configurar e lançar as metas da sua equipe.</div></div>
+    <div class="acts" id="metasActsTop" style="display:none">
+      <button class="btn bto" onclick="abrirCfgMeta()">⚙️ Configurar Indicadores</button>
+      <button class="btn btgh" onclick="expMetas()">📥 Exportar</button>
+      <button class="btn bto" onclick="verCartaMeta()">🖨️ Ver Carta</button>
+      <button class="btn btg" onclick="savMetas()">💾 Salvar Metas</button>
+    </div>
+  </div>
+
+  <!-- TELA 1: GRID DE DEPARTAMENTOS -->
+  <div id="metasDeptView">
+    <div class="card" style="padding:12px 16px">
+      <div class="flts" style="margin-bottom:6px">
+        <div><span class="flbl">Mês</span><select id="mMes" style="width:140px" onchange="renderDeptCards()"><option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Março</option><option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option><option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select></div>
+        <div><span class="flbl">Ano</span><input type="number" id="mAno" value="2026" style="width:90px" oninput="renderDeptCards()"></div>
+      </div>
+      <div><span class="flbl">Filtrar Departamento</span>
+      <div class="dept-chipbar" id="metasDeptChips"></div></div>
+    </div>
+    <div class="dep-grid" id="depCardsGrid"></div>
+    <div id="eDeptCards" class="empty" style="display:none"><div class="ei">🎯</div><h4>Importe a base FoRelaFunc2</h4><p>Os departamentos aparecerão aqui.</p></div>
+  </div>
+
+  <!-- TELA 2: METAS DO DEPARTAMENTO SELECIONADO -->
+  <div id="metasDetailView" style="display:none">
+    <div class="back-btn" onclick="voltarDeptos()">← Voltar para Departamentos</div>
+
+    <!-- Header: depto + toggle modo + ações -->
+    <div class="card" style="padding:12px 16px;margin-bottom:10px">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <div class="chip" id="metaDepAtual" style="font-size:12px;padding:7px 14px">—</div>
+          <!-- Toggle Por Setor / Por Colaborador -->
+          <div style="display:inline-flex;background:#141414;border:1px solid #2a2a2a;border-radius:20px;padding:3px;gap:2px">
+            <button id="toggleSetor" class="btn btn-sm" onclick="setModoMeta('setor')"
+              style="border-radius:16px;padding:4px 14px;font-size:11px;font-weight:700;background:var(--oub);border:1px solid var(--oubr);color:var(--ou)">
+              🏢 Por Setor
+            </button>
+            <button id="toggleColab" class="btn btn-sm" onclick="setModoMeta('colab')"
+              style="border-radius:16px;padding:4px 14px;font-size:11px;font-weight:600;background:none;border:1px solid transparent;color:#555">
+              👤 Por Colaborador
+            </button>
+          </div>
+          <!-- Select colaborador (visível só no modo colab) -->
+          <div id="metaColabWrap" style="display:none">
+            <select id="metaColabSel" onchange="renderMetasModo()" style="background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:6px;padding:6px 10px;font-size:12px;color:#ddd;outline:none;font-family:inherit;min-width:220px">
+              <option value="">Selecione o colaborador...</option>
+            </select>
+          </div>
+        </div>
+        <div id="metaScoreResumo" style="font-size:11px;color:#555">Configure os indicadores para ver o score</div>
+      </div>
+    </div>
+
+    <div id="cfgMetaInfo" class="al alg" style="display:none"><span>📌</span><span id="cfgMetaInfoTxt"></span></div>
+    <div class="kgrid" id="metKpi"></div>
+
+    <!-- MODO SETOR -->
+    <div id="metasModoSetor">
+      <div id="bMetasWrap"></div>
+    </div>
+
+    <!-- MODO COLABORADOR (indicadores individuais integrados) -->
+    <div id="metasModoColab" style="display:none">
+      <div id="iiPesoAviso" class="al" style="display:none;margin-bottom:8px"></div>
+
+      <!-- Bloco Metas do Setor -->
+      <div class="card" style="margin-bottom:10px" id="iiSetorCard">
+        <div class="chdr">
+          <div class="ctit"><div class="ci cio">🏢</div>Metas do Setor
+            <span id="iiSetorPesoLabel" style="font-size:11px;font-weight:400;color:#555;margin-left:6px"></span>
+          </div>
+          <button class="btn bto btn-sm" onclick="setModoMeta(\'setor\')">✏️ Editar indicadores do setor</button>
+        </div>
+        <div id="iiSetorGrid"></div>
+      </div>
+
+      <!-- Bloco Metas Individuais -->
+      <div class="card" style="margin-bottom:10px" id="iiIndCard">
+        <div class="chdr">
+          <div class="ctit"><div class="ci cig">👤</div>Metas Individuais
+            <span id="iiIndPesoLabel" style="font-size:11px;font-weight:400;color:#555;margin-left:6px"></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div id="iiIndScoreLabel" style="font-size:12px;font-weight:700;color:#555"></div>
+            <button class="btn bto btn-sm" onclick="abrirCfgIndInd()">⚙️ Configurar</button>
+            <button class="btn btg btn-sm" onclick="salvarIndInd()">💾 Salvar</button>
+          </div>
+        </div>
+        <div id="iiIndGrid"></div>
+      </div>
+
+      <!-- Score final combinado -->
+      <div id="iiScoreFinalCard" class="card" style="display:none">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px" id="iiScoreFinalInner"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL CFG METAS INDIVIDUAIS -->
+<div class="mo" id="moCfgIndInd">
+  <div class="mdl" style="width:760px;max-width:97vw">
+    <div class="mhdr"><h3 id="cfgIndIndTit">⚙️ Metas Individuais</h3><button class="mclose" onclick="document.getElementById('moCfgIndInd').classList.remove('open')">✕</button></div>
+    <div class="al alg" style="margin-bottom:14px"><span>📌</span><span>Configure as metas <strong>individuais</strong> do colaborador. Os pesos aqui somados com os pesos das metas do setor devem totalizar <strong>100%</strong>. Ex: setor vale 50%, individual vale 50% = 100%.</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+      <div class="fld" style="margin:0"><label>Colaborador</label><input type="text" id="cfgIndColabNome" readonly style="background:#111;border-color:#2a2a2a;color:#777"></div>
+      <div class="fld" style="margin:0"><label>Peso total das metas do setor (%)</label><input type="number" id="cfgIndPesoSetor" readonly style="background:#111;border-color:#2a2a2a;color:#777" placeholder="—"></div>
+    </div>
+    <div id="cfgIndPesoAvisoM" class="al" style="display:none;margin-bottom:10px"></div>
+    <div style="font-size:10px;font-weight:700;color:#555;margin:10px 0 8px;letter-spacing:.8px;text-transform:uppercase">Indicadores Individuais</div>
+    <div id="cfgIndList" style="display:flex;flex-direction:column;gap:8px;max-height:340px;overflow-y:auto;padding-right:4px"></div>
+    <button class="btn bto" style="margin-top:10px;width:100%" onclick="addIndicadorInd()">+ Adicionar Indicador Individual</button>
+    <div class="mft">
+      <button class="btn btgh" onclick="document.getElementById('moCfgIndInd').classList.remove('open')">Cancelar</button>
+      <button class="btn btg" onclick="savCfgIndInd()">✅ Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- CARTA DE PREMIAÇÃO -->
+<div class="page" id="p-carta">
+  <div class="pghdr">
+    <div><h1>Carta de Premiação</h1><div class="sub">Gere cartas personalizadas de reconhecimento.</div></div>
+    <div class="acts"><button class="btn btg" onclick="gerCarta()">🏆 Gerar Carta</button><button class="btn bto" onclick="impCarta()">🖨️ Imprimir</button></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div>
+      <div class="card">
+        <div class="chdr"><div class="ctit"><div class="ci cig">⚙️</div>Configurar</div></div>
+        <div class="fld"><label>Departamento</label><select id="ctDep" style="width:100%" onchange="populCtF()"><option value="">Todos</option></select></div>
+        <div class="fld"><label>Colaborador</label><select id="ctF" style="width:100%"><option value="">Selecione...</option></select></div>
+        <div class="fld"><label>Tipo de Premiação</label><select id="ctTipo" style="width:100%"><option value="destaque">🌟 Funcionário Destaque</option><option value="vendas">🏆 Campeão de Vendas</option><option value="tempo">⭐ Tempo de Casa</option><option value="meta">🎯 Meta Atingida</option><option value="especial">🎖️ Premiação Especial</option></select></div>
+        <div class="fld"><label>Valor do Prêmio (R$)</label><input type="number" id="ctVal" placeholder="0,00"></div>
+        <div class="fld"><label>Competência</label><input type="text" id="ctComp" placeholder="ex: Junho/2026"></div>
+        <div class="fld"><label>Descrição / Motivo</label><textarea id="ctMsg" placeholder="Descreva o motivo..." style="min-height:80px;resize:vertical"></textarea></div>
+        <div class="fld"><label>Responsável</label><input type="text" id="ctAss" placeholder="Nome do responsável"></div>
+        <div class="fld"><label>Cargo</label><input type="text" id="ctCrg" placeholder="ex: Gerente de RH"></div>
+      </div>
+    </div>
+    <div>
+      <div class="card"><div class="chdr"><div class="ctit"><div class="ci cig">👁️</div>Pré-visualização</div></div>
+        <div id="ctPrev" class="carta"><div style="text-align:center;color:#444;font-size:12px;padding:36px 0">Configure e clique em "Gerar Carta"</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABERTURA DE CONTA (BANCO) -->
+<div class="page" id="p-banco">
+  <div class="pghdr">
+    <div><h1>Abertura de Conta — Novos Funcionários</h1><div class="sub">Selecione o mês de admissão para gerar a planilha de abertura de conta no banco.</div></div>
+    <div class="acts"><button class="btn bto" onclick="prevBanc()">👁️ Visualizar</button><button class="btn btg" onclick="expBanc()">📥 Exportar .XLS</button></div>
+  </div>
+  <div class="al alg"><span>ℹ️</span><span>Esta planilha não usa verbas — é exclusiva para cadastro de conta bancária de colaboradores recém-admitidos. Marque a data de admissão de cada um na tabela abaixo.</span></div>
+  <div class="card" style="padding:12px 16px">
+    <div style="display:grid;grid-template-columns:1fr 1fr 2fr;gap:12px">
+      <div><span class="flbl">Mês de Admissão</span><select id="bMes" style="width:100%" onchange="renderBancoAdmissoes()"><option value="">Selecione...</option><option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Março</option><option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option><option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select></div>
+      <div><span class="flbl">Ano de Admissão</span><input type="number" id="bAno" value="2026" style="width:100%" oninput="renderBancoAdmissoes()"></div>
+      <div><span class="flbl">Buscar colaborador</span><div class="sw"><span class="si">🔍</span><input type="text" id="bBsk" placeholder="Nome ou chapa..." oninput="renderBancoAdmissoes()"></div></div>
+    </div>
+  </div>
+  <div class="kgrid" id="bncKpi"></div>
+  <div class="card">
+    <div class="chdr"><div class="ctit"><div class="ci cig">🏦</div>Marcar Admissões e Dados Bancários</div></div>
+    <div class="al alg" style="margin-bottom:10px"><span>📌</span><span>Marque a data de admissão de cada colaborador uma única vez. Os dados ficam salvos para próximas consultas.</span></div>
+    <div class="tw"><table><thead><tr><th>Chapa</th><th>Nome</th><th>Departamento</th><th>Filial</th><th>Data Admissão</th><th>Banco</th><th>Agência</th><th>Conta</th></tr></thead><tbody id="bBancoAll"></tbody></table></div>
+  </div>
+  <div id="bncPrev" style="display:none" class="card">
+    <div class="chdr"><div class="ctit"><div class="ci cigr">✅</div>Admitidos no período selecionado</div></div>
+    <div class="tw"><table><thead><tr><th>Chapa</th><th>Nome</th><th>Departamento</th><th>Admissão</th><th>Banco</th><th>Agência</th><th>Conta</th></tr></thead><tbody id="bBanc"></tbody></table></div>
+  </div>
+</div>
+
+<!-- HISTÓRICO -->
+<div class="page" id="p-hist">
+  <div class="pghdr"><div><h1>Histórico</h1><div class="sub">Registro completo de todos os lançamentos salvos.</div></div></div>
+  <div class="card" style="padding:12px 16px">
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div><span class="flbl">Módulo</span><select id="hMod" onchange="renderHist()" style="min-width:130px"><option value="">Todos</option><option value="verba">Verbas</option><option value="coprt">Copart.</option><option value="meta">Metas</option><option value="premio">Premiação</option><option value="banco">Banco</option></select></div>
+      <div><span class="flbl">Mês</span><select id="hMes" onchange="renderHist()"><option value="">Todos</option><option value="1">Jan</option><option value="2">Fev</option><option value="3">Mar</option><option value="4">Abr</option><option value="5">Mai</option><option value="6">Jun</option><option value="7">Jul</option><option value="8">Ago</option><option value="9">Set</option><option value="10">Out</option><option value="11">Nov</option><option value="12">Dez</option></select></div>
+      <div><span class="flbl">Ano</span><input type="number" id="hAno" value="2026" style="width:80px" oninput="renderHist()"></div>
+      <div><span class="flbl">Departamento</span><select id="hDep" onchange="renderHist()" style="min-width:160px"><option value="">Todos</option></select></div>
+      <div><span class="flbl">Buscar</span><div class="sw"><span class="si">🔍</span><input type="text" id="hBsk" placeholder="Nome ou chapa..." oninput="renderHist()" style="min-width:170px"></div></div>
+    </div>
+  </div>
+  <div class="kgrid" id="hKpi"></div>
+  <div class="card">
+    <div class="tw"><table><thead><tr><th>Data</th><th>Módulo</th><th>Colaborador</th><th>Departamento</th><th>Competência</th><th>Usuário</th><th style="text-align:right">Info</th></tr></thead><tbody id="bHist"></tbody></table></div>
+    <div id="eHist" class="empty"><div class="ei">📋</div><h4>Nenhum registro</h4></div>
+  </div>
+</div>
+
+<!-- MIX -->
+<div class="page" id="p-mix">
+  <div class="pghdr"><div><h1>Exportação MIX</h1><div class="sub">Formato MIX para importação na folha de pagamento.</div></div></div>
+  <div class="card">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:16px">
+      <div class="fld" style="margin:0"><label>Mês</label><select id="xMes" style="width:100%"><option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Março</option><option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option><option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select></div>
+      <div class="fld" style="margin:0"><label>Ano</label><input type="number" id="xAno" value="2026" style="width:100%"></div>
+      <div class="fld" style="margin:0"><label>Verba</label><input type="text" id="xVrb" value="573" style="width:100%"></div>
+    </div>
+    <div style="display:flex;gap:8px"><button class="btn bto" onclick="prevMix()">👁️ Visualizar</button><button class="btn btg" onclick="expMix()">📥 Exportar .XLS</button></div>
+  </div>
+  <div id="mixRes" style="display:none" class="card"><div class="kgrid" id="mixKpi" style="margin-bottom:0"></div></div>
+  <div id="mixPrev" style="display:none" class="card">
+    <div class="chdr"><div class="ctit">Preview — <span id="mixCnt">0</span> registros</div><button class="btn btgh btn-sm" onclick="this.closest('.card').style.display='none'">✕</button></div>
+    <div class="tw"><table><thead><tr><th>EMPRESA</th><th>FILIAL</th><th>CHAPA</th><th>MATR.</th><th>MÊS</th><th>ANO</th><th>T.ENV</th><th>IDENT</th><th>VERBA</th><th style="text-align:right">QTDE</th><th>USUÁRIO</th><th>MÊS.S</th></tr></thead><tbody id="bMix"></tbody></table></div>
+  </div>
+</div>
+
+<!-- USUÁRIOS -->
+<div class="page" id="p-users">
+  <div class="pghdr"><div><h1>Usuários</h1><div class="sub">Gerencie acessos. Gestores veem apenas seus departamentos.</div></div><div class="acts"><button class="btn btg" onclick="abrirMdl()">+ Novo Usuário</button></div></div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="tw" style="border:none;border-radius:0"><table><thead><tr><th>Usuário</th><th>Perfil</th><th>Departamentos</th><th style="text-align:center;width:120px">Ações</th></tr></thead><tbody id="bUsers"></tbody></table></div>
+  </div>
+</div>
+
+</div><!-- main -->
+</div><!-- app -->
+
+<!-- MODAL USUÁRIO -->
+<div class="mo" id="moUser">
+  <div class="mdl">
+    <div class="mhdr"><h3 id="mTit">Novo Usuário</h3><button class="mclose" onclick="fchMdl()">✕</button></div>
+    <div class="fld"><label>Login</label><input type="text" id="mU" placeholder="ex: joao.silva" autocomplete="off"></div>
+    <div class="fld"><label>Senha</label><input type="password" id="mP" placeholder="Mínimo 4 caracteres"></div>
+    <div class="fld"><label>Perfil</label><select id="mPrf" onchange="togSets()" style="width:100%"><option value="gestor">👤 Gestor (acesso por departamento)</option><option value="rh">🔑 RH (acesso total)</option></select></div>
+    <div id="sWrap"><div class="fld"><label>Departamentos permitidos</label><div id="sChk" style="max-height:200px;overflow-y:auto;border:1.5px solid #2a2a2a;border-radius:6px;padding:8px;background:#181818"></div></div></div>
+    <div class="mft"><button class="btn btgh" onclick="fchMdl()">Cancelar</button><button class="btn btg" onclick="savUser()">💾 Salvar</button></div>
+  </div>
+</div>
+
+<!-- MODAL CONFIG META — INDICADORES -->
+<div class="mo" id="moCfgMeta">
+  <div class="mdl" style="width:720px;max-width:97vw">
+    <div class="mhdr"><h3>⚙️ Indicadores da Carta de Metas</h3><button class="mclose" onclick="document.getElementById('moCfgMeta').classList.remove('open')">✕</button></div>
+    <div class="al alg" style="margin-bottom:12px"><span>📌</span><span>Configure os indicadores conforme a planilha modelo. Pesos devem somar 100. Tipo: <strong>p</strong> = quanto maior melhor | <strong>q</strong> = quanto menor melhor.</span></div>
+    <div class="fld"><label>Título da Carta de Metas</label><input type="text" id="cfgTit" placeholder="ex: Carta de Metas — Produção — Junho/2026"></div>
+    <div class="fld"><label>Descrição / Critérios gerais</label><textarea id="cfgDesc" placeholder="Descreva os critérios gerais..." style="min-height:50px;resize:vertical"></textarea></div>
+    <div class="fld"><label>Valor base do prêmio (R$)</label><input type="number" id="cfgPremioBase" placeholder="ex: 400" style="width:180px;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:6px;padding:7px 10px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>
+    <div style="font-size:10px;font-weight:700;color:#555;margin:12px 0 8px;letter-spacing:.8px;text-transform:uppercase">Indicadores</div>
+    <div id="cfgMetaList" style="display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto;padding-right:4px"></div>
+    <button class="btn bto" style="margin-top:10px;width:100%" onclick="addIndicador()">+ Adicionar Indicador</button>
+    <div class="mft"><button class="btn btgh" onclick="document.getElementById('moCfgMeta').classList.remove('open')">Cancelar</button><button class="btn btg" onclick="savCfgMeta()">✅ Salvar Configuração</button></div>
+  </div>
+</div>
+
+<script>
+const MESES=['','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const PGN={dash:'Dashboard',lanc:'Lançar Verbas',metas:'Carta de Metas','ind-ind':'Indicadores',base:'Base FoRelaFunc2',coprt:'Coparticipação',premiacao:'Carta de Premiação',conta:'Abertura de Conta',hist:'Histórico',mix:'Exportar MIX',usuarios:'Usuários'};
+
+const S={usuarios:[],funcionarios:[],lancamentos:{},coprt:{},metas:{},cfgMeta:{titulo:'',desc:'',b100:10,b80:5},metaIndicadores:{},metaInd:{},banco:{},hist:[],logado:null,editU:null,soP:false,metaDepAtual:null};
+
+// ── TOAST ──
+function toast(m,t='ok'){
+  const c=document.getElementById('toast'),d=document.createElement('div');
+  d.className='tst '+t;d.innerHTML='<span>'+(t==='ok'?'✅':t==='er'?'❌':'⚠️')+'</span><span>'+m+'</span>';
+  c.appendChild(d);setTimeout(()=>{d.style.opacity='0';d.style.transition='opacity .3s';setTimeout(()=>d.remove(),300);},3200);
+}
+
+// ── PERSISTÊNCIA ──
+function salvar(){
+  try{localStorage.setItem('bfrh_v5',JSON.stringify({usuarios:S.usuarios,funcionarios:S.funcionarios,lancamentos:S.lancamentos,coprt:S.coprt,metas:S.metas,cfgMeta:S.cfgMeta,metaIndicadores:S.metaIndicadores,banco:S.banco,hist:S.hist}));}catch(e){}
+}
+function carregar(){
+  try{
+    const raw=localStorage.getItem('bfrh_v5')||localStorage.getItem('bfrh_v4');
+    if(raw){const p=JSON.parse(raw);S.usuarios=p.usuarios||[];S.funcionarios=p.funcionarios||[];S.lancamentos=p.lancamentos||{};S.coprt=p.coprt||{};S.metas=p.metas||{};S.cfgMeta=p.cfgMeta||{titulo:'',desc:'',b100:10,b80:5};S.metaIndicadores=p.metaIndicadores||{};S.banco=p.banco||{};S.hist=p.hist||[];}
+  }catch(e){}
+  if(!S.usuarios.find(u=>u.user==='rh')){S.usuarios.push({user:'rh',pass:'rh123',perfil:'rh',setores:[]});salvar();}
+}
+function addHist(mod,chapa,setor,mes,ano,info){
+  const f=S.funcionarios.find(x=>x.chapa===chapa);
+  S.hist.unshift({dt:new Date().toLocaleString('pt-BR'),mod,chapa,nm:f?f.nome:'—',setor,comp:MESES[mes]+'/'+ano,usr:S.logado?.user||'—',info});
+  if(S.hist.length>1000)S.hist=S.hist.slice(0,1000);
+}
+
+// ── LOGIN ──
+function fazerLogin(){
+  const user=document.getElementById('loginUser').value.trim().toLowerCase(),pass=document.getElementById('loginPass').value;
+  const u=S.usuarios.find(x=>x.user===user&&x.pass===pass);
+  if(!u){document.getElementById('loginErr').style.display='block';document.getElementById('loginPass').value='';return;}
+  S.logado=u;
+  document.getElementById('pgLogin').style.display='none';
+  document.getElementById('app').style.display='block';
+  const ini=u.user.split('.').map(p=>p[0]?.toUpperCase()).join('').slice(0,2)||u.user[0].toUpperCase();
+  document.getElementById('uAv').textContent=ini;document.getElementById('uNm').textContent=u.user;document.getElementById('uRo').textContent=u.perfil==='rh'?'🔑 RH':'👤 Gestor';
+  initApp();toast('Bem-vindo, '+u.user+'!');
+}
+function logout(){S.logado=null;document.getElementById('pgLogin').style.display='flex';document.getElementById('app').style.display='none';document.getElementById('loginUser').value='';document.getElementById('loginPass').value='';document.getElementById('loginErr').style.display='none';}
+document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')fazerLogin();});
+document.getElementById('loginUser').addEventListener('keydown',e=>{if(e.key==='Enter')fazerLogin();});
+
+// ── NAV ──
+function go(id){
+  // alias mapping: nav id → page id
+  const alias={premiacao:'carta',conta:'banco',usuarios:'users',mix:'mix',hist:'hist',dash:'dash',coprt:'coprt'};
+  const pgId=alias[id]||id;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.chipbar .cnav').forEach(b=>b.classList.remove('on'));
+  const pg=document.getElementById('p-'+pgId);
+  if(pg)pg.classList.add('active');
+  const nb=document.getElementById('nb-'+id);
+  if(nb)nb.classList.add('on');
+  const hpg=document.getElementById('hPg');
+  if(hpg)hpg.textContent=PGN[id]||'';
+  if(id==='lanc'){lDepSel='';rSF();renderLanc();atualizarComp();}
+  if(id==='base')renderBase();
+  if(id==='metas'){voltarDeptos();renderDeptCards();}
+  if(id==='ind-ind')initIndInd();
+  if(id==='dash')renderDash();
+  if(id==='coprt')renderCoprt();
+  if(id==='hist')renderHist();
+}
+
+// ── INIT ──
+function initApp(){
+  const n=new Date();
+  ['selMes','mMes','isMes','iiMes'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=n.getMonth()+1;});
+  ['selAno','mAno','isAno','iiAno'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=n.getFullYear();});
+  atualizarComp();renderBase();rSF();updKpi();
+  go('lanc');
+}
+
+// ── IMPORTAR BASE ──
+function onDrop(e){e.preventDefault();document.getElementById('upz').classList.remove('drag');const f=e.dataTransfer.files[0];if(f)importarBase(f);}
+function importarBase(file){
+  if(!file)return;
+  const st=document.getElementById('impSt');st.style.display='block';
+  st.innerHTML='<div class="al alg"><span>⏳</span><span>Processando '+file.name+'...</span></div>';
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    try{
+      const wb=XLSX.read(ev.target.result,{type:'array'});
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:null});
+      let hr=-1;
+      for(let i=0;i<Math.min(rows.length,10);i++){
+        const r=rows[i];
+        if(r&&r.some(c=>c&&(String(c).toLowerCase().includes('chapa')||String(c).toLowerCase().includes('refer')))){hr=i;break;}
+      }
+      const fn=[];
+      const startRow=hr>=0?hr+1:0;
+      for(let i=startRow;i<rows.length;i++){
+        const r=rows[i];
+        if(!r)continue;
+        const vals=r.filter(v=>v!==null&&v!==undefined&&String(v).trim()!=='');
+        if(vals.length===0)continue;
+        const ref=String(r[0]||'').trim();
+        const nome=String(r[1]||r[3]||'').trim();
+        const chapa=String(r[2]||'').trim();
+        const cargo=String(r[4]||'').trim();
+        const depto=String(r[5]||'').trim();
+        const filial=String(r[6]||'').trim();
+        if(!nome||!chapa)continue;
+        if(nome.toLowerCase()==='nome'||chapa.toLowerCase()==='chapa')continue;
+        if(ref.toLowerCase().includes('referênc')||ref.toLowerCase().includes('referenc'))continue;
+        fn.push({ref,nome,chapa,cargo,depto,filial});
+      }
+      if(fn.length===0){st.innerHTML='<div class="al ale"><span>❌</span><span>Nenhum dado encontrado. Verifique se é o FoRelaFunc2 correto.</span></div>';return;}
+      S.funcionarios=fn;salvar();
+      lDepSel='';mDepSel='';
+      const ndep=new Set(fn.map(f=>f.depto).filter(Boolean)).size;
+      const nfil=new Set(fn.map(f=>f.filial).filter(Boolean)).size;
+      st.innerHTML='<div class="al alok"><span>✅</span><span><strong>'+fn.length+' colaboradores</strong> | <strong>'+ndep+' departamentos</strong> | <strong>'+nfil+' filiais</strong> — '+file.name+'</span></div>';
+      renderBase();rSF();updKpi();renderMSets();populCtDep();populCtF();renderDash();
+      const b=document.getElementById('bdg');b.textContent=fn.length;b.style.display='inline-block';
+      toast(fn.length+' colaboradores importados!');
+    }catch(err){
+      st.innerHTML='<div class="al ale"><span>❌</span><span>Erro ao processar: '+err.message+'</span></div>';
+      toast('Erro ao processar arquivo.','er');
+      console.error(err);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+// ── KPIs genérico ──
+function kpi(ic,n,l,bg){return '<div class="kpi"><div class="kico" style="background:'+bg+'">'+ic+'</div><div><div class="kn">'+n+'</div><div class="kl">'+l+'</div></div></div>';}
+// ── ESCOPO DE VISIBILIDADE POR USUÁRIO (RH vê tudo, Gestor só vê seus setores) ──
+function setoresPermitidos(){
+  const u=S.logado;
+  if(!u||u.perfil==='rh')return null; // null = sem restrição
+  return u.setores||[];
+}
+function funcVisiveis(){
+  const sp=setoresPermitidos();
+  if(!sp)return S.funcionarios;
+  return S.funcionarios.filter(f=>sp.includes(f.depto));
+}
+function deptosVisiveis(){
+  return [...new Set(funcVisiveis().map(f=>f.depto).filter(Boolean))].sort();
+}
+function updKpi(){
+  const a=document.getElementById('kpiA'),g=document.getElementById('kpiG');
+  if(!S.funcionarios.length){a.style.display='none';return;}a.style.display='block';
+  const fi=new Set(S.funcionarios.map(f=>f.filial).filter(Boolean)).size;
+  const de=new Set(S.funcionarios.map(f=>f.depto).filter(Boolean)).size;
+  const lc=Object.values(S.lancamentos).filter(v=>v&&v!==0).length;
+  g.innerHTML=kpi('👥',S.funcionarios.length,'Colaboradores','var(--oub);border:1px solid var(--oubr)')+kpi('🏢',fi,'Filiais','var(--vdb)')+kpi('📁',de,'Departamentos','var(--azb)')+kpi('✏️',lc,'Lançamentos','var(--rxb)');
+}
+
+// ════════════════════ DASHBOARD ════════════════════
+function renderDash(){
+  const filSel=document.getElementById('dFil'),depSel=document.getElementById('dDep');
+  const escopo=funcVisiveis();
+  const allFils=[...new Set(escopo.map(f=>f.filial).filter(Boolean))].sort();
+  if(filSel && filSel.options.length<=1){
+    filSel.innerHTML='<option value="">Todas as filiais</option>'+allFils.map(x=>'<option value="'+x+'">'+x+'</option>').join('');
+  }
+  const filAtual=filSel?filSel.value:'';
+  // Departamentos dependem da filial escolhida (sempre dentro do escopo do usuário)
+  const depsDaFilial=filAtual?[...new Set(escopo.filter(f=>f.filial===filAtual).map(f=>f.depto).filter(Boolean))].sort():deptosVisiveis();
+  if(depSel){
+    const vAtual=depSel.value;
+    depSel.innerHTML='<option value="">Todos os departamentos</option>'+depsDaFilial.map(x=>'<option value="'+x+'"'+(x===vAtual?' selected':'')+'>'+x+'</option>').join('');
+    if(!depsDaFilial.includes(vAtual))depSel.value='';
+  }
+  const depAtual=depSel?depSel.value:'';
+
+  if(!escopo.length){
+    document.getElementById('dashEmpty').style.display='block';
+    document.getElementById('dashKpi').innerHTML='';
+    document.getElementById('dashBarDep').innerHTML='';
+    document.getElementById('dashBarFil').innerHTML='';
+    return;
+  }
+  document.getElementById('dashEmpty').style.display='none';
+
+  let base=escopo;
+  if(filAtual)base=base.filter(f=>f.filial===filAtual);
+  if(depAtual)base=base.filter(f=>f.depto===depAtual);
+
+  const totFil=new Set(base.map(f=>f.filial)).size;
+  const totDep=new Set(base.map(f=>f.depto)).size;
+  const chapasVisiveis=new Set(escopo.map(f=>f.chapa));
+  const lancAtivos=Object.entries(S.lancamentos).filter(([k,v])=>{
+    if(!(v&&v!==0))return false;
+    const chapa=k.split('_')[1];
+    return chapasVisiveis.has(chapa);
+  }).length;
+
+  document.getElementById('dashKpi').innerHTML=
+    kpi('👥',base.length,filAtual||depAtual?'Colaboradores (filtrado)':'Total de Colaboradores','var(--oub);border:1px solid var(--oubr)')+
+    kpi('🏢',totFil,'Filiais','var(--vdb)')+
+    kpi('📁',totDep,'Departamentos','var(--azb)')+
+    kpi('✏️',lancAtivos,'Lançamentos Ativos','var(--rxb)');
+
+  // Bar chart por departamento (dentro do filtro de filial)
+  const baseDept=filAtual?escopo.filter(f=>f.filial===filAtual):escopo;
+  const byDep={};
+  baseDept.forEach(f=>{if(!f.depto)return;byDep[f.depto]=(byDep[f.depto]||0)+1;});
+  const maxDep=Math.max(...Object.values(byDep),1);
+  const sortedDep=Object.entries(byDep).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  document.getElementById('dashBarDep').innerHTML=sortedDep.map(([d,c])=>{
+    const pct=Math.round((c/maxDep)*100);
+    return '<div class="bar-row"><div class="bar-lbl" title="'+d+'">'+d+'</div><div class="bar-track"><div class="bar-fill" style="width:'+Math.max(pct,8)+'%"><span>'+c+'</span></div></div></div>';
+  }).join('')||'<div style="color:#555;font-size:12px;padding:10px">Sem dados para exibir.</div>';
+
+  // Bar chart por filial (dentro do filtro de depto)
+  const baseFil=depAtual?escopo.filter(f=>f.depto===depAtual):escopo;
+  const byFil={};
+  baseFil.forEach(f=>{if(!f.filial)return;byFil[f.filial]=(byFil[f.filial]||0)+1;});
+  const maxFil=Math.max(...Object.values(byFil),1);
+  const sortedFil=Object.entries(byFil).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('dashBarFil').innerHTML=sortedFil.map(([fi,c])=>{
+    const pct=Math.round((c/maxFil)*100);
+    return '<div class="bar-row"><div class="bar-lbl" title="'+fi+'">'+fi+'</div><div class="bar-track"><div class="bar-fill" style="width:'+Math.max(pct,8)+'%"><span>'+c+'</span></div></div></div>';
+  }).join('')||'<div style="color:#555;font-size:12px;padding:10px">Sem dados para exibir.</div>';
+}
+
+// ── RENDER SELETORES GERAIS ──
+let lDepSel='', mDepSel='';
+function buildDeptChips(containerId, currentVal, onClickFn){
+  const allDeps=deptosVisiveis();
+  const container=document.getElementById(containerId);
+  if(!container)return;
+  let html='';
+  allDeps.forEach(dep=>{
+    const safe=dep.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    html+='<button class="dept-chip'+(currentVal===dep?' on':'')+'" onclick="'+onClickFn+'(\''+safe+'\')">'+dep+'</button>';
+  });
+  container.innerHTML=html;
+}
+function setLancDep(dep){
+  lDepSel=dep;
+  buildDeptChips('lancDeptChips',lDepSel,'setLancDep');
+  // show content area only when a dept is selected
+  const contentCard=document.getElementById('lancContentCard');
+  if(contentCard)contentCard.style.display=dep?'block':'none';
+  renderLanc();
+}
+function setMetasDep(dep){mDepSel=dep;buildDeptChips('metasDeptChips',mDepSel,'setMetasDep');renderDeptCards();}
+function rSF(){
+  buildDeptChips('lancDeptChips',lDepSel,'setLancDep');
+  buildDeptChips('metasDeptChips',mDepSel,'setMetasDep');
+  // hide content card until a dept is clicked
+  const contentCard=document.getElementById('lancContentCard');
+  if(contentCard)contentCard.style.display=lDepSel?'block':'none';
+  // Individual dropdown
+  const allDeps=deptosVisiveis();
+  const iiDep=document.getElementById('iiDep');
+  if(iiDep){const v=iiDep.value;iiDep.innerHTML='<option value="">Todos</option>'+allDeps.map(d=>'<option value="'+d+'"'+(d===v?' selected':'')+'>'+d+'</option>').join('');}
+  const escopo=funcVisiveis();
+  const fils=[...new Set(escopo.map(f=>f.filial).filter(Boolean))].sort();
+  const sFF=document.getElementById('fFil'),sFD=document.getElementById('fDep');
+  if(sFF)sFF.innerHTML='<option value="">Todas</option>'+fils.map(x=>'<option value="'+x+'">'+x+'</option>').join('');
+  if(sFD)sFD.innerHTML='<option value="">Todos</option>'+allDeps.map(x=>'<option value="'+x+'">'+x+'</option>').join('');
+}
+
+// ── BASE ──
+function renderBase(){
+  const bk=(document.getElementById('busca')?.value||'').toLowerCase();
+  const ff=document.getElementById('fFil')?.value||'';
+  const fd=document.getElementById('fDep')?.value||'';
+  const escopo=funcVisiveis();
+  let l=escopo;
+  if(bk)l=l.filter(f=>f.nome.toLowerCase().includes(bk)||f.chapa.includes(bk));
+  if(ff)l=l.filter(f=>f.filial===ff);
+  if(fd)l=l.filter(f=>f.depto===fd);
+  const body=document.getElementById('bBase'),empty=document.getElementById('eBase');
+  if(!escopo.length){body.innerHTML='';empty.style.display='block';document.getElementById('cntF').textContent='';return;}
+  empty.style.display='none';
+  document.getElementById('cntF').textContent='— '+l.length+' de '+escopo.length;
+  body.innerHTML=l.slice(0,300).map(f=>'<tr><td><code>'+f.chapa+'</code></td><td style="color:#666">'+f.ref+'</td><td><strong style="color:#fff">'+f.nome+'</strong></td><td style="color:#666;font-size:11px">'+f.cargo+'</td><td><span class="sp">'+f.depto+'</span></td><td><span class="b bg">'+f.filial+'</span></td></tr>').join('');
+  if(l.length>300)body.innerHTML+='<tr><td colspan="6" style="text-align:center;color:#555;font-size:11px;padding:12px">… e mais '+(l.length-300)+'. Refine os filtros.</td></tr>';
+}
+
+// ── LANÇAMENTO ──
+function atualizarComp(){const m=document.getElementById('selMes').value,a=document.getElementById('selAno').value;const c=document.getElementById('chipComp');if(c)c.textContent=MESES[m]+' / '+a;}
+function togPre(){S.soP=!S.soP;const b=document.getElementById('bPre');if(S.soP){b.textContent='👁️ Todos';b.classList.remove('btgh');b.classList.add('bto');}else{b.textContent='Só preenchidos';b.classList.add('btgh');b.classList.remove('bto');}renderLanc();}
+
+function renderLanc(){
+  const u=S.logado,rh=u?.perfil==='rh',sp=rh?null:(u?.setores||[]);
+  const fd=lDepSel||'';
+  const contentCard=document.getElementById('lancContentCard');
+  // If no dept selected, hide the table and stop
+  if(!fd){if(contentCard)contentCard.style.display='none';return;}
+  if(contentCard)contentCard.style.display='block';
+  const bk=(document.getElementById('lBsk')?.value||'').toLowerCase();
+  const mes=document.getElementById('selMes').value,ano=document.getElementById('selAno').value,vb=document.getElementById('selVerba').value||'573';
+  const escopo=funcVisiveis();
+  let lista=escopo;
+  if(fd)lista=lista.filter(f=>f.depto===fd);
+  if(bk)lista=lista.filter(f=>f.nome.toLowerCase().includes(bk));
+  const ck=f=>f.chapa+'_'+mes+'_'+ano+'_'+vb;
+  if(S.soP)lista=lista.filter(f=>S.lancamentos[ck(f)]!==undefined&&S.lancamentos[ck(f)]!=='');
+  const wrap=document.getElementById('bLancWrap'),empty=document.getElementById('eLanc');
+  if(!lista.length){wrap.innerHTML='';empty.style.display='block';const lp=document.getElementById('lPrg');if(lp)lp.textContent='0 de 0';const pf=document.getElementById('pFill');if(pf)pf.style.width='0%';return;}
+  empty.style.display='none';
+  const totAll=lista.length;
+  const preAll=lista.filter(f=>S.lancamentos[ck(f)]!==undefined&&S.lancamentos[ck(f)]!=='').length;
+  const pctAll=totAll>0?Math.round((preAll/totAll)*100):0;
+  const lp=document.getElementById('lPrg');if(lp)lp.textContent=preAll+' de '+totAll+' preenchidos ('+pctAll+'%)';
+  const pf=document.getElementById('pFill');if(pf)pf.style.width=pctAll+'%';
+  const byDep={};
+  lista.forEach(f=>{if(!byDep[f.depto])byDep[f.depto]=[];byDep[f.depto].push(f);});
+  let html='';
+  Object.keys(byDep).sort().forEach(dep=>{
+    const funcs=byDep[dep];
+    const preD=funcs.filter(f=>S.lancamentos[ck(f)]!==undefined&&S.lancamentos[ck(f)]!=='').length;
+    html+='<div class="setor-hdr"><span>'+dep+'</span><small>'+preD+'/'+funcs.length+' preenchidos</small></div>';
+    html+='<div class="tw" style="border:1px solid #232323;border-top:none;border-radius:0 0 6px 6px;margin-bottom:2px"><table><thead><tr><th>Chapa</th><th>Nome</th><th>Cargo</th><th>Filial</th><th style="text-align:right">Valor (R$)</th></tr></thead><tbody>';
+    funcs.forEach(f=>{
+      const k=ck(f),v=S.lancamentos[k]!==undefined?S.lancamentos[k]:'',cls=v!==''?' ok':'';
+      html+='<tr><td><code>'+f.chapa+'</code></td><td><strong style="color:#fff">'+f.nome+'</strong></td><td style="font-size:11px;color:#666">'+f.cargo+'</td><td style="font-size:11px">'+f.filial+'</td><td style="text-align:right"><input class="vi'+cls+'" type="number" step="0.01" min="0" data-k="'+k+'" value="'+v+'" oninput="uL(this)" placeholder="0,00"></td></tr>';
+    });
+    const totDep=funcs.reduce((a,f)=>a+(parseFloat(S.lancamentos[ck(f)])||0),0);
+    if(preD>0)html+='<tr class="trtot"><td colspan="4" style="text-align:right;font-size:10px">Total '+dep+':</td><td style="text-align:right">R$ '+totDep.toLocaleString('pt-BR',{minimumFractionDigits:2})+'</td></tr>';
+    html+='</tbody></table></div>';
+  });
+  wrap.innerHTML=html;
+}
+
+function uL(inp){const k=inp.dataset.k,v=inp.value;if(v===''||v===null){delete S.lancamentos[k];inp.classList.remove('ok');}else{S.lancamentos[k]=parseFloat(v);inp.classList.add('ok');}updKpi();}
+function salvarLanc(){
+  document.querySelectorAll('.vi').forEach(inp=>{
+    const k=inp.dataset.k;if(!k)return;
+    const v=inp.value;
+    if(v===''||v===null)delete S.lancamentos[k];
+    else{S.lancamentos[k]=parseFloat(v);if(v){const p=k.split('_');const f=S.funcionarios.find(x=>x.chapa===p[0]);addHist('verba',p[0],f?f.depto:'—',p[1],p[2],'R$ '+parseFloat(v).toLocaleString('pt-BR',{minimumFractionDigits:2}));}}
+  });
+  salvar();updKpi();toast('Lançamentos salvos!');
+}
+function limparLanc(){
+  if(!confirm('Limpar todos os valores desta competência/verba?'))return;
+  const mes=document.getElementById('selMes').value,ano=document.getElementById('selAno').value,vb=document.getElementById('selVerba').value||'573';
+  Object.keys(S.lancamentos).forEach(k=>{const p=k.split('_');if(p.length>=4&&p[p.length-3]===mes&&p[p.length-2]===ano&&p[p.length-1]===vb)delete S.lancamentos[k];});
+  salvar();renderLanc();updKpi();toast('Valores limpos.','wn');
+}
+
+// ── COPARTICIPAÇÃO ──
+function renderCoprt(){
+  const mes=document.getElementById('cMes').value,ano=document.getElementById('cAno').value;
+  const dep=document.getElementById('cDep')?.value||'';
+  const bk=(document.getElementById('cBsk')?.value||'').toLowerCase();
+  const tipo=document.getElementById('cTipo').value||'saude';
+  let lista=funcVisiveis();
+  if(dep)lista=lista.filter(f=>f.depto===dep);
+  if(bk)lista=lista.filter(f=>f.nome.toLowerCase().includes(bk)||f.chapa.includes(bk));
+  const wrap=document.getElementById('bCoprtWrap'),empty=document.getElementById('eCoprt');
+  if(!lista.length){wrap.innerHTML='';empty.style.display='block';document.getElementById('copKpi').innerHTML='';return;}
+  empty.style.display='none';
+  const ck=f=>'cop_'+f.chapa+'_'+mes+'_'+ano+'_'+tipo;
+  const totD=lista.reduce((a,f)=>a+(parseFloat(S.coprt[ck(f)]?.val)||0),0);
+  document.getElementById('copKpi').innerHTML=kpi('🤝',lista.length,'Colaboradores','var(--azb)')+kpi('💰','R$ '+totD.toLocaleString('pt-BR',{minimumFractionDigits:2}),'Total Descontos','var(--vdb)');
+  const byDep={};
+  lista.forEach(f=>{if(!byDep[f.depto])byDep[f.depto]=[];byDep[f.depto].push(f);});
+  let html='';
+  Object.keys(byDep).sort().forEach(d=>{
+    const funcs=byDep[d];
+    const totSub=funcs.reduce((a,f)=>a+(parseFloat(S.coprt[ck(f)]?.val)||0),0);
+    html+='<div class="setor-hdr"><span>'+d+'</span><small>Total desconto: R$ '+totSub.toLocaleString('pt-BR',{minimumFractionDigits:2})+'</small></div>';
+    html+='<div class="tw" style="border:1px solid #232323;border-top:none;border-radius:0 0 6px 6px;margin-bottom:2px"><table><thead><tr><th>Chapa</th><th>Nome</th><th>Cargo</th><th>Filial</th><th style="text-align:right">Desconto (R$)</th><th style="text-align:center">Tipo</th></tr></thead><tbody>';
+    funcs.forEach(f=>{
+      const k=ck(f),c=S.coprt[k]||{};
+      html+='<tr><td><code>'+f.chapa+'</code></td><td><strong style="color:#fff">'+f.nome+'</strong></td><td style="font-size:11px;color:#666">'+f.cargo+'</td><td style="font-size:11px">'+f.filial+'</td><td style="text-align:right"><input class="vi'+(c.val?' ok':'')+'" type="number" step="0.01" min="0" data-kc="'+k+'" value="'+(c.val||'')+'" oninput="uC(this)" placeholder="0,00"></td><td style="text-align:center"><select style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:5px;padding:3px 7px;font-size:11px;color:#ddd;font-family:inherit" data-kc="'+k+'" onchange="uCS(this)"><option value="T"'+((!c.tipo||c.tipo==="T")?" selected":"")+'>Titular</option><option value="D"'+(c.tipo==="D"?" selected":"")+'>Dependente</option></select></td></tr>';
+    });
+    html+='</tbody></table></div>';
+  });
+  wrap.innerHTML=html;
+}
+function uC(inp){const k=inp.dataset.kc,v=inp.value;if(!S.coprt[k])S.coprt[k]={};S.coprt[k].val=v?parseFloat(v):null;inp.classList.toggle('ok',!!v);}
+function uCS(sel){const k=sel.dataset.kc;if(!S.coprt[k])S.coprt[k]={};S.coprt[k].tipo=sel.value;}
+function savCoprt(){salvar();toast('Coparticipação salva!');}
+function expCoprt(){
+  const mes=parseInt(document.getElementById('cMes').value),ano=parseInt(document.getElementById('cAno').value),tipo=document.getElementById('cTipo').value;
+  const rows=funcVisiveis().map(f=>{const k='cop_'+f.chapa+'_'+mes+'_'+ano+'_'+tipo,c=S.coprt[k]||{};return{CHAPA:f.chapa,NOME:f.nome,DEPTO:f.depto,FILIAL:f.filial,MES:mes,ANO:ano,PLANO:tipo,TIPO:c.tipo||'T',DESCONTO:c.val||0};}).filter(l=>l.DESCONTO>0);
+  if(!rows.length){toast('Nenhum desconto.','wn');return;}
+  const ws=XLSX.utils.json_to_sheet(rows),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Copart');XLSX.writeFile(wb,'Coparticipacao_'+MESES[mes]+'_'+ano+'.xls');toast('Exportado '+rows.length+' registros!');
+}
+
+// ════════════════════ CARTA DE METAS (Cards de Departamento) ════════════════════
+function renderDeptCards(){
+  const grid=document.getElementById('depCardsGrid'),empty=document.getElementById('eDeptCards');
+  const mes=document.getElementById('mMes')?.value,ano=document.getElementById('mAno')?.value;
+  if(!S.funcionarios.length){grid.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  const u=S.logado,rh=u?.perfil==='rh',sp=rh?null:(u?.setores||[]);
+  let deps=[...new Set(S.funcionarios.map(f=>f.depto).filter(Boolean))].sort();
+  if(sp)deps=deps.filter(d=>sp.includes(d));
+  if(mDepSel)deps=deps.filter(d=>d===mDepSel);
+  const inds=S.metaIndicadores||{};
+  grid.innerHTML=deps.map(dep=>{
+    const funcs=S.funcionarios.filter(f=>f.depto===dep);
+    const depInds=(inds[dep]||[]);
+    let preenchidos=0;
+    funcs.forEach(f=>{
+      const k='meta_'+f.chapa+'_'+mes+'_'+ano;
+      const m=S.metas[k];
+      if(m&&depInds.length>0&&depInds.some((_,i)=>m['real_'+i]!==undefined&&m['real_'+i]!==''))preenchidos++;
+      else if(m&&(m.meta||m.real||m.nota))preenchidos++;
+    });
+    const pct=funcs.length>0?Math.round((preenchidos/funcs.length)*100):0;
+    const nInd=depInds.length;
+    return '<div class="dep-card" onclick="abrirDeptMetas(\''+dep.replace(/'/g,"\\'")+'\')">'+
+      '<div class="dep-card-name">'+dep+'</div>'+
+      '<div class="dep-card-stats">'+
+        '<div><div class="dep-card-cnt">'+funcs.length+'</div><div class="dep-card-lbl">Colaboradores</div></div>'+
+        '<div><div class="dep-card-cnt" style="color:'+(nInd>0?'var(--vd)':'#555')+'">'+nInd+'</div><div class="dep-card-lbl">Indicadores</div></div>'+
+      '</div>'+
+      '<div class="dep-card-prog"><div class="prg-i" style="margin-bottom:4px"><span>'+preenchidos+'/'+funcs.length+' com meta</span><span>'+pct+'%</span></div><div class="prg-b"><div class="prg-f" style="width:'+pct+'%"></div></div></div>'+
+      '</div>';
+  }).join('');
+}
+let S_modoMeta = 'setor'; // 'setor' | 'colab'
+
+function abrirDeptMetas(dep){
+  const sp=setoresPermitidos();
+  if(sp&&!sp.includes(dep)){toast('Você não tem acesso a este departamento.','er');return;}
+  S.metaDepAtual=dep;
+  S_modoMeta='setor';
+  document.getElementById('metasDeptView').style.display='none';
+  document.getElementById('metasDetailView').style.display='block';
+  document.getElementById('metasActsTop').style.display='flex';
+  document.getElementById('metaDepAtual').textContent=dep;
+  // Populate colab select
+  const sel=document.getElementById('metaColabSel');
+  if(sel){
+    const funcs=funcVisiveis().filter(f=>f.depto===dep);
+    sel.innerHTML='<option value="">Selecione o colaborador...</option>'+funcs.map(f=>'<option value="'+f.chapa+'">'+f.nome+'</option>').join('');
+  }
+  setModoMeta('setor');
+}
+
+function setModoMeta(modo){
+  S_modoMeta=modo;
+  const btnS=document.getElementById('toggleSetor'),btnC=document.getElementById('toggleColab');
+  const wrapColab=document.getElementById('metaColabWrap');
+  const modoSetorDiv=document.getElementById('metasModoSetor');
+  const modoColabDiv=document.getElementById('metasModoColab');
+
+  if(modo==='setor'){
+    btnS.style.background='var(--oub)';btnS.style.borderColor='var(--oubr)';btnS.style.color='var(--ou)';btnS.style.fontWeight='700';
+    btnC.style.background='none';btnC.style.borderColor='transparent';btnC.style.color='#555';btnC.style.fontWeight='600';
+    wrapColab.style.display='none';
+    modoSetorDiv.style.display='block';
+    modoColabDiv.style.display='none';
+    renderMetasDetail();
+  } else {
+    btnC.style.background='var(--azb)';btnC.style.borderColor='rgba(59,130,246,.3)';btnC.style.color='var(--az)';btnC.style.fontWeight='700';
+    btnS.style.background='none';btnS.style.borderColor='transparent';btnS.style.color='#555';btnS.style.fontWeight='600';
+    wrapColab.style.display='block';
+    modoSetorDiv.style.display='none';
+    modoColabDiv.style.display='block';
+    renderMetasModo();
+  }
+}
+
+function renderMetasModo(){
+  if(!S.metaDepAtual)return;
+  const dep=S.metaDepAtual;
+  const chapa=document.getElementById('metaColabSel')?.value||'';
+  const mes=document.getElementById('mMes')?.value||new Date().getMonth()+1;
+  const ano=document.getElementById('mAno')?.value||new Date().getFullYear();
+
+  const indsSetor=S.metaIndicadores[dep]||[];
+  const pesoSetorTotal=indsSetor.reduce((a,i)=>a+i.peso,0);
+
+  // KPIs do modo colab
+  if(!chapa){
+    // Modo setor geral: mostra todos colaboradores
+    const funcs=funcVisiveis().filter(f=>f.depto===dep);
+    const resultados=funcs.map(f=>{
+      const indsInd=S.metaInd?.[f.chapa]||[];
+      return calcScoreCombinado(f,indsSetor,indsInd,S.metas,mes,ano);
+    });
+    const ating100=resultados.filter(r=>r.score>=100).length;
+    const totalPremio=resultados.reduce((a,r)=>a+r.premio,0);
+    const scoreMedio=resultados.length?resultados.reduce((a,r)=>a+r.score,0)/resultados.length:0;
+    const corMed=scoreMedio>=100?'var(--vd)':scoreMedio>=80?'var(--ou)':'var(--vm)';
+    document.getElementById('metKpi').innerHTML=
+      kpi('👥',funcs.length,'Colaboradores','var(--azb)')+
+      kpi('📊',resultados.length?scoreMedio.toFixed(1)+'%':'—','Score Médio','var(--oub);border:1px solid var(--oubr)')+
+      kpi('✅',ating100,'Score ≥ 100%','var(--vdb)')+
+      kpi('🏆','R$ '+totalPremio.toLocaleString('pt-BR',{minimumFractionDigits:2}),'Total Prêmios','var(--rxb)');
+    document.getElementById('metaScoreResumo').innerHTML='<span style="font-size:11px;color:#555">Selecione um colaborador para ver o score individual</span>';
+
+    // Hide individual blocks, show prompt
+    document.getElementById('iiPesoAviso').style.display='none';
+    document.getElementById('iiSetorGrid').innerHTML='<div style="color:#555;font-size:12px;padding:10px 0">Selecione um colaborador para ver os lançamentos.</div>';
+    document.getElementById('iiSetorPesoLabel').textContent=pesoSetorTotal>0?'('+pesoSetorTotal+'% do score)':'(sem indicadores)';
+    document.getElementById('iiIndGrid').innerHTML='<div style="color:#555;font-size:12px;padding:10px 0">Selecione um colaborador para ver as metas individuais.</div>';
+    document.getElementById('iiIndPesoLabel').textContent='';
+    document.getElementById('iiIndScoreLabel').textContent='';
+    document.getElementById('iiScoreFinalCard').style.display='none';
+    return;
+  }
+
+  // Colaborador selecionado
+  const f=S.funcionarios.find(x=>x.chapa===chapa);
+  if(!f)return;
+  const indsInd=S.metaInd?.[chapa]||[];
+  const pesoIndTotal=indsInd.reduce((a,i)=>a+i.peso,0);
+  const res=calcScoreCombinado(f,indsSetor,indsInd,S.metas,mes,ano);
+
+  const corF=faixaCor(res.score/100);
+  document.getElementById('metaScoreResumo').innerHTML=
+    '<div style="text-align:right"><div style="font-size:10px;color:#555">Score Final</div>'+
+    '<div style="font-size:20px;font-weight:900;color:'+corF+'">'+res.score.toFixed(1)+'%</div></div>';
+
+  document.getElementById('metKpi').innerHTML=
+    kpi('📊',res.score.toFixed(1)+'%','Score Final','var(--oub);border:1px solid var(--oubr)')+
+    kpi('🏢',res.pesoSetorTotal+'%','Peso Setor','var(--lab)')+
+    kpi('👤',res.pesoIndTotal+'%','Peso Individual','var(--azb)')+
+    kpi('🏆',res.premio>0?'R$ '+res.premio.toLocaleString('pt-BR',{minimumFractionDigits:2}):'—','Prêmio','var(--rxb)');
+
+  // Aviso pesos
+  const avisoEl=document.getElementById('iiPesoAviso');
+  const pesoGrand=pesoSetorTotal+pesoIndTotal;
+  if(pesoGrand>0&&Math.abs(pesoGrand-100)>0.01){
+    avisoEl.style.display='flex';avisoEl.className='al ale';
+    avisoEl.innerHTML='<span>⚠️</span><span>Pesos somam <strong>'+pesoGrand+'%</strong> (setor: '+pesoSetorTotal+'% + individual: '+pesoIndTotal+'%). Ajuste para totalizar 100%.</span>';
+  } else if(pesoSetorTotal===0&&pesoIndTotal===0){
+    avisoEl.style.display='flex';avisoEl.className='al alg';
+    avisoEl.innerHTML='<span>💡</span><span>Configure os indicadores do setor em <strong>⚙️ Configurar Indicadores</strong> e os individuais em <strong>⚙️ Configurar</strong>. Os pesos devem somar 100%.</span>';
+  } else {avisoEl.style.display='none';}
+
+  // Label pesos
+  document.getElementById('iiSetorPesoLabel').textContent=pesoSetorTotal>0?'('+pesoSetorTotal+'% do score)':'(sem indicadores)';
+  document.getElementById('iiIndPesoLabel').textContent=pesoIndTotal>0?'('+pesoIndTotal+'% do score)':'(sem metas individuais)';
+
+  // Bloco SETOR
+  if(!indsSetor.length){
+    document.getElementById('iiSetorGrid').innerHTML='<div class="al alg" style="margin:0"><span>⚙️</span><span>Nenhum indicador de setor. Configure em <strong>⚙️ Configurar Indicadores</strong>.</span></div>';
+  } else {
+    let htmlS='<div class="tw"><table><thead><tr>'+
+      indsSetor.map((ind,i)=>'<th style="text-align:right;min-width:100px;white-space:normal">'+ind.nome+'<br><span style="font-size:9px;color:#555;font-weight:400">Peso '+ind.peso+'% | Meta '+ind.meta+(ind.melhor==='q'?'↓':'↑')+'</span></th>').join('')+
+      '<th style="text-align:center">Score Setor</th></tr></thead><tbody><tr>';
+    const scoreS=res.pesoSetorTotal>0?res.pontosSetor/res.pesoSetorTotal*100:0;
+    const corS=faixaCor(scoreS/100);
+    htmlS+=res.detSetor.map(det=>{
+      const corA=det.real>0?faixaCor(det.ating):'#555';
+      return '<td style="text-align:right">'+
+        '<input class="vi'+(det.real>0?' ok':'')+'" type="number" step="0.01" min="0" data-km="'+det.km+'" data-campo="'+det.key+'" value="'+(det.real||'')+'" oninput="uMColab(this)" placeholder="—" style="width:86px">'+
+        (det.real>0?'<div style="font-size:10px;color:'+corA+';margin-top:2px;text-align:right">'+Math.round(det.ating*100)+'%</div>':'')+'</td>';
+    }).join('');
+    htmlS+='<td style="text-align:center">'+(scoreS>0?'<div style="font-weight:900;color:'+corS+'">'+scoreS.toFixed(1)+'%</div>':'<span style="color:#555">—</span>')+'</td></tr></tbody></table></div>';
+    document.getElementById('iiSetorGrid').innerHTML=htmlS;
+  }
+
+  // Bloco INDIVIDUAL
+  if(!indsInd.length){
+    document.getElementById('iiIndGrid').innerHTML='<div class="al alg" style="margin:0"><span>👤</span><span>Nenhuma meta individual para este colaborador. Clique em <strong>⚙️ Configurar</strong>.</span></div>';
+    document.getElementById('iiIndScoreLabel').textContent='';
+  } else {
+    const scoreI=res.pesoIndTotal>0?res.pontosInd/res.pesoIndTotal*100:0;
+    const corI=faixaCor(scoreI/100);
+    document.getElementById('iiIndScoreLabel').innerHTML=scoreI>0?'<span style="color:'+corI+';font-weight:900">'+scoreI.toFixed(1)+'%</span>':'—';
+    let htmlI='<div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">';
+    res.detInd.forEach(det=>{
+      const corA=det.real>0?faixaCor(det.ating):'#555';
+      htmlI+='<div style="background:#141414;border:1px solid #2a2a2a;border-radius:7px;padding:11px 14px">';
+      htmlI+='<div style="display:flex;justify-content:space-between;margin-bottom:8px">';
+      htmlI+='<span style="font-size:12px;font-weight:700;color:var(--ou)">'+det.nome+(det.desc?' <span style="color:#555;font-weight:400;font-size:10px">— '+det.desc+'</span>':'')+'</span>';
+      htmlI+='<div style="display:flex;gap:8px;font-size:10px;color:#555"><span>Peso: <strong style="color:var(--ou)">'+det.peso+'%</strong></span><span>Meta: <strong style="color:#ccc">'+det.meta+(det.melhor==='q'?'↓':'↑')+'</strong></span></div></div>';
+      htmlI+='<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">';
+      htmlI+='<div><span class="flbl">Realizado</span><input class="vi'+(det.real>0?' ok':'')+'" type="number" step="0.01" min="0" data-km="'+det.km+'" data-campo="'+det.key+'" value="'+(det.real||'')+'" oninput="uMColab(this)" placeholder="—" style="width:120px;margin-top:4px"></div>';
+      if(det.real>0){
+        htmlI+='<div style="margin-top:18px;text-align:center"><div style="font-size:15px;font-weight:900;color:'+corA+'">'+Math.round(det.ating*100)+'%</div><div style="font-size:10px;color:#555">'+faixaLabel(det.ating)+'</div></div>';
+        htmlI+='<div style="margin-top:18px;text-align:center"><div style="font-size:13px;font-weight:700;color:var(--az)">'+det.pts.toFixed(1)+' pts</div><div style="font-size:10px;color:#555">de '+det.peso+' pts</div></div>';
+        htmlI+='<div style="flex:1;min-width:100px;margin-top:18px"><div class="prg-b" style="height:5px"><div class="prg-f" style="width:'+Math.min(det.ating,1.2)/1.2*100+'%;background:'+corA+'"></div></div>';
+        htmlI+='<div style="display:flex;justify-content:space-between;font-size:9px;color:#444;margin-top:2px"><span>0</span><span>80%</span><span>100%</span><span>120%</span></div></div>';
+      }
+      htmlI+='</div></div>';
+    });
+    htmlI+='</div>';
+    document.getElementById('iiIndGrid').innerHTML=htmlI;
+  }
+
+  // Score final combinado
+  const finalCard=document.getElementById('iiScoreFinalCard');
+  finalCard.style.display='block';
+  document.getElementById('iiScoreFinalInner').innerHTML=
+    '<div><div style="font-size:11px;color:#555;margin-bottom:4px">Score Final Combinado</div>'+
+    '<div style="font-size:28px;font-weight:900;color:'+corF+'">'+res.score.toFixed(1)+'%</div>'+
+    '<div style="font-size:11px;color:#555">'+faixaLabel(res.score/100)+'</div></div>'+
+    '<div style="display:flex;gap:20px;flex-wrap:wrap">'+
+      '<div style="text-align:center"><div style="font-size:11px;color:#555">Setor</div><div style="font-size:14px;font-weight:700;color:var(--ou)">'+(res.pesoSetorTotal>0?(res.pontosSetor/res.pesoSetorTotal*100).toFixed(1)+'%':'—')+'</div><div style="font-size:10px;color:#444">'+res.pesoSetorTotal+'% do peso</div></div>'+
+      '<div style="text-align:center;color:#333;font-size:20px;padding-top:12px">+</div>'+
+      '<div style="text-align:center"><div style="font-size:11px;color:#555">Individual</div><div style="font-size:14px;font-weight:700;color:var(--az)">'+(res.pesoIndTotal>0?(res.pontosInd/res.pesoIndTotal*100).toFixed(1)+'%':'—')+'</div><div style="font-size:10px;color:#444">'+res.pesoIndTotal+'% do peso</div></div>'+
+    '</div>'+
+    '<div style="text-align:right"><div style="font-size:11px;color:#555">Prêmio Estimado</div><div style="font-size:18px;font-weight:900;color:'+(res.premio>0?'var(--ou)':'#555')+'">'+
+    (res.premio>0?'R$ '+res.premio.toLocaleString('pt-BR',{minimumFractionDigits:2}):'—')+'</div></div>';
+}
+
+function uMColab(inp){
+  const k=inp.dataset.km,campo=inp.dataset.campo,v=inp.value;
+  if(!S.metas[k])S.metas[k]={};
+  S.metas[k][campo]=v!==''?parseFloat(v):undefined;
+  inp.classList.toggle('ok',v!=='');
+  renderMetasModo();
+}
+
+function voltarDeptos(){
+  S.metaDepAtual=null;
+  S_modoMeta='setor';
+  document.getElementById('metasDeptView').style.display='block';
+  document.getElementById('metasDetailView').style.display='none';
+  document.getElementById('metasActsTop').style.display='none';
+  renderDeptCards();
+}
+
+// ── CFG META — INDICADORES ──
+function addIndicador(ind){
+  const list=document.getElementById('cfgMetaList');
+  const idx=list.children.length;
+  const v=(ind&&typeof ind==='object'&&!Array.isArray(ind))?ind:{nome:'',desc:'',memoria:'',fonte:'',peso:'',meta:'',melhor:'p'};
+  const row=document.createElement('div');
+  row.style.cssText='background:#141414;border:1px solid #2a2a2a;border-radius:8px;padding:12px 14px;position:relative';
+  row.className='ind-row';
+  const selP=v.melhor!=='q'?'selected':'';
+  const selQ=v.melhor==='q'?'selected':'';
+  row.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">'
+    +'<span class="ind-label" style="font-size:11px;font-weight:700;color:var(--ou)">Indicador '+(idx+1)+'</span>'
+    +'<button type="button" onclick="this.parentNode.parentNode.remove();reindexInds()" style="background:var(--vmb);border:1px solid rgba(239,68,68,.3);color:var(--vm);border-radius:4px;padding:2px 8px;cursor:pointer;font-size:10px;font-family:inherit">✕ Remover</button>'
+    +'</div>'
+    +'<div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-bottom:8px">'
+    +'<div><span class="flbl">Nome do Indicador</span><input type="text" class="ind-nome" value="'+v.nome+'" placeholder="ex: Produção produto A" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'
+    +'<div><span class="flbl">Peso (%)</span><input type="number" class="ind-peso" value="'+v.peso+'" placeholder="ex: 40" min="1" max="100" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'
+    +'<div><span class="flbl">Meta (valor ref)</span><input type="number" class="ind-meta" value="'+v.meta+'" placeholder="ex: 100" step="0.01" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'
+    +'</div>'
+    +'<div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px">'
+    +'<div><span class="flbl">Descrição</span><input type="text" class="ind-desc" value="'+v.desc+'" placeholder="ex: Qtde produzida" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'
+    +'<div><span class="flbl">Memória de Cálculo</span><input type="text" class="ind-mem" value="'+(v.memoria||'')+'" placeholder="ex: Planilha" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'
+    +'<div><span class="flbl">Fonte</span><input type="text" class="ind-fonte" value="'+(v.fonte||'')+'" placeholder="ex: ERP" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'
+    +'<div><span class="flbl">Tipo</span><select class="ind-melhor" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"><option value="p" '+selP+'>↑ maior melhor</option><option value="q" '+selQ+'>↓ menor melhor</option></select></div>'
+    +'</div>';
+  list.appendChild(row);
+  reindexInds();
+}
+function reindexInds(){
+  [...document.getElementById('cfgMetaList').children].forEach((row,i)=>{
+    row.dataset.ind=i;
+    const label=row.querySelector('.ind-label');
+    if(label)label.textContent='Indicador '+(i+1);
+  });
+}
+function abrirCfgMeta(){
+  const dep=S.metaDepAtual;
+  document.getElementById('cfgTit').value=S.cfgMeta.titulo||'';
+  document.getElementById('cfgDesc').value=S.cfgMeta.desc||'';
+  document.getElementById('cfgPremioBase').value=S.cfgMeta.premioBase||400;
+  const list=document.getElementById('cfgMetaList');list.innerHTML='';
+  const inds=dep?(S.metaIndicadores[dep]||[]):[];
+  if(inds.length){inds.forEach(function(item){addIndicador(item);});}
+  else{addIndicador(null);addIndicador(null);}
+  document.getElementById('moCfgMeta').classList.add('open');
+}
+function savCfgMeta(){
+  S.cfgMeta={titulo:document.getElementById('cfgTit').value,desc:document.getElementById('cfgDesc').value,b100:10,b80:5,premioBase:parseFloat(document.getElementById('cfgPremioBase').value)||400};
+  const rows=[...document.getElementById('cfgMetaList').children];
+  const inds=rows.map(row=>({
+    nome:row.querySelector('.ind-nome').value.trim(),
+    desc:row.querySelector('.ind-desc').value.trim(),
+    memoria:row.querySelector('.ind-mem').value.trim(),
+    fonte:row.querySelector('.ind-fonte').value.trim(),
+    resp:'',
+    peso:parseFloat(row.querySelector('.ind-peso').value)||0,
+    meta:parseFloat(row.querySelector('.ind-meta').value)||0,
+    melhor:row.querySelector('.ind-melhor').value
+  })).filter(i=>i.nome);
+  const totalPeso=inds.reduce((a,i)=>a+i.peso,0);
+  if(inds.length&&Math.abs(totalPeso-100)>0.01){toast('⚠️ Atenção: pesos somam '+totalPeso+'% (recomendado 100%)','wn');}
+  if(S.metaDepAtual)S.metaIndicadores[S.metaDepAtual]=inds;
+  salvar();document.getElementById('moCfgMeta').classList.remove('open');renderMetasDetail();toast('Indicadores salvos!');
+}
+
+// ── CÁLCULO DE PONTOS por indicador (lógica da planilha) ──
+// Atingimento = real/meta (ratio)
+// Faixas: <0.8=0pts | 0.8-0.9=peso*0.8 | 0.9-1=peso*0.9 | 1-1.1=peso*1 | 1.1-1.2=peso*1.1 | >=1.2=peso*1.2
+// Para "q" (menor melhor): atingimento = meta/real (inverso)
+function calcAtingimento(meta,real,melhor){
+  if(!meta||!real)return 0;
+  return melhor==='q'?(meta/real):(real/meta);
+}
+function calcPontos(peso,ating){
+  if(ating>=1.2)return peso*1.2;
+  if(ating>=1.1)return peso*1.1;
+  if(ating>=1.0)return peso*1.0;
+  if(ating>=0.9)return peso*0.9;
+  if(ating>=0.8)return peso*0.8;
+  return 0;
+}
+function faixaCor(ating){
+  if(ating>=1.0)return 'var(--vd)';
+  if(ating>=0.8)return 'var(--ou)';
+  return 'var(--vm)';
+}
+function faixaLabel(ating){
+  if(ating>=1.2)return '120%+';
+  if(ating>=1.1)return '110–120%';
+  if(ating>=1.0)return '100–110%';
+  if(ating>=0.9)return '90–100%';
+  if(ating>=0.8)return '80–90%';
+  return '<80%';
+}
+function calcScore(funcs,inds,metas,mes,ano){
+  // Score = SUM(pontos)/SUM(pesos)*100 por funcionário
+  return funcs.map(f=>{
+    const k='meta_'+f.chapa+'_'+mes+'_'+ano;
+    const m=metas[k]||{};
+    const totalPeso=inds.reduce((a,i)=>a+i.peso,0)||100;
+    let totalPontos=0;
+    const detalhes=inds.map((ind,i)=>{
+      const real=parseFloat(m['real_'+i])||0;
+      const metaV=ind.meta;
+      const ating=calcAtingimento(metaV,real,ind.melhor);
+      const pts=calcPontos(ind.peso,ating);
+      totalPontos+=pts;
+      return{...ind,real,ating,pts};
+    });
+    const score=totalPeso>0?totalPontos/totalPeso*100:0;
+    // Prêmio: mesmo escalonamento mas sobre valor base
+    const base=S.cfgMeta.premioBase||400;
+    const premio=score>=120?base*1.2:score>=110?base*1.1:score>=100?base*1.0:score>=90?base*0.9:score>=80?base*0.8:0;
+    return{f,score,totalPontos,totalPeso,premio,detalhes};
+  });
+}
+function renderMetasDetail(){
+  if(!S.metaDepAtual)return;
+  const dep=S.metaDepAtual;
+  const mes=document.getElementById('mMes').value,ano=document.getElementById('mAno').value;
+  const infoEl=document.getElementById('cfgMetaInfo'),infoTx=document.getElementById('cfgMetaInfoTxt');
+  const funcs=S.funcionarios.filter(f=>f.depto===dep);
+  const inds=S.metaIndicadores[dep]||[];
+  const wrap=document.getElementById('bMetasWrap');
+  // Info banner
+  if(S.cfgMeta.titulo){infoEl.style.display='flex';infoTx.innerHTML='<strong>'+S.cfgMeta.titulo+'</strong>'+(S.cfgMeta.desc?' — '+S.cfgMeta.desc:'')+(inds.length?' | <strong>'+inds.length+' indicadores</strong> configurados':'');}
+  else infoEl.style.display='none';
+  if(!inds.length){
+    // Modo legado: sem indicadores configurados
+    wrap.innerHTML='<div class="al alg"><span>⚙️</span><span>Configure os indicadores da carta de metas clicando em <strong>Configurar Indicadores</strong> para usar a lógica completa de pontuação por faixas (80%/90%/100%/110%/120%+).</span></div>';
+    // KPI simples
+    document.getElementById('metKpi').innerHTML=kpi('🎯',funcs.length,'Colaboradores','var(--lab)')+kpi('⚙️','—','Configure indicadores','var(--oub);border:1px solid var(--oubr)');
+    return;
+  }
+  const totalPeso=inds.reduce((a,i)=>a+i.peso,0);
+  const resultados=calcScore(funcs,inds,S.metas,mes,ano);
+  const ating100=resultados.filter(r=>r.score>=100).length;
+  const ating80=resultados.filter(r=>r.score>=80&&r.score<100).length;
+  const totalPremio=resultados.reduce((a,r)=>a+r.premio,0);
+  document.getElementById('metKpi').innerHTML=
+    kpi('🎯',funcs.length,'Colaboradores','var(--lab)')+
+    kpi('✅',ating100,'Score ≥ 100%','var(--vdb)')+
+    kpi('📊',ating80,'Score 80–99%','var(--oub);border:1px solid var(--oubr)')+
+    kpi('🏆','R$ '+totalPremio.toLocaleString('pt-BR',{minimumFractionDigits:2}),'Total Prêmios','var(--rxb)');
+  // Aviso se pesos ≠ 100
+  let avisoHTML='';
+  if(Math.abs(totalPeso-100)>0.01)avisoHTML='<div class="al wn alg" style="margin-bottom:10px"><span>⚠️</span><span>Pesos somam <strong>'+totalPeso+'%</strong> — recomendado 100%. Clique em Configurar Indicadores para ajustar.</span></div>';
+  // Header dos indicadores
+  let thInds=inds.map((ind,i)=>'<th style="text-align:right;min-width:110px;white-space:normal">'+ind.nome+'<br><span style="font-size:9px;color:#555;font-weight:400">Peso '+ind.peso+'% | Meta '+ind.meta+(ind.melhor==='q'?'↓':'↑')+'</span></th>').join('');
+  let html=avisoHTML+'<div class="tw"><table><thead><tr>'+
+    '<th style="min-width:200px">Colaborador</th>'+
+    thInds+
+    '<th style="text-align:center">Score Total</th>'+
+    '<th style="text-align:right">Prêmio</th>'+
+    '</tr></thead><tbody>';
+  resultados.forEach(({f,score,premio,detalhes})=>{
+    const k='meta_'+f.chapa+'_'+mes+'_'+ano;
+    const m=S.metas[k]||{};
+    const corScore=faixaCor(score/100);
+    let tdInds=detalhes.map((det,i)=>{
+      const corA=det.meta>0&&(m['real_'+i]!==undefined&&m['real_'+i]!=='')?faixaCor(det.ating):'#555';
+      return '<td style="text-align:right">'+
+        '<input class="vi" type="number" step="0.01" min="0" data-km="'+k+'" data-campo="real_'+i+'" value="'+(m['real_'+i]!==undefined?m['real_'+i]:'')+'" oninput="uM(this)" placeholder="—" style="width:90px">'+
+        (m['real_'+i]!==undefined&&m['real_'+i]!==''?'<div style="font-size:10px;color:'+corA+';margin-top:2px;text-align:right">'+Math.round(det.ating*100)+'% · '+det.pts.toFixed(1)+'pts</div>':'')+'</td>';
+    }).join('');
+    html+='<tr>'+
+      '<td><strong style="color:#fff">'+f.nome+'</strong><br><code style="font-size:10px">'+f.chapa+'</code><br><span style="font-size:10px;color:#555">'+f.cargo+'</span></td>'+
+      tdInds+
+      '<td style="text-align:center">'+(score>0?'<div style="font-size:14px;font-weight:900;color:'+corScore+'">'+score.toFixed(1)+'%</div><div style="font-size:10px;color:#555">'+faixaLabel(score/100)+'</div>':'<span style="color:#555">—</span>')+'</td>'+
+      '<td style="text-align:right;font-weight:700;color:'+(premio>0?'var(--ou)':'#444')+'">'+(premio>0?'R$ '+premio.toLocaleString('pt-BR',{minimumFractionDigits:2}):'—')+'</td></tr>';
+  });
+  html+='</tbody></table></div>';
+  wrap.innerHTML=html;
+}
+function uM(inp){
+  const k=inp.dataset.km,campo=inp.dataset.campo,v=inp.value;
+  if(!S.metas[k])S.metas[k]={};
+  S.metas[k][campo]=v!==''?parseFloat(v):undefined;
+  inp.classList.toggle('ok',v!=='');
+  renderMetasDetail();
+}
+function uMNota(sel){const k=sel.dataset.km;if(!S.metas[k])S.metas[k]={};S.metas[k].nota=sel.value;const c={'BOM':'var(--vd)','MÉDIO':'var(--ou)','RUIM':'var(--vm)','':''};sel.style.color=c[sel.value]||'#ddd';}
+function uMObs(inp){const k=inp.dataset.km;if(!S.metas[k])S.metas[k]={};S.metas[k].obs=inp.value;}
+function savMetas(){
+  if(!S.metaDepAtual)return;
+  const mes=document.getElementById('mMes').value,ano=document.getElementById('mAno').value;
+  const funcs=S.funcionarios.filter(f=>f.depto===S.metaDepAtual);
+  const inds=S.metaIndicadores[S.metaDepAtual]||[];
+  funcs.forEach(f=>{
+    const k='meta_'+f.chapa+'_'+mes+'_'+ano,m=S.metas[k];
+    if(m){
+      const res=calcScore([f],inds,S.metas,mes,ano)[0];
+      addHist('meta',f.chapa,f.depto,mes,ano,'Score: '+res.score.toFixed(1)+'% | Prêmio: R$ '+res.premio.toLocaleString('pt-BR',{minimumFractionDigits:2}));
+    }
+  });
+  salvar();toast('Metas de '+S.metaDepAtual+' salvas!');
+  renderDeptCards();
+}
+function expMetas(){
+  if(!S.metaDepAtual){toast('Selecione um departamento primeiro.','wn');return;}
+  const mes=parseInt(document.getElementById('mMes').value),ano=parseInt(document.getElementById('mAno').value);
+  const funcs=S.funcionarios.filter(f=>f.depto===S.metaDepAtual);
+  const inds=S.metaIndicadores[S.metaDepAtual]||[];
+  const resultados=calcScore(funcs,inds,S.metas,mes,ano);
+  const rows=resultados.map(({f,score,premio,detalhes})=>{
+    const row={CHAPA:f.chapa,NOME:f.nome,DEPTO:f.depto,FILIAL:f.filial,MES:mes,ANO:ano};
+    detalhes.forEach((det,i)=>{row['META_'+i+'_'+det.nome.toUpperCase().replace(/ /g,'_')]=det.meta;row['REAL_'+i]=det.real;row['ATING_'+i+'_%']=Math.round(det.ating*100);row['PONTOS_'+i]=+det.pts.toFixed(2);});
+    row.SCORE_TOTAL=+score.toFixed(2);row.PREMIO=+premio.toFixed(2);
+    return row;
+  });
+  const ws=XLSX.utils.json_to_sheet(rows),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Metas');XLSX.writeFile(wb,'CartaMetas_'+S.metaDepAtual+'_'+MESES[mes]+'_'+ano+'.xls');toast('Exportado '+rows.length+' registros!');
+}
+
+// ── VER CARTA DE METAS (impressão) ──
+function verCartaMeta(){
+  if(!S.metaDepAtual){toast('Selecione um departamento primeiro.','wn');return;}
+  const dep=S.metaDepAtual;
+  const mes=parseInt(document.getElementById('mMes').value),ano=parseInt(document.getElementById('mAno').value);
+  const funcs=S.funcionarios.filter(f=>f.depto===dep);
+  const inds=S.metaIndicadores[dep]||[];
+  if(!inds.length){toast('Configure os indicadores primeiro.','wn');return;}
+  const resultados=calcScore(funcs,inds,S.metas,mes,ano);
+  const logoSvg='<svg width="80" height="40" viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="cg" cx="60%" cy="40%" r="55%"><stop offset="0%" stop-color="#f5d76e"/><stop offset="60%" stop-color="#C9A227"/><stop offset="100%" stop-color="#8a6c10"/></radialGradient></defs><ellipse cx="175" cy="80" rx="90" ry="52" fill="#111" stroke="url(#cg)" stroke-width="2.5"/><path d="M140 30 C150 10,180 8,200 28" fill="none" stroke="url(#cg)" stroke-width="2" stroke-linecap="round"/><path d="M155 132 C165 150,185 152,200 132" fill="none" stroke="url(#cg)" stroke-width="2" stroke-linecap="round"/><path d="M88 80 L52 44 C44 36,36 50,48 56 L60 62 L48 68 C36 74,44 122,52 116 L88 80Z" fill="none" stroke="url(#cg)" stroke-width="2.5" stroke-linejoin="round"/><path d="M145 42 Q138 80 145 118" fill="none" stroke="#C9A227" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/><circle cx="228" cy="68" r="9" fill="#0a0a0a" stroke="url(#cg)" stroke-width="2"/><circle cx="228" cy="68" r="4" fill="url(#cg)"/><circle cx="230" cy="66" r="1.5" fill="#fff" opacity="0.8"/><text x="183" y="89" font-family="Arial Black,Arial,sans-serif" font-size="36" font-weight="900" fill="url(#cg)" text-anchor="middle" letter-spacing="-1">BF</text></svg>';
+  const faixas=[0.8,0.9,1.0,1.1,1.2];
+  const faixasLabel=['80%','90%','100%','110%','120%'];
+  let cartasHTML=resultados.map(({f,score,premio,detalhes})=>{
+    const corScore=score>=100?'#22c55e':score>=80?'#C9A227':'#ef4444';
+    const base=S.cfgMeta.premioBase||400;
+    let indRows=detalhes.map((det,i)=>{
+      const ating=Math.round(det.ating*100);
+      const corA=det.real>0?(ating>=100?'#22c55e':ating>=80?'#C9A227':'#ef4444'):'#666';
+      // Mini faixa
+      let faizasHTML=faixas.map((f2,fi)=>{
+        const active=det.ating>=f2&&(fi===faixas.length-1||det.ating<faixas[fi+1]);
+        return '<span style="padding:2px 6px;border-radius:3px;font-size:9px;font-weight:700;background:'+(active?corA:'#1e1e1e')+';color:'+(active?'#000':'#555')+'">'+faixasLabel[fi]+'</span>';
+      }).join('');
+      return `<tr>
+        <td style="padding:6px 8px;font-size:11px;color:#ddd">${det.nome}</td>
+        <td style="padding:6px 8px;font-size:10px;color:#777">${det.desc}</td>
+        <td style="padding:6px 8px;text-align:right;font-weight:700;color:#C9A227">${det.meta}</td>
+        <td style="padding:6px 8px;text-align:right;font-weight:700;color:${det.real>0?'#fff':'#555'}">${det.real||'—'}</td>
+        <td style="padding:6px 8px;text-align:center">${faizasHTML}</td>
+        <td style="padding:6px 8px;text-align:right;font-weight:700;color:${corA}">${det.real>0?ating+'%':'—'}</td>
+        <td style="padding:6px 8px;text-align:center;font-size:10px;color:#888">${det.peso}%</td>
+        <td style="padding:6px 8px;text-align:right;font-weight:700;color:${det.real>0?corA:'#555'}">${det.real>0?det.pts.toFixed(1):'—'}</td>
+      </tr>`;
+    }).join('');
+    let premioRows=faixas.map((f2,fi)=>{
+      const premV=base*f2;
+      const active=score/100>=f2&&(fi===faixas.length-1||score/100<faixas[fi+1]);
+      return `<tr style="background:${active?'rgba(201,162,39,.15)':'transparent'}">
+        <td style="padding:5px 8px;font-size:11px;color:${active?'#C9A227':'#666'};font-weight:${active?'700':'400'}">${faixasLabel[fi]} do score</td>
+        <td style="padding:5px 8px;text-align:right;font-weight:700;color:${active?'#C9A227':'#555'}">R$ ${premV.toLocaleString('pt-BR',{minimumFractionDigits:2})}</td>
+        <td style="padding:5px 8px;text-align:center">${active?'◀ FAIXA ATUAL':''}</td>
+      </tr>`;
+    }).join('');
+    return `<div style="background:#0f0f0f;border:1px solid rgba(201,162,39,.3);border-radius:12px;padding:28px;margin-bottom:32px;position:relative;page-break-after:always">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#C9A227,transparent)"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:12px">${logoSvg}<div><div style="font-size:11px;font-weight:700;color:#C9A227;letter-spacing:1px">BRAZILIANFISH — CARTA DE METAS</div><div style="font-size:10px;color:#666">${MESES[mes]}/${ano} · Departamento: ${dep}</div></div></div>
+        <div style="text-align:right"><div style="font-size:28px;font-weight:900;color:${corScore}">${score.toFixed(1)}%</div><div style="font-size:10px;color:#666">Score Final</div></div>
+      </div>
+      <div style="height:1px;background:linear-gradient(90deg,transparent,#C9A227,transparent);margin:12px 0"></div>
+      <div style="margin-bottom:12px"><div style="font-size:13px;font-weight:800;color:#fff">${f.nome}</div><div style="font-size:11px;color:#777">${f.cargo} · Chapa: ${f.chapa} · Filial: ${f.filial}</div></div>
+      ${S.cfgMeta.titulo?'<div style="font-size:11px;font-weight:700;color:#C9A227;margin-bottom:4px">'+S.cfgMeta.titulo+'</div>':''}
+      ${S.cfgMeta.desc?'<div style="font-size:11px;color:#666;margin-bottom:12px">'+S.cfgMeta.desc+'</div>':''}
+      <table style="width:100%;border-collapse:collapse;margin-bottom:16px">
+        <thead><tr style="background:#1e1e1e">
+          <th style="padding:7px 8px;text-align:left;font-size:9px;color:#555;font-weight:700;text-transform:uppercase">Indicador</th>
+          <th style="padding:7px 8px;text-align:left;font-size:9px;color:#555;font-weight:700;text-transform:uppercase">Descrição</th>
+          <th style="padding:7px 8px;text-align:right;font-size:9px;color:#555;font-weight:700;text-transform:uppercase">Meta</th>
+          <th style="padding:7px 8px;text-align:right;font-size:9px;color:#555;font-weight:700;text-transform:uppercase">Realizado</th>
+          <th style="padding:7px 8px;text-align:center;font-size:9px;color:#555;font-weight:700;text-transform:uppercase">Faixas</th>
+          <th style="padding:7px 8px;text-align:right;font-size:9px;color:#555;font-weight:700;text-transform:uppercase">Ating.</th>
+          <th style="padding:7px 8px;text-align:center;font-size:9px;color:#555;font-weight:700;text-transform:uppercase">Peso</th>
+          <th style="padding:7px 8px;text-align:right;font-size:9px;color:#555;font-weight:700;text-transform:uppercase">Pontos</th>
+        </tr></thead>
+        <tbody>${indRows}</tbody>
+        <tfoot><tr style="background:rgba(201,162,39,.08);border-top:1px solid rgba(201,162,39,.3)">
+          <td colspan="6" style="padding:7px 8px;font-size:11px;font-weight:700;color:#C9A227;text-align:right">SCORE FINAL:</td>
+          <td style="padding:7px 8px;text-align:center;font-size:11px;font-weight:900;color:${corScore}">${score.toFixed(1)}%</td>
+          <td style="padding:7px 8px"></td>
+        </tr></tfoot>
+      </table>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div><div style="font-size:10px;font-weight:700;color:#555;text-transform:uppercase;margin-bottom:6px">Tabela de Prêmio</div>
+        <table style="width:100%;border-collapse:collapse"><thead><tr style="background:#1e1e1e"><th style="padding:5px 8px;font-size:9px;color:#555;text-align:left;font-weight:700">Faixa</th><th style="padding:5px 8px;font-size:9px;color:#555;text-align:right;font-weight:700">Valor</th><th style="padding:5px 8px;font-size:9px;color:#555;text-align:center;font-weight:700"></th></tr></thead><tbody>${premioRows}</tbody></table></div>
+        <div style="background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.3);border-radius:8px;padding:16px;display:flex;flex-direction:column;align-items:center;justify-content:center">
+          <div style="font-size:11px;color:#888;margin-bottom:4px">Prêmio a Receber</div>
+          <div style="font-size:26px;font-weight:900;color:${premio>0?'#C9A227':'#555'}">${premio>0?'R$ '+premio.toLocaleString('pt-BR',{minimumFractionDigits:2}):'R$ 0,00'}</div>
+          <div style="font-size:10px;color:#666;margin-top:4px">Score ${score.toFixed(1)}% · Faixa ${faixaLabel(score/100)}</div>
+        </div>
+      </div>
+      <div style="margin-top:24px;display:flex;justify-content:space-between;align-items:flex-end">
+        <div style="text-align:center"><div style="width:140px;height:1px;background:#333;margin-bottom:5px"></div><div style="font-size:11px;color:#ccc;font-weight:600">${f.nome}</div><div style="font-size:10px;color:#555">Colaborador</div></div>
+        <div style="text-align:right;font-size:10px;color:#444">${dep} · ${MESES[mes]}/${ano}</div>
+        <div style="text-align:center"><div style="width:140px;height:1px;background:#333;margin-bottom:5px"></div><div style="font-size:11px;color:#ccc;font-weight:600">Responsável</div><div style="font-size:10px;color:#555">Departamento Pessoal</div></div>
+      </div>
+    </div>`;
+  }).join('');
+  const w=window.open('','_blank');
+  w.document.write(`<html><head><title>Carta de Metas — ${dep} — ${MESES[mes]}/${ano}</title>
+  <style>*{box-sizing:border-box;margin:0;padding:0}body{background:#0a0a0a;color:#ddd;font-family:Arial,sans-serif;padding:32px}@media print{body{padding:8px}div[style*="page-break-after"]{page-break-after:always}}</style>
+  </head><body>${cartasHTML}<script>setTimeout(()=>{window.print();},400);<\/script></body></html>`);
+  w.document.close();
+}
+
+// ── CARTA PREMIAÇÃO ──
+function populCtDep(){
+  const deps=[...new Set(S.funcionarios.map(f=>f.depto).filter(Boolean))].sort();
+  const sel=document.getElementById('ctDep');
+  if(!sel)return;
+  sel.innerHTML='<option value="">Todos os departamentos</option>'+deps.map(d=>'<option value="'+d+'">'+d+'</option>').join('');
+  populCtF();
+}
+function populCtF(){
+  const dep=document.getElementById('ctDep')?.value||'';
+  const u=S.logado,rh=u?.perfil==='rh',sp=rh?null:(u?.setores||[]);
+  let l=S.funcionarios;
+  if(sp)l=l.filter(f=>sp.includes(f.depto));
+  if(dep)l=l.filter(f=>f.depto===dep);
+  const sel=document.getElementById('ctF');if(!sel)return;
+  sel.innerHTML='<option value="">Selecione o colaborador...</option>'+l.map(f=>'<option value="'+f.chapa+'">'+f.nome+' — '+f.depto+' ('+f.chapa+')</option>').join('');
+}
+function gerCarta(){
+  const ch=document.getElementById('ctF').value;if(!ch){toast('Selecione um colaborador.','wn');return;}
+  const f=S.funcionarios.find(x=>x.chapa===ch);if(!f)return;
+  const tipo=document.getElementById('ctTipo').value,val=document.getElementById('ctVal').value,comp=document.getElementById('ctComp').value||'—',msg=document.getElementById('ctMsg').value,ass=document.getElementById('ctAss').value||'Departamento Pessoal',crg=document.getElementById('ctCrg').value||'Gerente de RH';
+  const tn={destaque:'Funcionário Destaque do Período',vendas:'Campeão de Vendas',tempo:'Reconhecimento por Tempo de Casa',meta:'Atingimento de Meta',especial:'Premiação Especial'};
+  const logoSvg='<svg width="100" height="42" viewBox="0 0 200 84"><g fill="none" stroke="#C9A227" stroke-width="3.2"><path d="M62 42 L 8 14 C 8 14, 16 42, 8 42 C 8 42, 16 70, 8 70 Z" stroke-linejoin="round"/><line x1="2" y1="42" x2="68" y2="42"/><line x1="2" y1="42" x2="35" y2="14"/><line x1="2" y1="42" x2="35" y2="70"/><circle cx="46" cy="33" r="3.2" fill="#C9A227" stroke="none"/><path d="M178 42 L 198 18 M178 42 L 198 66" stroke-linecap="round"/><circle cx="118" cy="42" r="36"/><text x="118" y="53" font-family="Arial" font-size="30" font-weight="800" fill="#C9A227" text-anchor="middle">BF</text></g></svg>';
+  document.getElementById('ctPrev').innerHTML='<div class="carta" id="ctImp">'+logoSvg+'<div class="gdv"></div><div class="ct-title">🏆 '+(tn[tipo]||'Premiação')+'</div><div class="ct-body"><p>Prezado(a) <strong style="color:var(--ou)">'+f.nome+'</strong>,</p><br><p>É com grande satisfação que a <strong>BrazilianFish</strong> reconhece sua dedicação na competência de <strong>'+comp+'</strong>.</p><br>'+(msg?'<p>'+msg+'</p><br>':'')+(val?'<p>Em reconhecimento, o valor de <strong style="color:var(--ou)">R$ '+parseFloat(val).toLocaleString('pt-BR',{minimumFractionDigits:2})+'</strong> será creditado conforme os trâmites do DP.</p><br>':'')+'<p style="font-size:11px;color:#666">Cargo: '+f.cargo+' | Depto: '+f.depto+' | Filial: '+f.filial+'</p></div><div style="margin-top:28px;display:flex;justify-content:flex-end"><div><div class="aslin"></div><div class="asn">'+ass+'</div><div class="asc">'+crg+'</div></div></div></div>';
+  addHist('premio',ch,f.depto,new Date().getMonth()+1,new Date().getFullYear(),val?'Prêmio: R$ '+parseFloat(val).toLocaleString('pt-BR',{minimumFractionDigits:2}):'Premiação');
+  salvar();toast('Carta gerada!');
+}
+function impCarta(){
+  const el=document.getElementById('ctImp');if(!el){toast('Gere a carta primeiro.','wn');return;}
+  const w=window.open('','_blank');
+  w.document.write('<html><head><title>Carta — BrazilianFish</title><style>body{background:#0a0a0a;color:#e0e0e0;font-family:Arial,sans-serif;padding:40px;}.carta{background:#0f0f0f;border:1px solid rgba(201,162,39,.3);border-radius:10px;padding:28px;position:relative;}.ct-title{font-size:18px;font-weight:900;color:#C9A227;text-align:center;margin:12px 0;}.gdv{height:1px;background:linear-gradient(90deg,transparent,#C9A227,transparent);margin:10px 0;}.ct-body{font-size:12px;color:#ccc;line-height:1.7;}.aslin{width:130px;height:1px;background:#333;margin-bottom:5px;}.asn{font-size:11px;font-weight:600;color:#ccc;}.asc{font-size:10px;color:#666;}</style></head><body>'+el.innerHTML+'</body></html>');
+  w.document.close();setTimeout(()=>{w.print();w.close();},500);
+}
+
+// ════════════════════ ABERTURA DE CONTA (BANCO) ════════════════════
+function renderBancoAdmissoes(){
+  const bk=(document.getElementById('bBsk')?.value||'').toLowerCase();
+  let lista=funcVisiveis();
+  if(bk)lista=lista.filter(f=>f.nome.toLowerCase().includes(bk)||f.chapa.includes(bk));
+  const body=document.getElementById('bBancoAll');
+  if(!lista.length){body.innerHTML='<tr><td colspan="8" style="text-align:center;padding:20px;color:#555">Importe a base FoRelaFunc2 primeiro.</td></tr>';return;}
+  body.innerHTML=lista.slice(0,300).map(f=>{
+    const b=S.banco[f.chapa]||{};
+    return '<tr><td><code>'+f.chapa+'</code></td><td><strong style="color:#fff">'+f.nome+'</strong></td><td><span class="sp">'+f.depto+'</span></td><td style="font-size:11px">'+f.filial+'</td>'+
+      '<td><input type="date" data-bk="'+f.chapa+'" data-campo="admissao" value="'+(b.admissao||'')+'" oninput="uBanco(this)" style="background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:5px 8px;font-size:11px;color:#ddd;outline:none;font-family:inherit;width:135px"></td>'+
+      '<td><input type="text" data-bk="'+f.chapa+'" data-campo="banco" value="'+(b.banco||'')+'" placeholder="Banco" oninput="uBanco(this)" style="background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:5px 8px;font-size:11px;color:#ddd;outline:none;font-family:inherit;width:90px"></td>'+
+      '<td><input type="text" data-bk="'+f.chapa+'" data-campo="agencia" value="'+(b.agencia||'')+'" placeholder="Agência" oninput="uBanco(this)" style="background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:5px 8px;font-size:11px;color:#ddd;outline:none;font-family:inherit;width:80px"></td>'+
+      '<td><input type="text" data-bk="'+f.chapa+'" data-campo="conta" value="'+(b.conta||'')+'" placeholder="Conta" oninput="uBanco(this)" style="background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:5px 8px;font-size:11px;color:#ddd;outline:none;font-family:inherit;width:100px"></td></tr>';
+  }).join('');
+  if(lista.length>300)body.innerHTML+='<tr><td colspan="8" style="text-align:center;padding:12px;color:#555;font-size:11px">… e mais '+(lista.length-300)+'. Use a busca.</td></tr>';
+  bncKpi();
+  const mes=document.getElementById('bMes').value;
+  if(mes)prevBanc();
+}
+function uBanco(inp){
+  const ch=inp.dataset.bk,campo=inp.dataset.campo;
+  if(!S.banco[ch])S.banco[ch]={};
+  S.banco[ch][campo]=inp.value;
+  if(campo==='admissao'&&inp.value){
+    const f=S.funcionarios.find(x=>x.chapa===ch);
+    addHist('banco',ch,f?f.depto:'—',new Date(inp.value).getMonth()+1,new Date(inp.value).getFullYear(),'Admissão registrada');
+  }
+  salvar();
+}
+function bncKpi(){
+  const comAdmissao=Object.values(S.banco).filter(b=>b.admissao).length;
+  const comConta=Object.values(S.banco).filter(b=>b.conta).length;
+  document.getElementById('bncKpi').innerHTML=kpi('📅',comAdmissao,'Com Data de Admissão','var(--oub);border:1px solid var(--oubr)')+kpi('🏦',comConta,'Com Conta Cadastrada','var(--vdb)');
+}
+function prevBanc(){
+  const mes=document.getElementById('bMes').value,ano=document.getElementById('bAno').value;
+  if(!mes){toast('Selecione o mês de admissão.','wn');return;}
+  document.getElementById('bncPrev').style.display='block';
+  const rows=funcVisiveis().map(f=>{
+    const b=S.banco[f.chapa];
+    if(!b||!b.admissao)return null;
+    const d=new Date(b.admissao);
+    if((d.getMonth()+1)!=mes||d.getFullYear()!=ano)return null;
+    return{chapa:f.chapa,nome:f.nome,depto:f.depto,admissao:b.admissao,banco:b.banco||'—',ag:b.agencia||'—',conta:b.conta||'—'};
+  }).filter(x=>x);
+  bncKpi();
+  document.getElementById('bBanc').innerHTML=rows.length?rows.map(l=>'<tr><td><code>'+l.chapa+'</code></td><td><strong style="color:#fff">'+l.nome+'</strong></td><td><span class="sp">'+l.depto+'</span></td><td>'+new Date(l.admissao).toLocaleDateString('pt-BR')+'</td><td>'+l.banco+'</td><td>'+l.ag+'</td><td>'+l.conta+'</td></tr>').join(''):'<tr><td colspan="7" style="text-align:center;padding:18px;color:#555">Nenhum colaborador admitido neste período.</td></tr>';
+}
+function expBanc(){
+  const mes=document.getElementById('bMes').value,ano=document.getElementById('bAno').value;
+  if(!mes){toast('Selecione o mês de admissão.','wn');return;}
+  const rows=funcVisiveis().map(f=>{
+    const b=S.banco[f.chapa];
+    if(!b||!b.admissao)return null;
+    const d=new Date(b.admissao);
+    if((d.getMonth()+1)!=mes||d.getFullYear()!=ano)return null;
+    return{CHAPA:f.chapa,NOME:f.nome,DEPTO:f.depto,FILIAL:f.filial,DATA_ADMISSAO:b.admissao,BANCO:b.banco||'',AGENCIA:b.agencia||'',CONTA:b.conta||'',CPF:''};
+  }).filter(x=>x);
+  if(!rows.length){toast('Nenhum colaborador admitido neste período.','wn');return;}
+  const ws=XLSX.utils.json_to_sheet(rows),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'AberturaConta');XLSX.writeFile(wb,'Abertura_Conta_'+MESES[mes]+'_'+ano+'.xls');toast('Exportado '+rows.length+' registros!');
+}
+
+// ── HISTÓRICO ──
+function renderHist(){
+  const mod=document.getElementById('hMod').value,mes=document.getElementById('hMes').value,ano=document.getElementById('hAno').value;
+  const dep=document.getElementById('hDep')?.value||'';
+  const bk=(document.getElementById('hBsk')?.value||'').toLowerCase();
+  const sp=setoresPermitidos();
+  let l=S.hist;
+  if(sp)l=l.filter(h=>sp.includes(h.setor));
+  if(mod)l=l.filter(h=>h.mod===mod);
+  if(mes)l=l.filter(h=>h.comp.includes(MESES[mes]));
+  if(ano)l=l.filter(h=>h.comp.includes(ano));
+  if(dep)l=l.filter(h=>h.setor===dep);
+  if(bk)l=l.filter(h=>h.nm.toLowerCase().includes(bk)||h.chapa.includes(bk));
+  const body=document.getElementById('bHist'),empty=document.getElementById('eHist');
+  const mN={verba:'Verbas',coprt:'Copart.',meta:'Metas',premio:'Premiação',banco:'Banco'};
+  const mC={verba:'bg',coprt:'bb',meta:'bo',premio:'bp',banco:'bgr'};
+  if(!l.length){body.innerHTML='';empty.style.display='block';document.getElementById('hKpi').innerHTML='';return;}
+  empty.style.display='none';
+  document.getElementById('hKpi').innerHTML=kpi('📋',l.length,'Registros','var(--oub);border:1px solid var(--oubr)');
+  body.innerHTML=l.slice(0,300).map(h=>'<tr><td style="font-size:11px;color:#555">'+h.dt+'</td><td><span class="b '+(mC[h.mod]||'bgy')+'">'+(mN[h.mod]||h.mod)+'</span></td><td><strong style="color:#fff">'+h.nm+'</strong><br><code>'+h.chapa+'</code></td><td><span class="sp">'+h.setor+'</span></td><td>'+h.comp+'</td><td><span class="b bgy">'+h.usr+'</span></td><td style="text-align:right;color:var(--ou)">'+h.info+'</td></tr>').join('');
+}
+
+// ── MIX ──
+function buildMix(){const mes=parseInt(document.getElementById('xMes').value),ano=parseInt(document.getElementById('xAno').value),vb=document.getElementById('xVrb').value||'573';return S.funcionarios.map(f=>{const k=f.chapa+'_'+mes+'_'+ano+'_'+vb,v=S.lancamentos[k];return v&&v!==0?{EMPRESA:'',FILIAL:'',CHAPA:f.chapa,MATRICULA:f.ref,MES:mes,ANO:ano,TIPO_ENVELOPE:'',IDENTIFICADOR:'',VERBA:vb,QUANTIDADE:parseFloat(v),USUARIO:'',MES_SEGUINTE:''}:null;}).filter(x=>x);}
+function prevMix(){const rows=buildMix();if(!rows.length){toast('Nenhum valor.','wn');document.getElementById('mixPrev').style.display='none';document.getElementById('mixRes').style.display='none';return;}const tot=rows.reduce((a,l)=>a+l.QUANTIDADE,0),dep=new Set(rows.map(l=>{const f=S.funcionarios.find(x=>x.chapa===l.CHAPA);return f?.depto;})).size;document.getElementById('mixRes').style.display='block';document.getElementById('mixKpi').innerHTML=kpi('📋',rows.length,'Registros','var(--oub);border:1px solid var(--oubr)')+kpi('💰','R$ '+tot.toLocaleString('pt-BR',{minimumFractionDigits:2}),'Total','var(--vdb)')+kpi('📁',dep,'Deptos','var(--azb)');document.getElementById('mixPrev').style.display='block';document.getElementById('mixCnt').textContent=rows.length;document.getElementById('bMix').innerHTML=rows.slice(0,50).map(l=>'<tr><td>'+l.EMPRESA+'</td><td>'+l.FILIAL+'</td><td><code>'+l.CHAPA+'</code></td><td>'+l.MATRICULA+'</td><td>'+l.MES+'</td><td>'+l.ANO+'</td><td>'+l.TIPO_ENVELOPE+'</td><td>'+l.IDENTIFICADOR+'</td><td><strong>'+l.VERBA+'</strong></td><td style="text-align:right;color:var(--ou);font-weight:700">'+l.QUANTIDADE.toLocaleString('pt-BR',{minimumFractionDigits:2})+'</td><td>'+l.USUARIO+'</td><td>'+l.MES_SEGUINTE+'</td></tr>').join('');}
+function expMix(){const rows=buildMix();if(!rows.length){toast('Nenhum valor.','wn');return;}const ws=XLSX.utils.json_to_sheet(rows,{header:['EMPRESA','FILIAL','CHAPA','MATRICULA','MES','ANO','TIPO_ENVELOPE','IDENTIFICADOR','VERBA','QUANTIDADE','USUARIO','MES_SEGUINTE']});const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Importação');const m=document.getElementById('xMes').value,a=document.getElementById('xAno').value,v=document.getElementById('xVrb').value||'573';XLSX.writeFile(wb,'Importacao_Verbas_'+MESES[m]+'_'+a+'_V'+v+'.xls');toast('Exportado '+rows.length+' registros!');}
+
+// ── USUÁRIOS ──
+function renderUsers(){document.getElementById('bUsers').innerHTML=S.usuarios.map((u,i)=>'<tr><td><div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:6px;background:'+(u.perfil==='rh'?'linear-gradient(135deg,var(--ou),var(--ou2))':'var(--vdb)')+';color:'+(u.perfil==='rh'?'#000':'var(--vd)')+';display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900">'+u.user.slice(0,2).toUpperCase()+'</div><strong style="color:#fff">'+u.user+'</strong></div></td><td><span class="b '+(u.perfil==='rh'?'bg':'bgr')+'">'+(u.perfil==='rh'?'🔑 RH':'👤 Gestor')+'</span></td><td>'+(u.perfil==='rh'?'<em style="color:#444;font-size:11px">Acesso total</em>':(u.setores?.length?u.setores.slice(0,3).map(s=>'<span class="sp">'+s+'</span>').join('')+(u.setores.length>3?'<span class="sp">+'+( u.setores.length-3)+'</span>':''):'<em style="color:#444;font-size:11px">Nenhum depto</em>'))+'</td><td style="text-align:center"><button class="btn btgh btn-sm" onclick="editUser('+i+')">✏️</button>'+(u.user!=='rh'?'<button class="btn btdk btn-sm" onclick="delUser('+i+')" style="margin-left:5px">🗑️</button>':'')+'</td></tr>').join('');}
+function abrirMdl(){S.editU=null;document.getElementById('mTit').textContent='Novo Usuário';document.getElementById('mU').value='';document.getElementById('mP').value='';document.getElementById('mPrf').value='gestor';togSets();renderMSets();document.getElementById('moUser').classList.add('open');}
+function editUser(i){S.editU=i;const u=S.usuarios[i];document.getElementById('mTit').textContent='Editar';document.getElementById('mU').value=u.user;document.getElementById('mP').value=u.pass;document.getElementById('mPrf').value=u.perfil;togSets();renderMSets(u.setores);document.getElementById('moUser').classList.add('open');}
+function delUser(i){if(!confirm('Excluir "'+S.usuarios[i].user+'"?'))return;S.usuarios.splice(i,1);salvar();renderUsers();toast('Removido.','wn');}
+function fchMdl(){document.getElementById('moUser').classList.remove('open');}
+function togSets(){document.getElementById('sWrap').style.display=document.getElementById('mPrf').value==='rh'?'none':'block';}
+function renderMSets(sel=[]){
+  const deps=[...new Set(S.funcionarios.map(f=>f.depto).filter(Boolean))].sort();
+  document.getElementById('sChk').innerHTML=deps.map(d=>'<label style="display:flex;align-items:center;gap:8px;padding:7px 6px;cursor:pointer;font-size:12px;border-radius:5px;color:#ddd;transition:background .1s" onmouseover="this.style.background=\'#222\'" onmouseout="this.style.background=\'\'"><input type="checkbox" value="'+d+'" '+(sel.includes(d)?'checked':'')+' style="width:14px;height:14px;accent-color:var(--ou)">'+d+'</label>').join('')||'<em style="color:#444;font-size:12px">Importe a base para ver os departamentos.</em>';
+}
+function savUser(){
+  const user=document.getElementById('mU').value.trim().toLowerCase(),pass=document.getElementById('mP').value,perfil=document.getElementById('mPrf').value;
+  const setores=perfil==='rh'?[]:[...document.querySelectorAll('#sChk input:checked')].map(c=>c.value);
+  if(!user||!pass){toast('Preencha usuário e senha.','er');return;}
+  if(S.editU!==null){S.usuarios[S.editU]={user,pass,perfil,setores};toast('Atualizado!');}
+  else{if(S.usuarios.find(u=>u.user===user)){toast('Usuário já existe.','er');return;}S.usuarios.push({user,pass,perfil,setores});toast('"'+user+'" criado!');}
+  salvar();renderUsers();fchMdl();
+}
+document.getElementById('moUser').addEventListener('click',function(e){if(e.target===this)fchMdl();});
+document.getElementById('moCfgMeta').addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
+
+// ════════════════════ INDICADORES COMBINADOS (SETOR + INDIVIDUAL) ════════════════════
+// Metas do setor vêm de S.metaIndicadores[dep] e S.metas['meta_chapa_mes_ano']
+// Metas individuais ficam em S.metaInd[chapa] = [{nome,peso,meta,melhor,desc}]
+// e os realizados em S.metas['metaind_chapa_mes_ano'] = {real_0, real_1, ...}
+// Score combinado: (pontos_setor + pontos_ind) / (pesoSetor + pesoInd) * 100
+
+function initIndInd(){
+  const allDeps=deptosVisiveis();
+  const iiDep=document.getElementById('iiDep');
+  if(iiDep){
+    const v=iiDep.value;
+    iiDep.innerHTML='<option value="">Selecione...</option>'+allDeps.map(d=>'<option value="'+d+'"'+(d===v?' selected':'')+'>'+d+'</option>').join('');
+  }
+  const n=new Date();
+  const mesEl=document.getElementById('iiMes'),anoEl=document.getElementById('iiAno');
+  if(mesEl&&!mesEl.value)mesEl.value=n.getMonth()+1;
+  if(anoEl&&!anoEl.value)anoEl.value=n.getFullYear();
+  renderIndInd();
+}
+
+function onIiDepChange(){
+  const dep=document.getElementById('iiDep')?.value||'';
+  const sel=document.getElementById('iiFunc');
+  if(sel){
+    let lista=funcVisiveis();
+    if(dep)lista=lista.filter(f=>f.depto===dep);
+    sel.innerHTML='<option value="">Todos do setor</option>'+lista.map(f=>'<option value="'+f.chapa+'">'+f.nome+'</option>').join('');
+  }
+  renderIndInd();
+}
+
+function calcScoreCombinado(f, indsSetor, indsInd, metas, mes, ano){
+  const ks='meta_'+f.chapa+'_'+mes+'_'+ano;
+  const ms=metas[ks]||{};
+  const ki='metaind_'+f.chapa+'_'+mes+'_'+ano;
+  const mi=metas[ki]||{};
+
+  // Pontos setor
+  let pontosSetor=0, pesoSetorTotal=indsSetor.reduce((a,i)=>a+i.peso,0);
+  const detSetor=indsSetor.map((ind,i)=>{
+    const real=parseFloat(ms['real_'+i])||0;
+    const ating=calcAtingimento(ind.meta,real,ind.melhor);
+    const pts=calcPontos(ind.peso,ating);
+    pontosSetor+=pts;
+    return{...ind,real,ating,pts,key:'real_'+i,km:ks};
+  });
+
+  // Pontos individuais
+  let pontosInd=0, pesoIndTotal=indsInd.reduce((a,i)=>a+i.peso,0);
+  const detInd=indsInd.map((ind,i)=>{
+    const real=parseFloat(mi['real_'+i])||0;
+    const ating=calcAtingimento(ind.meta,real,ind.melhor);
+    const pts=calcPontos(ind.peso,ating);
+    pontosInd+=pts;
+    return{...ind,real,ating,pts,key:'real_'+i,km:ki};
+  });
+
+  const pesoTotal=pesoSetorTotal+pesoIndTotal||100;
+  const score=((pontosSetor+pontosInd)/pesoTotal)*100;
+  const base=S.cfgMeta.premioBase||400;
+  const premio=score>=120?base*1.2:score>=110?base*1.1:score>=100?base*1.0:score>=90?base*0.9:score>=80?base*0.8:0;
+
+  return{f,score,pontosSetor,pontosInd,pesoSetorTotal,pesoIndTotal,pesoTotal,premio,detSetor,detInd};
+}
+
+function renderIndInd(){
+  const dep=document.getElementById('iiDep')?.value||'';
+  const chapa=document.getElementById('iiFunc')?.value||'';
+  const mes=document.getElementById('iiMes')?.value||new Date().getMonth()+1;
+  const ano=document.getElementById('iiAno')?.value||new Date().getFullYear();
+  const panel=document.getElementById('iiMainPanel'),empty=document.getElementById('iiEmpty');
+  if(!dep){panel.style.display='none';empty.style.display='block';return;}
+  panel.style.display='block';empty.style.display='none';
+
+  let funcs=S.funcionarios.filter(f=>f.depto===dep);
+  const modoSingle=!!chapa;
+  if(chapa)funcs=funcs.filter(f=>f.chapa===chapa);
+
+  const indsSetor=S.metaIndicadores[dep]||[];
+  const pesoSetorTotal=indsSetor.reduce((a,i)=>a+i.peso,0);
+
+  // Cabeçalho
+  if(modoSingle&&funcs.length){
+    const f=funcs[0];
+    const ini=f.nome.split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase();
+    document.getElementById('iiAvatar').textContent=ini;
+    document.getElementById('iiNomeDisplay').textContent=f.nome;
+    document.getElementById('iiSubDisplay').innerHTML='<code>'+f.chapa+'</code> · '+f.cargo+' · <span class="sp">'+f.depto+'</span>';
+  } else {
+    document.getElementById('iiAvatar').textContent=dep.split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase();
+    document.getElementById('iiNomeDisplay').textContent=dep;
+    document.getElementById('iiSubDisplay').innerHTML='<span class="sp">'+funcs.length+' colaboradores</span>';
+  }
+
+  // Calcular resultados
+  const resultados=funcs.map(f=>{
+    const indsInd=S.metaInd?.[f.chapa]||[];
+    return calcScoreCombinado(f,indsSetor,indsInd,S.metas,mes,ano);
+  });
+
+  const ating100=resultados.filter(r=>r.score>=100).length;
+  const ating80=resultados.filter(r=>r.score>=80&&r.score<100).length;
+  const totalPremio=resultados.reduce((a,r)=>a+r.premio,0);
+  const scoreMedio=resultados.length?resultados.reduce((a,r)=>a+r.score,0)/resultados.length:0;
+  const corMed=scoreMedio>=100?'var(--vd)':scoreMedio>=80?'var(--ou)':'var(--vm)';
+
+  document.getElementById('iiScoreResumo').innerHTML=
+    '<div style="text-align:right"><div style="font-size:10px;color:#555">'+(modoSingle?'Score':'Score Médio')+'</div>'+
+    '<div style="font-size:18px;font-weight:900;color:'+corMed+'">'+(resultados.length?scoreMedio.toFixed(1)+'%':'—')+'</div></div>';
+
+  document.getElementById('iiKpi').innerHTML=
+    (modoSingle?'':kpi('👥',funcs.length,'Colaboradores','var(--azb)'))+
+    kpi('📊',resultados.length?scoreMedio.toFixed(1)+'%':'—','Score '+(modoSingle?'Final':'Médio'),'var(--oub);border:1px solid var(--oubr)')+
+    (modoSingle?'':kpi('✅',ating100,'Score ≥ 100%','var(--vdb)'))+
+    kpi('🏆','R$ '+totalPremio.toLocaleString('pt-BR',{minimumFractionDigits:2}),'Total Prêmios','var(--rxb)');
+
+  // Aviso de pesos
+  const avisoEl=document.getElementById('iiPesoAviso');
+  const pesoIndEx=S.metaInd?.[funcs[0]?.chapa]||[];
+  const pesoIndTotal=pesoIndEx.reduce((a,i)=>a+i.peso,0);
+  const pesoGrand=pesoSetorTotal+pesoIndTotal;
+  if(pesoGrand>0&&Math.abs(pesoGrand-100)>0.01){
+    avisoEl.style.display='flex';avisoEl.className='al wn alg';
+    avisoEl.innerHTML='<span>⚠️</span><span>Pesos totais somam <strong>'+pesoGrand+'%</strong> (setor: '+pesoSetorTotal+'% + individual: '+pesoIndTotal+'%). Ajuste para totalizar 100%.</span>';
+  } else if(pesoSetorTotal===0&&pesoIndTotal===0){
+    avisoEl.style.display='flex';avisoEl.className='al alg';
+    avisoEl.innerHTML='<span>💡</span><span>Configure os indicadores do setor na <strong>Carta de Metas</strong> e os individuais em <strong>⚙️ Metas Individuais</strong>. Os pesos devem somar 100% no total.</span>';
+  } else {
+    avisoEl.style.display='none';
+  }
+
+  // Labels de peso
+  document.getElementById('iiSetorPesoLabel').textContent=pesoSetorTotal>0?'('+pesoSetorTotal+'% do score total)':'(sem indicadores configurados)';
+  document.getElementById('iiIndPesoLabel').textContent=pesoIndTotal>0?'('+pesoIndTotal+'% do score total)':'(sem indicadores individuais)';
+
+  // Bloco SETOR
+  if(!indsSetor.length){
+    document.getElementById('iiSetorGrid').innerHTML='<div class="al alg" style="margin:0"><span>⚙️</span><span>Nenhum indicador de setor configurado. Configure na <strong>Carta de Metas</strong>.</span></div>';
+  } else {
+    // Tabela setor
+    let thS=indsSetor.map((ind,i)=>'<th style="text-align:right;min-width:100px;white-space:normal">'+ind.nome+'<br><span style="font-size:9px;color:#555;font-weight:400">Peso '+ind.peso+'% | Meta '+ind.meta+(ind.melhor==='q'?'↓':'↑')+'</span></th>').join('');
+    let htmlS='<div class="tw"><table><thead><tr>'+(modoSingle?'':'<th>Colaborador</th>')+thS+'<th style="text-align:center">Score Setor</th></tr></thead><tbody>';
+    resultados.forEach(({f,pontosSetor,pesoSetorTotal,detSetor})=>{
+      const scoreS=pesoSetorTotal>0?pontosSetor/pesoSetorTotal*100:0;
+      const corS=faixaCor(scoreS/100);
+      let tdS=detSetor.map(det=>{
+        const corA=det.real>0?faixaCor(det.ating):'#555';
+        return '<td style="text-align:right">'+
+          '<input class="vi'+(det.real>0?' ok':'')+'" type="number" step="0.01" min="0" data-km="'+det.km+'" data-campo="'+det.key+'" value="'+(det.real||'')+'" oninput="uM(this)" placeholder="—" style="width:86px">'+
+          (det.real>0?'<div style="font-size:10px;color:'+corA+';margin-top:2px;text-align:right">'+Math.round(det.ating*100)+'%</div>':'')+'</td>';
+      }).join('');
+      htmlS+='<tr>'+(modoSingle?'':'<td><strong style="color:#fff;font-size:12px">'+f.nome+'</strong><br><code style="font-size:10px">'+f.chapa+'</code></td>')+tdS+
+        '<td style="text-align:center">'+(scoreS>0?'<div style="font-weight:900;color:'+corS+'">'+scoreS.toFixed(1)+'%</div>':'<span style="color:#555">—</span>')+'</td></tr>';
+    });
+    htmlS+='</tbody></table></div>';
+    document.getElementById('iiSetorGrid').innerHTML=htmlS;
+  }
+
+  // Bloco INDIVIDUAL
+  const indsIndEx=modoSingle?(S.metaInd?.[funcs[0]?.chapa]||[]):[];
+  if(!modoSingle){
+    document.getElementById('iiIndGrid').innerHTML='<div style="color:#555;font-size:12px;padding:10px 0">Selecione um colaborador específico para ver e lançar as metas individuais.</div>';
+    document.getElementById('iiIndScoreLabel').textContent='';
+  } else if(!indsIndEx.length){
+    document.getElementById('iiIndGrid').innerHTML='<div class="al alg" style="margin:0"><span>👤</span><span>Nenhuma meta individual configurada para este colaborador. Clique em <strong>⚙️ Metas Individuais</strong> para configurar.</span></div>';
+    document.getElementById('iiIndScoreLabel').textContent='';
+  } else {
+    const res=resultados[0];
+    const scoreI=res.pesoIndTotal>0?res.pontosInd/res.pesoIndTotal*100:0;
+    const corI=faixaCor(scoreI/100);
+    document.getElementById('iiIndScoreLabel').innerHTML=scoreI>0?'<span style="color:'+corI+';font-weight:900">'+scoreI.toFixed(1)+'%</span>':'—';
+    let htmlI='<div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">';
+    res.detInd.forEach(det=>{
+      const corA=det.real>0?faixaCor(det.ating):'#555';
+      htmlI+='<div style="background:#141414;border:1px solid #2a2a2a;border-radius:7px;padding:11px 14px">';
+      htmlI+='<div style="display:flex;justify-content:space-between;margin-bottom:8px">';
+      htmlI+='<span style="font-size:12px;font-weight:700;color:var(--ou)">'+det.nome+(det.desc?' <span style="color:#555;font-weight:400;font-size:10px">— '+det.desc+'</span>':'')+'</span>';
+      htmlI+='<div style="display:flex;gap:8px;font-size:10px;color:#555"><span>Peso: <strong style="color:var(--ou)">'+det.peso+'%</strong></span><span>Meta: <strong style="color:#ccc">'+det.meta+(det.melhor==='q'?'↓':'↑')+'</strong></span></div>';
+      htmlI+='</div><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">';
+      htmlI+='<div><span class="flbl">Realizado</span><input class="vi'+(det.real>0?' ok':'')+'" type="number" step="0.01" min="0" data-km="'+det.km+'" data-campo="'+det.key+'" value="'+(det.real||'')+'" oninput="uM(this)" placeholder="—" style="width:120px;margin-top:4px"></div>';
+      if(det.real>0){
+        htmlI+='<div style="margin-top:18px;text-align:center"><div style="font-size:15px;font-weight:900;color:'+corA+'">'+Math.round(det.ating*100)+'%</div><div style="font-size:10px;color:#555">'+faixaLabel(det.ating)+'</div></div>';
+        htmlI+='<div style="margin-top:18px;text-align:center"><div style="font-size:13px;font-weight:700;color:var(--az)">'+det.pts.toFixed(1)+' pts</div><div style="font-size:10px;color:#555">de '+det.peso+' pts</div></div>';
+        htmlI+='<div style="flex:1;min-width:100px;margin-top:18px"><div class="prg-b" style="height:5px"><div class="prg-f" style="width:'+Math.min(det.ating,1.2)/1.2*100+'%;background:'+corA+'"></div></div>';
+        htmlI+='<div style="display:flex;justify-content:space-between;font-size:9px;color:#444;margin-top:2px"><span>0</span><span>80%</span><span>100%</span><span>120%</span></div></div>';
+      }
+      htmlI+='</div></div>';
+    });
+    htmlI+='</div>';
+    document.getElementById('iiIndGrid').innerHTML=htmlI;
+  }
+
+  // Score final combinado (só se tiver ambos ou ao menos um)
+  const finalCard=document.getElementById('iiScoreFinalCard');
+  if(modoSingle&&resultados.length){
+    const res=resultados[0];
+    const corF=faixaCor(res.score/100);
+    finalCard.style.display='block';
+    document.getElementById('iiScoreFinalInner').innerHTML=
+      '<div><div style="font-size:11px;color:#555;margin-bottom:4px">Score Final Combinado</div>'+
+      '<div style="font-size:28px;font-weight:900;color:'+corF+'">'+res.score.toFixed(1)+'%</div>'+
+      '<div style="font-size:11px;color:#555">'+faixaLabel(res.score/100)+'</div></div>'+
+      '<div style="display:flex;gap:20px;flex-wrap:wrap">'+
+        '<div style="text-align:center"><div style="font-size:11px;color:#555">Setor</div><div style="font-size:14px;font-weight:700;color:var(--ou)">'+(res.pesoSetorTotal>0?(res.pontosSetor/res.pesoSetorTotal*100).toFixed(1)+'%':'—')+'</div><div style="font-size:10px;color:#444">'+res.pesoSetorTotal+'% do peso</div></div>'+
+        '<div style="text-align:center;color:#333;font-size:20px;padding-top:12px">+</div>'+
+        '<div style="text-align:center"><div style="font-size:11px;color:#555">Individual</div><div style="font-size:14px;font-weight:700;color:var(--az)">'+(res.pesoIndTotal>0?(res.pontosInd/res.pesoIndTotal*100).toFixed(1)+'%':'—')+'</div><div style="font-size:10px;color:#444">'+res.pesoIndTotal+'% do peso</div></div>'+
+      '</div>'+
+      '<div style="text-align:right"><div style="font-size:11px;color:#555">Prêmio Estimado</div><div style="font-size:18px;font-weight:900;color:'+(res.premio>0?'var(--ou)':'#555')+'">'+
+      (res.premio>0?'R$ '+res.premio.toLocaleString('pt-BR',{minimumFractionDigits:2}):'—')+'</div></div>';
+  } else {
+    finalCard.style.display='none';
+  }
+}
+
+function irParaCartaMetas(){
+  const dep=S.metaDepAtual||'';
+  go('metas');
+  if(dep)setTimeout(()=>abrirDeptMetas(dep),50);
+}
+
+function salvarIndInd(){
+  const dep=S.metaDepAtual||'';
+  const chapa=document.getElementById('metaColabSel')?.value||'';
+  const mes=document.getElementById('mMes')?.value||new Date().getMonth()+1;
+  const ano=document.getElementById('mAno')?.value||new Date().getFullYear();
+  let funcs=S.funcionarios.filter(f=>f.depto===dep);
+  if(chapa)funcs=funcs.filter(f=>f.chapa===chapa);
+  const indsSetor=S.metaIndicadores[dep]||[];
+  funcs.forEach(f=>{
+    const indsInd=S.metaInd?.[f.chapa]||[];
+    const res=calcScoreCombinado(f,indsSetor,indsInd,S.metas,mes,ano);
+    addHist('meta',f.chapa,f.depto,mes,ano,'Score: '+res.score.toFixed(1)+'% | Prêmio: R$ '+res.premio.toLocaleString('pt-BR',{minimumFractionDigits:2}));
+  });
+  salvar();
+  toast(chapa?'Metas individuais salvas!':'Metas do setor salvas!');
+}
+
+// ── MODAL CFG METAS INDIVIDUAIS ──
+function abrirCfgIndInd(){
+  const chapa=document.getElementById('metaColabSel')?.value||'';
+  const dep=S.metaDepAtual||'';
+  if(!chapa){toast('Selecione um colaborador primeiro.','wn');return;}
+  const f=S.funcionarios.find(x=>x.chapa===chapa);
+  if(!f)return;
+  const indsSetor=S.metaIndicadores[dep]||[];
+  const pesoSetor=indsSetor.reduce((a,i)=>a+i.peso,0);
+  document.getElementById('cfgIndIndTit').textContent='⚙️ Metas Individuais — '+f.nome;
+  document.getElementById('cfgIndColabNome').value=f.nome+' ('+f.chapa+')';
+  document.getElementById('cfgIndPesoSetor').value=pesoSetor||'0';
+  const pesoRestante=Math.max(0,100-pesoSetor);
+  const avisoM=document.getElementById('cfgIndPesoAvisoM');
+  avisoM.style.display='flex';
+  avisoM.className='al alg';
+  avisoM.innerHTML='<span>💡</span><span>O setor ocupa <strong>'+pesoSetor+'%</strong> do score. As metas individuais devem ocupar os <strong>'+pesoRestante+'%</strong> restantes para totalizar 100%.</span>';
+  const indsInd=S.metaInd?.[chapa]||[];
+  const list=document.getElementById('cfgIndList');list.innerHTML='';
+  if(indsInd.length)indsInd.forEach(ind=>addIndicadorInd(ind));
+  else addIndicadorInd(null);
+  document.getElementById('moCfgIndInd').classList.add('open');
+}
+
+function addIndicadorInd(ind){
+  const list=document.getElementById('cfgIndList');
+  const idx=list.children.length;
+  const v=(ind&&typeof ind==='object')?ind:{nome:'',desc:'',memoria:'',fonte:'',peso:'',meta:'',melhor:'p'};
+  const row=document.createElement('div');
+  row.style.cssText='background:#141414;border:1px solid #2a2a2a;border-radius:8px;padding:12px 14px';
+  row.innerHTML=
+    '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">'+
+    '<span class="ind-label-ii" style="font-size:11px;font-weight:700;color:var(--ou)">Indicador '+(idx+1)+'</span>'+
+    '<button type="button" onclick="this.parentNode.parentNode.remove();reindexIndsInd()" style="background:var(--vmb);border:1px solid rgba(239,68,68,.3);color:var(--vm);border-radius:4px;padding:2px 8px;cursor:pointer;font-size:10px;font-family:inherit">✕ Remover</button>'+
+    '</div>'+
+    '<div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-bottom:8px">'+
+    '<div><span class="flbl">Nome do Indicador</span><input type="text" class="ind-nome-ii" value="'+v.nome+'" placeholder="ex: NPS Clientes" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'+
+    '<div><span class="flbl">Peso (%)</span><input type="number" class="ind-peso-ii" value="'+v.peso+'" placeholder="ex: 30" min="1" max="100" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'+
+    '<div><span class="flbl">Meta (valor ref)</span><input type="number" class="ind-meta-ii" value="'+v.meta+'" placeholder="ex: 9.0" step="0.01" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'+
+    '</div>'+
+    '<div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px">'+
+    '<div><span class="flbl">Descrição</span><input type="text" class="ind-desc-ii" value="'+v.desc+'" placeholder="ex: Pesquisa de satisfação" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'+
+    '<div><span class="flbl">Memória</span><input type="text" class="ind-mem-ii" value="'+(v.memoria||'')+'" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'+
+    '<div><span class="flbl">Fonte</span><input type="text" class="ind-fonte-ii" value="'+(v.fonte||'')+'" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'+
+    '<div><span class="flbl">Tipo</span><select class="ind-melhor-ii" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"><option value="p"'+(v.melhor!=='q'?' selected':'')+'>↑ maior melhor</option><option value="q"'+(v.melhor==='q'?' selected':'')+'>↓ menor melhor</option></select></div>'+
+    '</div>';
+  list.appendChild(row);
+}
+function reindexIndsInd(){
+  [...document.getElementById('cfgIndList').children].forEach((row,i)=>{
+    const label=row.querySelector('.ind-label-ii');
+    if(label)label.textContent='Indicador '+(i+1);
+  });
+}
+function savCfgIndInd(){
+  const chapa=document.getElementById('metaColabSel')?.value||'';
+  if(!chapa){toast('Selecione um colaborador primeiro.','wn');return;}
+  const dep=S.metaDepAtual||'';
+  const indsSetor=S.metaIndicadores[dep]||[];
+  const pesoSetor=indsSetor.reduce((a,i)=>a+i.peso,0);
+  const rows=[...document.getElementById('cfgIndList').children];
+  const inds=rows.map(row=>({
+    nome:row.querySelector('.ind-nome-ii').value.trim(),
+    desc:row.querySelector('.ind-desc-ii').value.trim(),
+    memoria:row.querySelector('.ind-mem-ii').value.trim(),
+    fonte:row.querySelector('.ind-fonte-ii').value.trim(),
+    peso:parseFloat(row.querySelector('.ind-peso-ii').value)||0,
+    meta:parseFloat(row.querySelector('.ind-meta-ii').value)||0,
+    melhor:row.querySelector('.ind-melhor-ii').value
+  })).filter(i=>i.nome);
+  const pesoInd=inds.reduce((a,i)=>a+i.peso,0);
+  const pesoTotal=pesoSetor+pesoInd;
+  if(inds.length&&Math.abs(pesoTotal-100)>0.01)toast('⚠️ Pesos somam '+pesoTotal+'% (setor '+pesoSetor+'% + ind '+pesoInd+'%). Ajuste para 100%.','wn');
+  if(!S.metaInd)S.metaInd={};
+  S.metaInd[chapa]=inds;
+  salvar();
+  document.getElementById('moCfgIndInd').classList.remove('open');
+  toast('Metas individuais de '+(S.funcionarios.find(f=>f.chapa===chapa)?.nome||chapa)+' salvas!');
+  renderMetasModo();
+}
+document.getElementById('moCfgIndInd').addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
+carregar();
+</script>
+</body>
+</html>
