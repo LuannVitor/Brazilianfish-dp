@@ -22,7 +22,7 @@
   --tx2:      #999;
   --tx3:      #555;
   --tx4:      #333;
-
+ 
   /* Brand gold */
   --au:       #C9A227;
   --au2:      #ddb84a;
@@ -30,7 +30,7 @@
   --aub:      rgba(201,162,39,.10);
   --aubr:     rgba(201,162,39,.22);
   --aubh:     rgba(201,162,39,.18);
-
+ 
   /* Semantic colours */
   --gn:       #22c55e;  --gnb: rgba(34,197,94,.12);  --gnbr: rgba(34,197,94,.25);
   --rd:       #ef4444;  --rdb: rgba(239,68,68,.12);   --rdbr: rgba(239,68,68,.25);
@@ -38,29 +38,29 @@
   --pu:       #a855f7;  --pub: rgba(168,85,247,.12);
   --og:       #f97316;  --ogb: rgba(249,115,22,.12);  --ogbr: rgba(249,115,22,.22);
   --cy:       #06b6d4;  --cyb: rgba(6,182,212,.12);
-
+ 
   /* Layout */
   --hdr:  56px;
   --nav:  220px;
   --r:    10px;
   --rsm:  7px;
   --rxs:  5px;
-
+ 
   /* Shadows */
   --sh-sm: 0 2px 8px rgba(0,0,0,.4);
   --sh-md: 0 4px 20px rgba(0,0,0,.6);
   --sh-lg: 0 12px 40px rgba(0,0,0,.8);
 }
-
+ 
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;font-size:13px;line-height:1.5;}
-
+ 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--s4);border-radius:3px;}
 ::-webkit-scrollbar-thumb:hover{background:var(--s5);}
-
+ 
 /* ══ TOAST ══ */
 #toast{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;}
 .tst{padding:11px 16px;border-radius:var(--rsm);font-size:12px;font-weight:500;display:flex;align-items:center;gap:9px;animation:tIn .18s ease;min-width:220px;border:1px solid;backdrop-filter:blur(8px);box-shadow:var(--sh-md);}
@@ -68,7 +68,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .tst.er{background:rgba(26,10,10,.95);border-color:var(--rd);color:#fca5a5;}
 .tst.wn{background:rgba(26,17,0,.95);border-color:var(--au);color:var(--au3);}
 @keyframes tIn{from{transform:translateX(12px) scale(.97);opacity:0;}to{transform:translateX(0) scale(1);opacity:1;}}
-
+ 
 /* ══ LOGIN ══ */
 #pgLogin{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--bg);position:relative;overflow:hidden;}
 .lg-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 22% 55%,rgba(201,162,39,.07),transparent 52%),radial-gradient(ellipse at 78% 22%,rgba(201,162,39,.05),transparent 44%);pointer-events:none;}
@@ -100,10 +100,10 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .btnl:active{transform:translateY(0);}
 .l-err{display:none;color:#fca5a5;font-size:11px;margin-top:10px;padding:9px 13px;background:var(--rdb);border-radius:var(--rxs);border:1px solid var(--rdbr);}
 .l-hint{margin-top:14px;padding:10px 12px;background:var(--aub);border-radius:var(--rxs);border:1px solid var(--aubr);font-size:11px;color:var(--au3);}
-
+ 
 /* ══ APP SHELL ══ */
 #app{display:none;min-height:100vh;background:var(--bg);}
-
+ 
 /* Header */
 header{
   background:rgba(9,9,9,.92);
@@ -127,7 +127,7 @@ header{
 .uro{font-size:10px;color:var(--au);line-height:1.2;}
 .btnout{background:transparent;border:1px solid var(--s4);color:var(--tx3);padding:6px 13px;border-radius:var(--rxs);cursor:pointer;font-size:11px;font-family:inherit;transition:all .15s;}
 .btnout:hover{border-color:var(--aubr);color:var(--au3);}
-
+ 
 /* ── Chipbar (top nav) ── */
 .chipbar{
   position:fixed;top:var(--hdr);left:0;right:0;
@@ -152,7 +152,7 @@ header{
 .cnav:hover{color:var(--tx2);background:var(--s2);border-color:var(--s3);}
 .cnav.on{background:var(--aub);border-color:var(--aubr);color:var(--au);font-weight:700;}
 .cnav-sep{width:1px;height:16px;background:var(--s3);margin:0 4px;flex-shrink:0;}
-
+ 
 /* ── Main content ── */
 .main{margin-top:calc(var(--hdr) + 44px);min-height:calc(100vh - var(--hdr) - 44px);}
 .page{display:none;padding:24px 28px;max-width:1380px;}
@@ -161,7 +161,7 @@ header{
 .pghdr h1{font-size:21px;font-weight:800;color:#fff;letter-spacing:-.4px;line-height:1.2;}
 .pghdr .sub{font-size:11px;color:var(--tx3);margin-top:3px;}
 .acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
-
+ 
 /* ── Card ── */
 .card{
   background:var(--s1);
@@ -180,7 +180,7 @@ header{
 .cio{background:var(--ogb);border:1px solid var(--ogbr);}
 .cip{background:var(--pub);}
 .cigr{background:var(--gnb);border:1px solid var(--gnbr);}
-
+ 
 /* ── KPI Grid ── */
 .kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-bottom:16px;}
 .kpi{
@@ -195,7 +195,7 @@ header{
 .kico{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
 .kn{font-size:22px;font-weight:900;color:#fff;line-height:1;letter-spacing:-.5px;}
 .kl{font-size:10px;color:var(--tx3);margin-top:4px;font-weight:500;}
-
+ 
 /* ── Buttons ── */
 .btn{padding:7px 14px;border-radius:var(--rsm);font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .12s;display:inline-flex;align-items:center;gap:6px;font-family:inherit;white-space:nowrap;line-height:1.4;}
 .btn:active{transform:scale(.97);}
@@ -209,7 +209,7 @@ header{
 .btdk:hover{background:var(--rd);color:#fff;}
 .btn-sm{padding:4px 10px;font-size:11px;}
 .btn-xs{padding:3px 8px;font-size:10px;}
-
+ 
 /* ── Tables ── */
 .tw{overflow-x:auto;border-radius:var(--rsm);border:1px solid var(--s3);}
 table{width:100%;border-collapse:collapse;font-size:12px;}
@@ -219,7 +219,7 @@ td{padding:10px 12px;border-bottom:1px solid var(--s2);vertical-align:middle;}
 tbody tr:hover td{background:var(--s2);}
 tbody tr:last-child td{border-bottom:none;}
 .trtot td{background:rgba(201,162,39,.07)!important;color:var(--au);font-weight:700;border-top:1px solid var(--aubr);}
-
+ 
 /* ── Badges ── */
 .b{display:inline-flex;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;line-height:1.5;}
 .bg{background:var(--aub);color:var(--au);border:1px solid var(--aubr);}
@@ -230,7 +230,7 @@ tbody tr:last-child td{border-bottom:none;}
 .bp{background:var(--pub);color:var(--pu);}
 .bo{background:var(--ogb);color:var(--og);border:1px solid var(--ogbr);}
 .sp{display:inline-flex;background:var(--s2);color:var(--tx2);border:1px solid var(--s3);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:600;margin:1px;}
-
+ 
 /* ── Filters row ── */
 .flts{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:12px;}
 .flbl{font-size:9px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.8px;display:block;margin-bottom:5px;}
@@ -240,39 +240,43 @@ tbody tr:last-child td{border-bottom:none;}
 .sw{position:relative;}
 .si{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:12px;pointer-events:none;color:var(--tx3);}
 .sw input{padding-left:30px;}
-
+ 
 /* ── Form fields ── */
 .fld{margin-bottom:13px;}
 .fld label{font-size:9px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.8px;display:block;margin-bottom:5px;}
 .fld input,.fld select,.fld textarea{width:100%;}
 .fld textarea{resize:vertical;min-height:70px;}
-
+ 
 /* ── Alerts ── */
 .al{padding:10px 14px;border-radius:var(--rsm);font-size:11px;margin-bottom:12px;display:flex;align-items:flex-start;gap:8px;border:1px solid;line-height:1.5;}
 .alg{background:var(--aub);color:var(--au3);border-color:var(--aubr);}
 .alok{background:var(--gnb);color:#86efac;border-color:var(--gnbr);}
 .ale{background:var(--rdb);color:#fca5a5;border-color:var(--rdbr);}
 .alwn{background:var(--ogb);color:#fb923c;border-color:var(--ogbr);}
-
+ 
 /* ── Upload zone ── */
 .upz{border:2px dashed var(--s4);border-radius:var(--r);padding:36px 20px;text-align:center;cursor:pointer;transition:all .15s;background:var(--s0);}
 .upz:hover,.upz.drag{border-color:var(--au);background:var(--aub);}
 .upz input[type=file]{display:none;}
-
+ 
 /* ── Value input ── */
 .vi{width:120px;padding:6px 10px;background:var(--s2);border:1.5px solid var(--s3);border-radius:var(--rsm);font-size:12px;text-align:right;outline:none;font-family:inherit;color:var(--tx);transition:border-color .15s;}
 .vi:focus{border-color:var(--au);}
 .vi.ok{border-color:var(--gn);background:var(--gnb);color:var(--gn);font-weight:700;}
-
+.vi-pct{width:64px;padding:6px 4px;background:var(--s2);border:1.5px solid var(--s3);border-radius:var(--rsm);font-size:13px;text-align:center;outline:none;font-family:inherit;color:var(--tx);font-weight:700;transition:all .15s;}
+.vi-pct:focus{border-color:var(--au);box-shadow:0 0 0 3px var(--aub);}
+.vi-pct.ok{border-color:var(--gn);background:var(--gnb);color:var(--gn);}
+.vi-pct.low{border-color:var(--rd);background:var(--rdb);color:var(--rd);}
+ 
 /* ── Progress ── */
 .prg-w{min-width:180px;}
 .prg-i{display:flex;justify-content:space-between;font-size:10px;color:var(--tx3);margin-bottom:5px;}
 .prg-b{height:4px;background:var(--s3);border-radius:2px;overflow:hidden;}
 .prg-f{height:100%;background:linear-gradient(90deg,var(--au),var(--au2));border-radius:2px;transition:width .5s ease;}
-
+ 
 /* ── Chip tag ── */
 .chip{display:inline-flex;background:var(--aub);color:var(--au);border:1px solid var(--aubr);border-radius:var(--rxs);padding:4px 10px;font-size:10px;font-weight:700;}
-
+ 
 /* ── Section header (within tables) ── */
 .setor-hdr{
   background:var(--s2);
@@ -284,12 +288,12 @@ tbody tr:last-child td{border-bottom:none;}
 }
 .setor-hdr span{font-size:12px;font-weight:700;color:var(--au3);}
 .setor-hdr small{font-size:10px;color:var(--tx3);}
-
+ 
 /* ── Nota classes ── */
 .nota-bom{background:var(--gnb);color:var(--gn);border:1px solid var(--gnbr);border-radius:var(--rsm);padding:3px 10px;font-size:11px;font-weight:700;}
 .nota-medio{background:var(--aub);color:var(--au);border:1px solid var(--aubr);border-radius:var(--rsm);padding:3px 10px;font-size:11px;font-weight:700;}
 .nota-ruim{background:var(--rdb);color:var(--rd);border:1px solid var(--rdbr);border-radius:var(--rsm);padding:3px 10px;font-size:11px;font-weight:700;}
-
+ 
 /* ── Modals ── */
 .mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(5px);}
 .mo.open{display:flex;}
@@ -300,13 +304,13 @@ tbody tr:last-child td{border-bottom:none;}
 .mclose{background:none;border:none;font-size:16px;cursor:pointer;color:var(--tx3);padding:4px 6px;border-radius:6px;transition:all .12s;}
 .mclose:hover{background:var(--s3);color:#fff;}
 .mft{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;padding-top:16px;border-top:1px solid var(--s3);}
-
+ 
 /* ── Empty state ── */
 .empty{text-align:center;padding:48px 20px;color:var(--tx3);}
 .empty .ei{font-size:34px;margin-bottom:12px;opacity:.35;}
 .empty h4{font-size:13px;font-weight:600;color:var(--tx2);margin-bottom:5px;}
 .empty p{font-size:11px;color:var(--tx3);}
-
+ 
 /* ── Dept chip filter bar ── */
 .dept-chipbar{display:flex;flex-wrap:wrap;gap:6px;padding:6px 0 2px;}
 .dept-chip{
@@ -319,7 +323,7 @@ tbody tr:last-child td{border-bottom:none;}
 }
 .dept-chip:hover{border-color:var(--s5);color:var(--tx2);}
 .dept-chip.on{background:var(--aub);border-color:var(--aubr);color:var(--au);font-weight:700;}
-
+ 
 /* ── Dept cards grid ── */
 .dep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(224px,1fr));gap:12px;}
 .dep-card{
@@ -338,7 +342,7 @@ tbody tr:last-child td{border-bottom:none;}
 .dep-card-prog{}
 .back-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--au);cursor:pointer;font-weight:600;padding:6px 0;margin-bottom:12px;transition:color .12s;}
 .back-btn:hover{color:var(--au3);}
-
+ 
 /* ── Dashboard charts ── */
 .dash-filters{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;}
 .dash-grid{display:grid;grid-template-columns:3fr 2fr;gap:16px;margin-top:16px;}
@@ -349,7 +353,7 @@ tbody tr:last-child td{border-bottom:none;}
 .bar-track{flex:1;height:20px;background:var(--s2);border-radius:4px;overflow:hidden;}
 .bar-fill{height:100%;background:linear-gradient(90deg,var(--au),var(--au2));border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:7px;transition:width .5s ease;}
 .bar-fill span{font-size:10px;font-weight:700;color:#000;}
-
+ 
 /* ── Carta de premiação ── */
 .carta{background:var(--s0);border:1px solid var(--aubr);border-radius:var(--r);padding:26px;position:relative;overflow:hidden;}
 .carta::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--au),var(--au2),var(--au));}
@@ -361,15 +365,15 @@ tbody tr:last-child td{border-bottom:none;}
 .asc{font-size:10px;color:var(--tx3);}
 .pb{height:5px;background:var(--s3);border-radius:2px;overflow:hidden;width:55px;}
 .pf{height:100%;border-radius:2px;}
-
+ 
 /* ── Toggle pill (Setor/Colaborador) ── */
 .mode-pill{display:inline-flex;background:var(--s0);border:1px solid var(--s3);border-radius:24px;padding:3px;gap:2px;}
 .mode-btn{border-radius:20px;padding:5px 16px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .12s;border:1px solid transparent;background:none;color:var(--tx3);}
 .mode-btn.on-setor{background:var(--aub);border-color:var(--aubr);color:var(--au);font-weight:700;}
 .mode-btn.on-colab{background:var(--blb);border-color:var(--blbr);color:var(--bl);font-weight:700;}
-
+ 
 code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);padding:1px 5px;border-radius:3px;font-size:11px;border:1px solid var(--s3);}
-
+ 
 /* ── Responsive ── */
 @media(max-width:700px){
   :root{--hdr:52px;}
@@ -380,9 +384,9 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
 </style>
 </head>
 <body>
-
+ 
 <div id="toast"></div>
-
+ 
 <!-- LOGIN -->
 <div id="pgLogin">
 <div class="lg-bg"></div><div class="lg-grid"></div>
@@ -453,11 +457,11 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
     <div class="frm"><label>Senha</label><div class="iw"><span class="iico">🔒</span><input type="password" id="loginPass" placeholder="••••••"></div></div>
     <button class="btnl" onclick="fazerLogin()">Entrar no Sistema</button>
     <div class="l-err" id="loginErr">⚠️ Usuário ou senha incorretos.</div>
-
+ 
   </div>
 </div>
 </div>
-
+ 
 <!-- APP -->
 <div id="app">
 <header>
@@ -488,7 +492,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
     <button class="btnout" onclick="logout()">⎋ Sair</button>
   </div>
 </header>
-
+ 
 <!-- CHIP NAV BAR -->
 <div class="chipbar">
   <button class="cnav" onclick="go('dash')" id="nb-dash">📊 Dashboard</button>
@@ -504,9 +508,9 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
   <button class="cnav rh-only" onclick="go('mix')" id="nb-mix">📤 Exportar MIX</button>
   <button class="cnav rh-only" onclick="go('usuarios')" id="nb-usuarios">👥 Usuários</button>
 </div>
-
+ 
 <div class="main">
-
+ 
 <!-- DASHBOARD -->
 <div class="page active" id="p-dash">
   <div class="pghdr"><div><h1>Dashboard</h1><div class="sub">Visão geral por filial e departamento.</div></div></div>
@@ -529,7 +533,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
   </div>
   <div id="dashEmpty" class="empty" style="display:none"><div class="ei">📊</div><h4>Importe a base FoRelaFunc2</h4><p>O dashboard será preenchido automaticamente.</p></div>
 </div>
-
+ 
 <!-- BASE -->
 <div class="page" id="p-base">
   <div class="pghdr"><div><h1>Base de Funcionários — FoRelaFunc2</h1><div class="sub">Importe o relatório FoRelaFunc2 (.xlsx).</div></div></div>
@@ -555,7 +559,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
     <div id="eBase" class="empty"><div class="ei">📂</div><h4>Nenhuma base importada</h4><p>Importe o FoRelaFunc2 para começar.</p></div>
   </div>
 </div>
-
+ 
 <!-- LANÇAMENTO VERBAS -->
 <div class="page active" id="p-lanc">
   <div class="pghdr">
@@ -586,7 +590,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
     <div id="eLanc" class="empty" style="display:none"><div class="ei">👥</div><h4>Nenhum colaborador</h4></div>
   </div>
 </div>
-
+ 
 <!-- COPARTICIPAÇÃO -->
 <div class="page" id="p-coprt">
   <div class="pghdr">
@@ -606,7 +610,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
   <div id="bCoprtWrap"></div>
   <div id="eCoprt" class="empty" style="display:none"><div class="ei">🤝</div><h4>Nenhum registro</h4></div>
 </div>
-
+ 
 <!-- CARTA DE METAS — agora navegação por cards de departamento -->
 <div class="page" id="p-metas">
   <div class="pghdr">
@@ -618,7 +622,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
       <button class="btn btg" onclick="savMetas()">💾 Salvar Metas</button>
     </div>
   </div>
-
+ 
   <!-- TELA 1: GRID DE DEPARTAMENTOS -->
   <div id="metasDeptView">
     <div class="card" style="padding:12px 16px">
@@ -632,11 +636,11 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
     <div class="dep-grid" id="depCardsGrid"></div>
     <div id="eDeptCards" class="empty" style="display:none"><div class="ei">🎯</div><h4>Importe a base FoRelaFunc2</h4><p>Os departamentos aparecerão aqui.</p></div>
   </div>
-
+ 
   <!-- TELA 2: METAS DO DEPARTAMENTO SELECIONADO -->
   <div id="metasDetailView" style="display:none">
     <div class="back-btn" onclick="voltarDeptos()">← Voltar para Departamentos</div>
-
+ 
     <!-- Header: depto + toggle modo + ações -->
     <div class="card" style="padding:12px 16px;margin-bottom:10px">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
@@ -663,19 +667,19 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
         <div id="metaScoreResumo" style="font-size:11px;color:#555">Configure os indicadores para ver o score</div>
       </div>
     </div>
-
+ 
     <div id="cfgMetaInfo" class="al alg" style="display:none"><span>📌</span><span id="cfgMetaInfoTxt"></span></div>
     <div class="kgrid" id="metKpi"></div>
-
+ 
     <!-- MODO SETOR -->
     <div id="metasModoSetor">
       <div id="bMetasWrap"></div>
     </div>
-
+ 
     <!-- MODO COLABORADOR (indicadores individuais integrados) -->
     <div id="metasModoColab" style="display:none">
       <div id="iiPesoAviso" class="al" style="display:none;margin-bottom:8px"></div>
-
+ 
       <!-- Bloco Metas do Setor -->
       <div class="card" style="margin-bottom:10px" id="iiSetorCard">
         <div class="chdr">
@@ -686,7 +690,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
         </div>
         <div id="iiSetorGrid"></div>
       </div>
-
+ 
       <!-- Bloco Metas Individuais -->
       <div class="card" style="margin-bottom:10px" id="iiIndCard">
         <div class="chdr">
@@ -701,7 +705,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
         </div>
         <div id="iiIndGrid"></div>
       </div>
-
+ 
       <!-- Score final combinado -->
       <div id="iiScoreFinalCard" class="card" style="display:none">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px" id="iiScoreFinalInner"></div>
@@ -709,13 +713,13 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
     </div>
   </div>
 </div>
-
-
+ 
+ 
 <!-- MODAL CFG METAS INDIVIDUAIS -->
 <div class="mo" id="moCfgIndInd">
   <div class="mdl" style="width:760px;max-width:97vw">
     <div class="mhdr"><h3 id="cfgIndIndTit">⚙️ Metas Individuais</h3><button class="mclose" onclick="document.getElementById('moCfgIndInd').classList.remove('open')">✕</button></div>
-    <div class="al alg" style="margin-bottom:14px"><span>📌</span><span>Configure as metas <strong>individuais</strong> do colaborador. Os pesos aqui somados com os pesos das metas do setor devem totalizar <strong>100%</strong>. Ex: setor vale 50%, individual vale 50% = 100%.</span></div>
+    <div class="al alg" style="margin-bottom:14px"><span>📌</span><span>Defina o nome e o <strong>peso (%)</strong> de cada meta individual. O peso aqui somado com o peso das metas do setor deve totalizar <strong>100%</strong>. Ex: setor vale 50%, individual vale 50% = 100%. Depois, digite o <strong>% atingido</strong> de cada meta.</span></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
       <div class="fld" style="margin:0"><label>Colaborador</label><input type="text" id="cfgIndColabNome" readonly style="background:#111;border-color:#2a2a2a;color:#777"></div>
       <div class="fld" style="margin:0"><label>Peso total das metas do setor (%)</label><input type="number" id="cfgIndPesoSetor" readonly style="background:#111;border-color:#2a2a2a;color:#777" placeholder="—"></div>
@@ -730,7 +734,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
     </div>
   </div>
 </div>
-
+ 
 <!-- CARTA DE PREMIAÇÃO -->
 <div class="page" id="p-carta">
   <div class="pghdr">
@@ -758,7 +762,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
     </div>
   </div>
 </div>
-
+ 
 <!-- ABERTURA DE CONTA (BANCO) -->
 <div class="page" id="p-banco">
   <div class="pghdr">
@@ -784,7 +788,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
     <div class="tw"><table><thead><tr><th>Chapa</th><th>Nome</th><th>Departamento</th><th>Admissão</th><th>Banco</th><th>Agência</th><th>Conta</th></tr></thead><tbody id="bBanc"></tbody></table></div>
   </div>
 </div>
-
+ 
 <!-- HISTÓRICO -->
 <div class="page" id="p-hist">
   <div class="pghdr"><div><h1>Histórico</h1><div class="sub">Registro completo de todos os lançamentos salvos.</div></div></div>
@@ -803,25 +807,80 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
     <div id="eHist" class="empty"><div class="ei">📋</div><h4>Nenhum registro</h4></div>
   </div>
 </div>
-
+ 
 <!-- MIX -->
 <div class="page" id="p-mix">
-  <div class="pghdr"><div><h1>Exportação MIX</h1><div class="sub">Formato MIX para importação na folha de pagamento.</div></div></div>
-  <div class="card">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:16px">
-      <div class="fld" style="margin:0"><label>Mês</label><select id="xMes" style="width:100%"><option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Março</option><option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option><option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select></div>
-      <div class="fld" style="margin:0"><label>Ano</label><input type="number" id="xAno" value="2026" style="width:100%"></div>
-      <div class="fld" style="margin:0"><label>Verba</label><input type="text" id="xVrb" value="573" style="width:100%"></div>
+  <div class="pghdr"><div><h1>Exportar Dados</h1><div class="sub">Escolha o que deseja exportar. Todos os formatos são compatíveis com Excel.</div></div></div>
+ 
+  <!-- Filtros globais de período -->
+  <div class="card" style="padding:14px 18px;margin-bottom:20px">
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
+      <div class="fld" style="margin:0"><label>Mês</label><select id="xMes" style="width:140px"><option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Março</option><option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option><option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select></div>
+      <div class="fld" style="margin:0"><label>Ano</label><input type="number" id="xAno" value="2026" style="width:100px"></div>
+      <div class="fld" style="margin:0"><label>Verba (MIX)</label><input type="text" id="xVrb" value="573" style="width:90px"></div>
+      <div style="margin-bottom:1px"><button class="btn bto" onclick="prevMix()">👁️ Visualizar MIX</button></div>
     </div>
-    <div style="display:flex;gap:8px"><button class="btn bto" onclick="prevMix()">👁️ Visualizar</button><button class="btn btg" onclick="expMix()">📥 Exportar .XLS</button></div>
   </div>
-  <div id="mixRes" style="display:none" class="card"><div class="kgrid" id="mixKpi" style="margin-bottom:0"></div></div>
-  <div id="mixPrev" style="display:none" class="card">
-    <div class="chdr"><div class="ctit">Preview — <span id="mixCnt">0</span> registros</div><button class="btn btgh btn-sm" onclick="this.closest('.card').style.display='none'">✕</button></div>
+ 
+    <!-- Carta de Metas -->
+    <div class="card" style="border-color:var(--gnbr);position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gn),#86efac)"></div>
+      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:14px">
+        <div class="kico" style="background:var(--gnb);font-size:20px;flex-shrink:0">🎯</div>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:3px">Carta de Metas</div>
+          <div style="font-size:11px;color:var(--tx3)">Exporta scores, % atingido por indicador, pontos e prêmios calculados de todos os colaboradores do mês selecionado.</div>
+        </div>
+      </div>
+      <div style="margin-bottom:10px">
+        <label class="flbl">Departamento</label>
+        <select id="xMetaDep" style="width:100%;margin-top:4px" class="fi-ctrl"><option value="">Todos os departamentos</option></select>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btg btn-sm" style="background:linear-gradient(135deg,var(--gn),#16a34a);color:#000" onclick="expMetasExport()">📥 Exportar .XLS</button>
+      </div>
+    </div>
+ 
+    <!-- Coparticipação -->
+    <div class="card" style="border-color:var(--blbr);position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--bl),#93c5fd)"></div>
+      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:14px">
+        <div class="kico" style="background:var(--blb);font-size:20px;flex-shrink:0">🤝</div>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:3px">Coparticipação</div>
+          <div style="font-size:11px;color:var(--tx3)">Exporta os valores de coparticipação lançados por colaborador, com totais por departamento e filial.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btg btn-sm" style="background:linear-gradient(135deg,var(--bl),#1d4ed8);color:#fff" onclick="expCoprt()">📥 Exportar .XLS</button>
+      </div>
+    </div>
+ 
+    <!-- Lançar Verbas -->
+    <div class="card" style="border-color:var(--ogbr);position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--og),#fed7aa)"></div>
+      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:14px">
+        <div class="kico" style="background:var(--ogb);font-size:20px;flex-shrink:0">✏️</div>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:3px">Verbas Lançadas</div>
+          <div style="font-size:11px;color:var(--tx3)">Exporta todos os valores de verbas lançados no período, organizados por departamento e colaborador.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btg btn-sm" style="background:linear-gradient(135deg,var(--og),#c2410c);color:#fff" onclick="expVerbas()">📥 Exportar .XLS</button>
+      </div>
+    </div>
+ 
+  </div>
+ 
+  <!-- Resultado da visualização MIX -->
+  <div id="mixRes" style="display:none;margin-top:14px" class="card"><div class="kgrid" id="mixKpi" style="margin-bottom:0"></div></div>
+  <div id="mixPrev" style="display:none;margin-top:14px" class="card">
+    <div class="chdr"><div class="ctit">Preview MIX — <span id="mixCnt">0</span> registros</div><button class="btn btgh btn-sm" onclick="this.closest('.card').style.display='none'">✕</button></div>
     <div class="tw"><table><thead><tr><th>EMPRESA</th><th>FILIAL</th><th>CHAPA</th><th>MATR.</th><th>MÊS</th><th>ANO</th><th>T.ENV</th><th>IDENT</th><th>VERBA</th><th style="text-align:right">QTDE</th><th>USUÁRIO</th><th>MÊS.S</th></tr></thead><tbody id="bMix"></tbody></table></div>
   </div>
 </div>
-
+ 
 <!-- USUÁRIOS -->
 <div class="page" id="p-users">
   <div class="pghdr"><div><h1>Usuários</h1><div class="sub">Gerencie acessos. Gestores veem apenas seus departamentos.</div></div><div class="acts"><button class="btn btg" onclick="abrirMdl()">+ Novo Usuário</button></div></div>
@@ -829,10 +888,10 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
     <div class="tw" style="border:none;border-radius:0"><table><thead><tr><th>Usuário</th><th>Perfil</th><th>Departamentos</th><th style="text-align:center;width:120px">Ações</th></tr></thead><tbody id="bUsers"></tbody></table></div>
   </div>
 </div>
-
+ 
 </div><!-- main -->
 </div><!-- app -->
-
+ 
 <!-- MODAL USUÁRIO -->
 <div class="mo" id="moUser">
   <div class="mdl">
@@ -844,12 +903,12 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
     <div class="mft"><button class="btn btgh" onclick="fchMdl()">Cancelar</button><button class="btn btg" onclick="savUser()">💾 Salvar</button></div>
   </div>
 </div>
-
+ 
 <!-- MODAL CONFIG META — INDICADORES -->
 <div class="mo" id="moCfgMeta">
   <div class="mdl" style="width:720px;max-width:97vw">
     <div class="mhdr"><h3>⚙️ Indicadores da Carta de Metas</h3><button class="mclose" onclick="document.getElementById('moCfgMeta').classList.remove('open')">✕</button></div>
-    <div class="al alg" style="margin-bottom:12px"><span>📌</span><span>Configure os indicadores conforme a planilha modelo. Pesos devem somar 100. Tipo: <strong>p</strong> = quanto maior melhor | <strong>q</strong> = quanto menor melhor.</span></div>
+    <div class="al alg" style="margin-bottom:12px"><span>📌</span><span>Defina o nome e o <strong>peso (%)</strong> de cada indicador. Os pesos de todos os indicadores devem somar <strong>100%</strong>. Depois, ao lançar as metas, basta digitar o <strong>% atingido</strong> de cada um — o sistema soma tudo automaticamente.</span></div>
     <div class="fld"><label>Título da Carta de Metas</label><input type="text" id="cfgTit" placeholder="ex: Carta de Metas — Produção — Junho/2026"></div>
     <div class="fld"><label>Descrição / Critérios gerais</label><textarea id="cfgDesc" placeholder="Descreva os critérios gerais..." style="min-height:50px;resize:vertical"></textarea></div>
     <div class="fld"><label>Valor base do prêmio (R$)</label><input type="number" id="cfgPremioBase" placeholder="ex: 400" style="width:180px;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:6px;padding:7px 10px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>
@@ -859,20 +918,20 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
     <div class="mft"><button class="btn btgh" onclick="document.getElementById('moCfgMeta').classList.remove('open')">Cancelar</button><button class="btn btg" onclick="savCfgMeta()">✅ Salvar Configuração</button></div>
   </div>
 </div>
-
+ 
 <script>
 const MESES=['','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const PGN={dash:'Dashboard',lanc:'Lançar Verbas',metas:'Carta de Metas','ind-ind':'Indicadores',base:'Base FoRelaFunc2',coprt:'Coparticipação',premiacao:'Carta de Premiação',conta:'Abertura de Conta',hist:'Histórico',mix:'Exportar MIX',usuarios:'Usuários'};
-
+ 
 const S={usuarios:[],funcionarios:[],lancamentos:{},coprt:{},metas:{},cfgMeta:{titulo:'',desc:'',b100:10,b80:5},metaIndicadores:{},metaInd:{},banco:{},hist:[],logado:null,editU:null,soP:false,metaDepAtual:null};
-
+ 
 // ── TOAST ──
 function toast(m,t='ok'){
   const c=document.getElementById('toast'),d=document.createElement('div');
   d.className='tst '+t;d.innerHTML='<span>'+(t==='ok'?'✅':t==='er'?'❌':'⚠️')+'</span><span>'+m+'</span>';
   c.appendChild(d);setTimeout(()=>{d.style.opacity='0';d.style.transition='opacity .3s';setTimeout(()=>d.remove(),300);},3200);
 }
-
+ 
 // ── PERSISTÊNCIA ──
 function salvar(){
   try{localStorage.setItem('bfrh_v5',JSON.stringify({usuarios:S.usuarios,funcionarios:S.funcionarios,lancamentos:S.lancamentos,coprt:S.coprt,metas:S.metas,cfgMeta:S.cfgMeta,metaIndicadores:S.metaIndicadores,banco:S.banco,hist:S.hist}));}catch(e){}
@@ -889,7 +948,7 @@ function addHist(mod,chapa,setor,mes,ano,info){
   S.hist.unshift({dt:new Date().toLocaleString('pt-BR'),mod,chapa,nm:f?f.nome:'—',setor,comp:MESES[mes]+'/'+ano,usr:S.logado?.user||'—',info});
   if(S.hist.length>1000)S.hist=S.hist.slice(0,1000);
 }
-
+ 
 // ── LOGIN ──
 function fazerLogin(){
   const user=document.getElementById('loginUser').value.trim().toLowerCase(),pass=document.getElementById('loginPass').value;
@@ -905,7 +964,7 @@ function fazerLogin(){
 function logout(){S.logado=null;document.getElementById('pgLogin').style.display='flex';document.getElementById('app').style.display='none';document.getElementById('loginUser').value='';document.getElementById('loginPass').value='';document.getElementById('loginErr').style.display='none';}
 document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')fazerLogin();});
 document.getElementById('loginUser').addEventListener('keydown',e=>{if(e.key==='Enter')fazerLogin();});
-
+ 
 // ── NAV ──
 function go(id){
   // alias mapping: nav id → page id
@@ -922,12 +981,12 @@ function go(id){
   if(id==='lanc'){lDepSel='';rSF();renderLanc();atualizarComp();}
   if(id==='base')renderBase();
   if(id==='metas'){voltarDeptos();renderDeptCards();}
-  if(id==='ind-ind')initIndInd();
+  if(id==='mix')renderMix();
   if(id==='dash')renderDash();
   if(id==='coprt')renderCoprt();
   if(id==='hist')renderHist();
 }
-
+ 
 // ── INIT ──
 function initApp(){
   const n=new Date();
@@ -936,7 +995,7 @@ function initApp(){
   atualizarComp();renderBase();rSF();updKpi();
   go('lanc');
 }
-
+ 
 // ── IMPORTAR BASE ──
 function onDrop(e){e.preventDefault();document.getElementById('upz').classList.remove('drag');const f=e.dataTransfer.files[0];if(f)importarBase(f);}
 function importarBase(file){
@@ -989,7 +1048,7 @@ function importarBase(file){
   };
   reader.readAsArrayBuffer(file);
 }
-
+ 
 // ── KPIs genérico ──
 function kpi(ic,n,l,bg){return '<div class="kpi"><div class="kico" style="background:'+bg+'">'+ic+'</div><div><div class="kn">'+n+'</div><div class="kl">'+l+'</div></div></div>';}
 // ── ESCOPO DE VISIBILIDADE POR USUÁRIO (RH vê tudo, Gestor só vê seus setores) ──
@@ -1014,7 +1073,7 @@ function updKpi(){
   const lc=Object.values(S.lancamentos).filter(v=>v&&v!==0).length;
   g.innerHTML=kpi('👥',S.funcionarios.length,'Colaboradores','var(--oub);border:1px solid var(--oubr)')+kpi('🏢',fi,'Filiais','var(--vdb)')+kpi('📁',de,'Departamentos','var(--azb)')+kpi('✏️',lc,'Lançamentos','var(--rxb)');
 }
-
+ 
 // ════════════════════ DASHBOARD ════════════════════
 function renderDash(){
   const filSel=document.getElementById('dFil'),depSel=document.getElementById('dDep');
@@ -1032,7 +1091,7 @@ function renderDash(){
     if(!depsDaFilial.includes(vAtual))depSel.value='';
   }
   const depAtual=depSel?depSel.value:'';
-
+ 
   if(!escopo.length){
     document.getElementById('dashEmpty').style.display='block';
     document.getElementById('dashKpi').innerHTML='';
@@ -1041,11 +1100,11 @@ function renderDash(){
     return;
   }
   document.getElementById('dashEmpty').style.display='none';
-
+ 
   let base=escopo;
   if(filAtual)base=base.filter(f=>f.filial===filAtual);
   if(depAtual)base=base.filter(f=>f.depto===depAtual);
-
+ 
   const totFil=new Set(base.map(f=>f.filial)).size;
   const totDep=new Set(base.map(f=>f.depto)).size;
   const chapasVisiveis=new Set(escopo.map(f=>f.chapa));
@@ -1054,13 +1113,13 @@ function renderDash(){
     const chapa=k.split('_')[1];
     return chapasVisiveis.has(chapa);
   }).length;
-
+ 
   document.getElementById('dashKpi').innerHTML=
     kpi('👥',base.length,filAtual||depAtual?'Colaboradores (filtrado)':'Total de Colaboradores','var(--oub);border:1px solid var(--oubr)')+
     kpi('🏢',totFil,'Filiais','var(--vdb)')+
     kpi('📁',totDep,'Departamentos','var(--azb)')+
     kpi('✏️',lancAtivos,'Lançamentos Ativos','var(--rxb)');
-
+ 
   // Bar chart por departamento (dentro do filtro de filial)
   const baseDept=filAtual?escopo.filter(f=>f.filial===filAtual):escopo;
   const byDep={};
@@ -1071,7 +1130,7 @@ function renderDash(){
     const pct=Math.round((c/maxDep)*100);
     return '<div class="bar-row"><div class="bar-lbl" title="'+d+'">'+d+'</div><div class="bar-track"><div class="bar-fill" style="width:'+Math.max(pct,8)+'%"><span>'+c+'</span></div></div></div>';
   }).join('')||'<div style="color:#555;font-size:12px;padding:10px">Sem dados para exibir.</div>';
-
+ 
   // Bar chart por filial (dentro do filtro de depto)
   const baseFil=depAtual?escopo.filter(f=>f.depto===depAtual):escopo;
   const byFil={};
@@ -1083,7 +1142,7 @@ function renderDash(){
     return '<div class="bar-row"><div class="bar-lbl" title="'+fi+'">'+fi+'</div><div class="bar-track"><div class="bar-fill" style="width:'+Math.max(pct,8)+'%"><span>'+c+'</span></div></div></div>';
   }).join('')||'<div style="color:#555;font-size:12px;padding:10px">Sem dados para exibir.</div>';
 }
-
+ 
 // ── RENDER SELETORES GERAIS ──
 let lDepSel='', mDepSel='';
 function buildDeptChips(containerId, currentVal, onClickFn){
@@ -1122,7 +1181,7 @@ function rSF(){
   if(sFF)sFF.innerHTML='<option value="">Todas</option>'+fils.map(x=>'<option value="'+x+'">'+x+'</option>').join('');
   if(sFD)sFD.innerHTML='<option value="">Todos</option>'+allDeps.map(x=>'<option value="'+x+'">'+x+'</option>').join('');
 }
-
+ 
 // ── BASE ──
 function renderBase(){
   const bk=(document.getElementById('busca')?.value||'').toLowerCase();
@@ -1140,11 +1199,11 @@ function renderBase(){
   body.innerHTML=l.slice(0,300).map(f=>'<tr><td><code>'+f.chapa+'</code></td><td style="color:#666">'+f.ref+'</td><td><strong style="color:#fff">'+f.nome+'</strong></td><td style="color:#666;font-size:11px">'+f.cargo+'</td><td><span class="sp">'+f.depto+'</span></td><td><span class="b bg">'+f.filial+'</span></td></tr>').join('');
   if(l.length>300)body.innerHTML+='<tr><td colspan="6" style="text-align:center;color:#555;font-size:11px;padding:12px">… e mais '+(l.length-300)+'. Refine os filtros.</td></tr>';
 }
-
+ 
 // ── LANÇAMENTO ──
 function atualizarComp(){const m=document.getElementById('selMes').value,a=document.getElementById('selAno').value;const c=document.getElementById('chipComp');if(c)c.textContent=MESES[m]+' / '+a;}
 function togPre(){S.soP=!S.soP;const b=document.getElementById('bPre');if(S.soP){b.textContent='👁️ Todos';b.classList.remove('btgh');b.classList.add('bto');}else{b.textContent='Só preenchidos';b.classList.add('btgh');b.classList.remove('bto');}renderLanc();}
-
+ 
 function renderLanc(){
   const u=S.logado,rh=u?.perfil==='rh',sp=rh?null:(u?.setores||[]);
   const fd=lDepSel||'';
@@ -1186,7 +1245,7 @@ function renderLanc(){
   });
   wrap.innerHTML=html;
 }
-
+ 
 function uL(inp){const k=inp.dataset.k,v=inp.value;if(v===''||v===null){delete S.lancamentos[k];inp.classList.remove('ok');}else{S.lancamentos[k]=parseFloat(v);inp.classList.add('ok');}updKpi();}
 function salvarLanc(){
   document.querySelectorAll('.vi').forEach(inp=>{
@@ -1203,7 +1262,7 @@ function limparLanc(){
   Object.keys(S.lancamentos).forEach(k=>{const p=k.split('_');if(p.length>=4&&p[p.length-3]===mes&&p[p.length-2]===ano&&p[p.length-1]===vb)delete S.lancamentos[k];});
   salvar();renderLanc();updKpi();toast('Valores limpos.','wn');
 }
-
+ 
 // ── COPARTICIPAÇÃO ──
 function renderCoprt(){
   const mes=document.getElementById('cMes').value,ano=document.getElementById('cAno').value;
@@ -1244,7 +1303,7 @@ function expCoprt(){
   if(!rows.length){toast('Nenhum desconto.','wn');return;}
   const ws=XLSX.utils.json_to_sheet(rows),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Copart');XLSX.writeFile(wb,'Coparticipacao_'+MESES[mes]+'_'+ano+'.xls');toast('Exportado '+rows.length+' registros!');
 }
-
+ 
 // ════════════════════ CARTA DE METAS (Cards de Departamento) ════════════════════
 function renderDeptCards(){
   const grid=document.getElementById('depCardsGrid'),empty=document.getElementById('eDeptCards');
@@ -1279,7 +1338,7 @@ function renderDeptCards(){
   }).join('');
 }
 let S_modoMeta = 'setor'; // 'setor' | 'colab'
-
+ 
 function abrirDeptMetas(dep){
   const sp=setoresPermitidos();
   if(sp&&!sp.includes(dep)){toast('Você não tem acesso a este departamento.','er');return;}
@@ -1297,14 +1356,14 @@ function abrirDeptMetas(dep){
   }
   setModoMeta('setor');
 }
-
+ 
 function setModoMeta(modo){
   S_modoMeta=modo;
   const btnS=document.getElementById('toggleSetor'),btnC=document.getElementById('toggleColab');
   const wrapColab=document.getElementById('metaColabWrap');
   const modoSetorDiv=document.getElementById('metasModoSetor');
   const modoColabDiv=document.getElementById('metasModoColab');
-
+ 
   if(modo==='setor'){
     btnS.style.background='var(--oub)';btnS.style.borderColor='var(--oubr)';btnS.style.color='var(--ou)';btnS.style.fontWeight='700';
     btnC.style.background='none';btnC.style.borderColor='transparent';btnC.style.color='#555';btnC.style.fontWeight='600';
@@ -1321,17 +1380,17 @@ function setModoMeta(modo){
     renderMetasModo();
   }
 }
-
+ 
 function renderMetasModo(){
   if(!S.metaDepAtual)return;
   const dep=S.metaDepAtual;
   const chapa=document.getElementById('metaColabSel')?.value||'';
   const mes=document.getElementById('mMes')?.value||new Date().getMonth()+1;
   const ano=document.getElementById('mAno')?.value||new Date().getFullYear();
-
+ 
   const indsSetor=S.metaIndicadores[dep]||[];
   const pesoSetorTotal=indsSetor.reduce((a,i)=>a+i.peso,0);
-
+ 
   // KPIs do modo colab
   if(!chapa){
     // Modo setor geral: mostra todos colaboradores
@@ -1343,14 +1402,13 @@ function renderMetasModo(){
     const ating100=resultados.filter(r=>r.score>=100).length;
     const totalPremio=resultados.reduce((a,r)=>a+r.premio,0);
     const scoreMedio=resultados.length?resultados.reduce((a,r)=>a+r.score,0)/resultados.length:0;
-    const corMed=scoreMedio>=100?'var(--vd)':scoreMedio>=80?'var(--ou)':'var(--vm)';
     document.getElementById('metKpi').innerHTML=
-      kpi('👥',funcs.length,'Colaboradores','var(--azb)')+
-      kpi('📊',resultados.length?scoreMedio.toFixed(1)+'%':'—','Score Médio','var(--oub);border:1px solid var(--oubr)')+
-      kpi('✅',ating100,'Score ≥ 100%','var(--vdb)')+
-      kpi('🏆','R$ '+totalPremio.toLocaleString('pt-BR',{minimumFractionDigits:2}),'Total Prêmios','var(--rxb)');
+      kpi('👥',funcs.length,'Colaboradores','var(--blb)')+
+      kpi('📊',resultados.length?scoreMedio.toFixed(1)+'%':'—','Score Médio','var(--aub);border:1px solid var(--aubr)')+
+      kpi('✅',ating100,'Score ≥ 100%','var(--gnb);border:1px solid var(--gnbr)')+
+      kpi('🏆','R$ '+totalPremio.toLocaleString('pt-BR',{minimumFractionDigits:2}),'Total Prêmios','var(--pub)');
     document.getElementById('metaScoreResumo').innerHTML='<span style="font-size:11px;color:#555">Selecione um colaborador para ver o score individual</span>';
-
+ 
     // Hide individual blocks, show prompt
     document.getElementById('iiPesoAviso').style.display='none';
     document.getElementById('iiSetorGrid').innerHTML='<div style="color:#555;font-size:12px;padding:10px 0">Selecione um colaborador para ver os lançamentos.</div>';
@@ -1361,112 +1419,123 @@ function renderMetasModo(){
     document.getElementById('iiScoreFinalCard').style.display='none';
     return;
   }
-
+ 
   // Colaborador selecionado
   const f=S.funcionarios.find(x=>x.chapa===chapa);
   if(!f)return;
   const indsInd=S.metaInd?.[chapa]||[];
   const pesoIndTotal=indsInd.reduce((a,i)=>a+i.peso,0);
   const res=calcScoreCombinado(f,indsSetor,indsInd,S.metas,mes,ano);
-
-  const corF=faixaCor(res.score/100);
+ 
+  const corF=faixaCor(res.score);
   document.getElementById('metaScoreResumo').innerHTML=
     '<div style="text-align:right"><div style="font-size:10px;color:#555">Score Final</div>'+
     '<div style="font-size:20px;font-weight:900;color:'+corF+'">'+res.score.toFixed(1)+'%</div></div>';
-
+ 
   document.getElementById('metKpi').innerHTML=
-    kpi('📊',res.score.toFixed(1)+'%','Score Final','var(--oub);border:1px solid var(--oubr)')+
-    kpi('🏢',res.pesoSetorTotal+'%','Peso Setor','var(--lab)')+
-    kpi('👤',res.pesoIndTotal+'%','Peso Individual','var(--azb)')+
-    kpi('🏆',res.premio>0?'R$ '+res.premio.toLocaleString('pt-BR',{minimumFractionDigits:2}):'—','Prêmio','var(--rxb)');
-
+    kpi('📊',res.score.toFixed(1)+'%','Score Final','var(--aub);border:1px solid var(--aubr)')+
+    kpi('🏢',res.pesoSetorTotal+'%','Peso Setor','var(--ogb)')+
+    kpi('👤',res.pesoIndTotal+'%','Peso Individual','var(--blb)')+
+    kpi('🏆',res.premio>0?'R$ '+res.premio.toLocaleString('pt-BR',{minimumFractionDigits:2}):'—','Prêmio','var(--pub)');
+ 
   // Aviso pesos
   const avisoEl=document.getElementById('iiPesoAviso');
   const pesoGrand=pesoSetorTotal+pesoIndTotal;
   if(pesoGrand>0&&Math.abs(pesoGrand-100)>0.01){
     avisoEl.style.display='flex';avisoEl.className='al ale';
-    avisoEl.innerHTML='<span>⚠️</span><span>Pesos somam <strong>'+pesoGrand+'%</strong> (setor: '+pesoSetorTotal+'% + individual: '+pesoIndTotal+'%). Ajuste para totalizar 100%.</span>';
+    avisoEl.innerHTML='<span>⚠️</span><span>Os pesos somam <strong>'+pesoGrand+'%</strong> (setor: '+pesoSetorTotal+'% + individual: '+pesoIndTotal+'%) — deveria ser 100% para o score final representar o todo. Ajuste os pesos nas configurações.</span>';
   } else if(pesoSetorTotal===0&&pesoIndTotal===0){
     avisoEl.style.display='flex';avisoEl.className='al alg';
-    avisoEl.innerHTML='<span>💡</span><span>Configure os indicadores do setor em <strong>⚙️ Configurar Indicadores</strong> e os individuais em <strong>⚙️ Configurar</strong>. Os pesos devem somar 100%.</span>';
+    avisoEl.innerHTML='<span>💡</span><span>Configure os indicadores do setor em <strong>⚙️ Configurar Indicadores</strong> e os individuais em <strong>⚙️ Configurar</strong>. Os pesos de cada indicador devem somar 100% no total.</span>';
   } else {avisoEl.style.display='none';}
-
+ 
   // Label pesos
   document.getElementById('iiSetorPesoLabel').textContent=pesoSetorTotal>0?'('+pesoSetorTotal+'% do score)':'(sem indicadores)';
   document.getElementById('iiIndPesoLabel').textContent=pesoIndTotal>0?'('+pesoIndTotal+'% do score)':'(sem metas individuais)';
-
-  // Bloco SETOR
+ 
+  // Bloco SETOR — % atingido direto
   if(!indsSetor.length){
     document.getElementById('iiSetorGrid').innerHTML='<div class="al alg" style="margin:0"><span>⚙️</span><span>Nenhum indicador de setor. Configure em <strong>⚙️ Configurar Indicadores</strong>.</span></div>';
   } else {
     let htmlS='<div class="tw"><table><thead><tr>'+
-      indsSetor.map((ind,i)=>'<th style="text-align:right;min-width:100px;white-space:normal">'+ind.nome+'<br><span style="font-size:9px;color:#555;font-weight:400">Peso '+ind.peso+'% | Meta '+ind.meta+(ind.melhor==='q'?'↓':'↑')+'</span></th>').join('')+
+      indsSetor.map(ind=>'<th style="text-align:center;min-width:110px;white-space:normal">'+ind.nome+'<br><span class="b bg" style="margin-top:3px;display:inline-block">Peso '+ind.peso+'%</span></th>').join('')+
       '<th style="text-align:center">Score Setor</th></tr></thead><tbody><tr>';
-    const scoreS=res.pesoSetorTotal>0?res.pontosSetor/res.pesoSetorTotal*100:0;
-    const corS=faixaCor(scoreS/100);
+    const scoreS=res.pontosSetor;
+    const corS=faixaCor(scoreS);
     htmlS+=res.detSetor.map(det=>{
-      const corA=det.real>0?faixaCor(det.ating):'#555';
-      return '<td style="text-align:right">'+
-        '<input class="vi'+(det.real>0?' ok':'')+'" type="number" step="0.01" min="0" data-km="'+det.km+'" data-campo="'+det.key+'" value="'+(det.real||'')+'" oninput="uMColab(this)" placeholder="—" style="width:86px">'+
-        (det.real>0?'<div style="font-size:10px;color:'+corA+';margin-top:2px;text-align:right">'+Math.round(det.ating*100)+'%</div>':'')+'</td>';
+      const preenchido=det.real!==null;
+      const corA=preenchido?faixaCor(det.real):'#555';
+      return '<td style="text-align:center">'+
+        '<div style="display:inline-flex;align-items:center;gap:3px">'+
+        '<input class="vi-pct" type="number" step="1" min="0" max="200" data-km="'+det.km+'" data-campo="'+det.key+'" value="'+(det.real!==null?det.real:'')+'" oninput="uMColabLive(this)" onblur="uMColab(this)" onkeydown="if(event.key===\'Enter\'){this.blur();}" placeholder="0" style="width:64px">'+
+        '<span style="font-size:11px;color:#666">%</span></div>'+
+        (preenchido?'<div style="font-size:10px;color:'+corA+';margin-top:3px;font-weight:700">'+det.pts.toFixed(1)+' pts</div>':'')+'</td>';
     }).join('');
     htmlS+='<td style="text-align:center">'+(scoreS>0?'<div style="font-weight:900;color:'+corS+'">'+scoreS.toFixed(1)+'%</div>':'<span style="color:#555">—</span>')+'</td></tr></tbody></table></div>';
     document.getElementById('iiSetorGrid').innerHTML=htmlS;
   }
-
-  // Bloco INDIVIDUAL
+ 
+  // Bloco INDIVIDUAL — % atingido direto
   if(!indsInd.length){
     document.getElementById('iiIndGrid').innerHTML='<div class="al alg" style="margin:0"><span>👤</span><span>Nenhuma meta individual para este colaborador. Clique em <strong>⚙️ Configurar</strong>.</span></div>';
     document.getElementById('iiIndScoreLabel').textContent='';
   } else {
-    const scoreI=res.pesoIndTotal>0?res.pontosInd/res.pesoIndTotal*100:0;
-    const corI=faixaCor(scoreI/100);
+    const scoreI=res.pontosInd;
+    const corI=faixaCor(scoreI);
     document.getElementById('iiIndScoreLabel').innerHTML=scoreI>0?'<span style="color:'+corI+';font-weight:900">'+scoreI.toFixed(1)+'%</span>':'—';
     let htmlI='<div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">';
     res.detInd.forEach(det=>{
-      const corA=det.real>0?faixaCor(det.ating):'#555';
-      htmlI+='<div style="background:#141414;border:1px solid #2a2a2a;border-radius:7px;padding:11px 14px">';
-      htmlI+='<div style="display:flex;justify-content:space-between;margin-bottom:8px">';
-      htmlI+='<span style="font-size:12px;font-weight:700;color:var(--ou)">'+det.nome+(det.desc?' <span style="color:#555;font-weight:400;font-size:10px">— '+det.desc+'</span>':'')+'</span>';
-      htmlI+='<div style="display:flex;gap:8px;font-size:10px;color:#555"><span>Peso: <strong style="color:var(--ou)">'+det.peso+'%</strong></span><span>Meta: <strong style="color:#ccc">'+det.meta+(det.melhor==='q'?'↓':'↑')+'</strong></span></div></div>';
-      htmlI+='<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">';
-      htmlI+='<div><span class="flbl">Realizado</span><input class="vi'+(det.real>0?' ok':'')+'" type="number" step="0.01" min="0" data-km="'+det.km+'" data-campo="'+det.key+'" value="'+(det.real||'')+'" oninput="uMColab(this)" placeholder="—" style="width:120px;margin-top:4px"></div>';
-      if(det.real>0){
-        htmlI+='<div style="margin-top:18px;text-align:center"><div style="font-size:15px;font-weight:900;color:'+corA+'">'+Math.round(det.ating*100)+'%</div><div style="font-size:10px;color:#555">'+faixaLabel(det.ating)+'</div></div>';
-        htmlI+='<div style="margin-top:18px;text-align:center"><div style="font-size:13px;font-weight:700;color:var(--az)">'+det.pts.toFixed(1)+' pts</div><div style="font-size:10px;color:#555">de '+det.peso+' pts</div></div>';
-        htmlI+='<div style="flex:1;min-width:100px;margin-top:18px"><div class="prg-b" style="height:5px"><div class="prg-f" style="width:'+Math.min(det.ating,1.2)/1.2*100+'%;background:'+corA+'"></div></div>';
-        htmlI+='<div style="display:flex;justify-content:space-between;font-size:9px;color:#444;margin-top:2px"><span>0</span><span>80%</span><span>100%</span><span>120%</span></div></div>';
+      const preenchido=det.real!==null;
+      const corA=preenchido?faixaCor(det.real):'#555';
+      htmlI+='<div style="background:var(--s2);border:1px solid var(--s3);border-radius:8px;padding:12px 15px">';
+      htmlI+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;flex-wrap:wrap;gap:6px">';
+      htmlI+='<span style="font-size:12px;font-weight:700;color:var(--au)">'+det.nome+(det.desc?' <span style="color:#666;font-weight:400;font-size:10px">— '+det.desc+'</span>':'')+'</span>';
+      htmlI+='<span class="b bg">Peso '+det.peso+'%</span></div>';
+      htmlI+='<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">';
+      htmlI+='<div><span class="flbl">% Atingido</span><div style="display:flex;align-items:center;gap:4px;margin-top:4px">'+
+        '<input class="vi-pct" type="number" step="1" min="0" max="200" data-km="'+det.km+'" data-campo="'+det.key+'" value="'+(det.real!==null?det.real:'')+'" oninput="uMColabLive(this)" onblur="uMColab(this)" onkeydown="if(event.key===\'Enter\'){this.blur();}" placeholder="0" style="width:74px">'+
+        '<span style="font-size:12px;color:#666">%</span></div></div>';
+      if(preenchido){
+        htmlI+='<div style="text-align:center"><div style="font-size:13px;font-weight:700;color:var(--bl)">'+det.pts.toFixed(1)+' pts</div><div style="font-size:10px;color:#555">de '+det.peso+' pts</div></div>';
+        htmlI+='<div style="flex:1;min-width:100px"><div class="prg-b" style="height:6px"><div class="prg-f" style="width:'+Math.min(det.real,150)/150*100+'%;background:'+corA+'"></div></div>'+
+          '<div style="font-size:10px;color:'+corA+';margin-top:3px;font-weight:600">'+faixaLabel(det.real)+'</div></div>';
       }
       htmlI+='</div></div>';
     });
     htmlI+='</div>';
     document.getElementById('iiIndGrid').innerHTML=htmlI;
   }
-
+ 
   // Score final combinado
   const finalCard=document.getElementById('iiScoreFinalCard');
   finalCard.style.display='block';
   document.getElementById('iiScoreFinalInner').innerHTML=
     '<div><div style="font-size:11px;color:#555;margin-bottom:4px">Score Final Combinado</div>'+
-    '<div style="font-size:28px;font-weight:900;color:'+corF+'">'+res.score.toFixed(1)+'%</div>'+
-    '<div style="font-size:11px;color:#555">'+faixaLabel(res.score/100)+'</div></div>'+
+    '<div style="font-size:30px;font-weight:900;color:'+corF+'">'+res.score.toFixed(1)+'%</div>'+
+    '<div style="font-size:11px;color:#555">'+faixaLabel(res.score)+'</div></div>'+
     '<div style="display:flex;gap:20px;flex-wrap:wrap">'+
-      '<div style="text-align:center"><div style="font-size:11px;color:#555">Setor</div><div style="font-size:14px;font-weight:700;color:var(--ou)">'+(res.pesoSetorTotal>0?(res.pontosSetor/res.pesoSetorTotal*100).toFixed(1)+'%':'—')+'</div><div style="font-size:10px;color:#444">'+res.pesoSetorTotal+'% do peso</div></div>'+
+      '<div style="text-align:center"><div style="font-size:11px;color:#555">Setor</div><div style="font-size:14px;font-weight:700;color:var(--au)">'+res.pontosSetor.toFixed(1)+'%</div><div style="font-size:10px;color:#444">de '+res.pesoSetorTotal+'% possíveis</div></div>'+
       '<div style="text-align:center;color:#333;font-size:20px;padding-top:12px">+</div>'+
-      '<div style="text-align:center"><div style="font-size:11px;color:#555">Individual</div><div style="font-size:14px;font-weight:700;color:var(--az)">'+(res.pesoIndTotal>0?(res.pontosInd/res.pesoIndTotal*100).toFixed(1)+'%':'—')+'</div><div style="font-size:10px;color:#444">'+res.pesoIndTotal+'% do peso</div></div>'+
+      '<div style="text-align:center"><div style="font-size:11px;color:#555">Individual</div><div style="font-size:14px;font-weight:700;color:var(--bl)">'+res.pontosInd.toFixed(1)+'%</div><div style="font-size:10px;color:#444">de '+res.pesoIndTotal+'% possíveis</div></div>'+
     '</div>'+
-    '<div style="text-align:right"><div style="font-size:11px;color:#555">Prêmio Estimado</div><div style="font-size:18px;font-weight:900;color:'+(res.premio>0?'var(--ou)':'#555')+'">'+
+    '<div style="text-align:right"><div style="font-size:11px;color:#555">Prêmio Estimado</div><div style="font-size:18px;font-weight:900;color:'+(res.premio>0?'var(--au)':'#555')+'">'+
     (res.premio>0?'R$ '+res.premio.toLocaleString('pt-BR',{minimumFractionDigits:2}):'—')+'</div></div>';
 }
-
-function uMColab(inp){
+ 
+function uMColabLive(inp){
+  // Salva o valor e atualiza só a cor do próprio campo, sem re-renderizar a tela (mantém o foco)
   const k=inp.dataset.km,campo=inp.dataset.campo,v=inp.value;
   if(!S.metas[k])S.metas[k]={};
   S.metas[k][campo]=v!==''?parseFloat(v):undefined;
-  inp.classList.toggle('ok',v!=='');
+  inp.classList.remove('ok','low');
+  if(v!==''){inp.classList.add(parseFloat(v)>=100?'ok':'low');}
+}
+function uMColab(inp){
+  // Recalcula score e re-renderiza — chamado ao sair do campo (blur) ou Enter
+  uMColabLive(inp);
   renderMetasModo();
 }
-
+ 
 function voltarDeptos(){
   S.metaDepAtual=null;
   S_modoMeta='setor';
@@ -1475,31 +1544,27 @@ function voltarDeptos(){
   document.getElementById('metasActsTop').style.display='none';
   renderDeptCards();
 }
-
+ 
 // ── CFG META — INDICADORES ──
 function addIndicador(ind){
   const list=document.getElementById('cfgMetaList');
   const idx=list.children.length;
-  const v=(ind&&typeof ind==='object'&&!Array.isArray(ind))?ind:{nome:'',desc:'',memoria:'',fonte:'',peso:'',meta:'',melhor:'p'};
+  const v=(ind&&typeof ind==='object'&&!Array.isArray(ind))?ind:{nome:'',desc:'',memoria:'',fonte:'',peso:''};
   const row=document.createElement('div');
-  row.style.cssText='background:#141414;border:1px solid #2a2a2a;border-radius:8px;padding:12px 14px;position:relative';
+  row.style.cssText='background:var(--s2);border:1px solid var(--s3);border-radius:9px;padding:13px 15px;position:relative';
   row.className='ind-row';
-  const selP=v.melhor!=='q'?'selected':'';
-  const selQ=v.melhor==='q'?'selected':'';
   row.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">'
-    +'<span class="ind-label" style="font-size:11px;font-weight:700;color:var(--ou)">Indicador '+(idx+1)+'</span>'
-    +'<button type="button" onclick="this.parentNode.parentNode.remove();reindexInds()" style="background:var(--vmb);border:1px solid rgba(239,68,68,.3);color:var(--vm);border-radius:4px;padding:2px 8px;cursor:pointer;font-size:10px;font-family:inherit">✕ Remover</button>'
+    +'<span class="ind-label" style="font-size:11px;font-weight:700;color:var(--au)">Indicador '+(idx+1)+'</span>'
+    +'<button type="button" onclick="this.parentNode.parentNode.remove();reindexInds()" style="background:var(--rdb);border:1px solid var(--rdbr);color:var(--rd);border-radius:5px;padding:2px 9px;cursor:pointer;font-size:10px;font-family:inherit">✕ Remover</button>'
     +'</div>'
-    +'<div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-bottom:8px">'
-    +'<div><span class="flbl">Nome do Indicador</span><input type="text" class="ind-nome" value="'+v.nome+'" placeholder="ex: Produção produto A" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'
-    +'<div><span class="flbl">Peso (%)</span><input type="number" class="ind-peso" value="'+v.peso+'" placeholder="ex: 40" min="1" max="100" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'
-    +'<div><span class="flbl">Meta (valor ref)</span><input type="number" class="ind-meta" value="'+v.meta+'" placeholder="ex: 100" step="0.01" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'
+    +'<div style="display:grid;grid-template-columns:2fr 1fr;gap:8px;margin-bottom:8px">'
+    +'<div><span class="flbl">Nome do Indicador</span><input type="text" class="ind-nome" value="'+v.nome+'" placeholder="ex: Produção / Qualidade / Pontualidade" class="fi-ctrl" style="width:100%"></div>'
+    +'<div><span class="flbl">Peso no Score (%)</span><input type="number" class="ind-peso" value="'+v.peso+'" placeholder="ex: 40" min="1" max="100" class="fi-ctrl" style="width:100%;font-weight:700;color:var(--au)"></div>'
     +'</div>'
-    +'<div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px">'
-    +'<div><span class="flbl">Descrição</span><input type="text" class="ind-desc" value="'+v.desc+'" placeholder="ex: Qtde produzida" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'
-    +'<div><span class="flbl">Memória de Cálculo</span><input type="text" class="ind-mem" value="'+(v.memoria||'')+'" placeholder="ex: Planilha" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'
-    +'<div><span class="flbl">Fonte</span><input type="text" class="ind-fonte" value="'+(v.fonte||'')+'" placeholder="ex: ERP" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'
-    +'<div><span class="flbl">Tipo</span><select class="ind-melhor" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"><option value="p" '+selP+'>↑ maior melhor</option><option value="q" '+selQ+'>↓ menor melhor</option></select></div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">'
+    +'<div><span class="flbl">Descrição</span><input type="text" class="ind-desc" value="'+v.desc+'" placeholder="opcional" class="fi-ctrl" style="width:100%"></div>'
+    +'<div><span class="flbl">Memória de Cálculo</span><input type="text" class="ind-mem" value="'+(v.memoria||'')+'" placeholder="opcional" class="fi-ctrl" style="width:100%"></div>'
+    +'<div><span class="flbl">Fonte</span><input type="text" class="ind-fonte" value="'+(v.fonte||'')+'" placeholder="opcional" class="fi-ctrl" style="width:100%"></div>'
     +'</div>';
   list.appendChild(row);
   reindexInds();
@@ -1531,64 +1596,51 @@ function savCfgMeta(){
     memoria:row.querySelector('.ind-mem').value.trim(),
     fonte:row.querySelector('.ind-fonte').value.trim(),
     resp:'',
-    peso:parseFloat(row.querySelector('.ind-peso').value)||0,
-    meta:parseFloat(row.querySelector('.ind-meta').value)||0,
-    melhor:row.querySelector('.ind-melhor').value
+    peso:parseFloat(row.querySelector('.ind-peso').value)||0
   })).filter(i=>i.nome);
   const totalPeso=inds.reduce((a,i)=>a+i.peso,0);
-  if(inds.length&&Math.abs(totalPeso-100)>0.01){toast('⚠️ Atenção: pesos somam '+totalPeso+'% (recomendado 100%)','wn');}
+  if(inds.length&&Math.abs(totalPeso-100)>0.01){toast('⚠️ Atenção: os pesos somam '+totalPeso+'% — ideal é somar 100% para o score representar o todo.','wn');}
   if(S.metaDepAtual)S.metaIndicadores[S.metaDepAtual]=inds;
   salvar();document.getElementById('moCfgMeta').classList.remove('open');renderMetasDetail();toast('Indicadores salvos!');
 }
-
-// ── CÁLCULO DE PONTOS por indicador (lógica da planilha) ──
-// Atingimento = real/meta (ratio)
-// Faixas: <0.8=0pts | 0.8-0.9=peso*0.8 | 0.9-1=peso*0.9 | 1-1.1=peso*1 | 1.1-1.2=peso*1.1 | >=1.2=peso*1.2
-// Para "q" (menor melhor): atingimento = meta/real (inverso)
-function calcAtingimento(meta,real,melhor){
-  if(!meta||!real)return 0;
-  return melhor==='q'?(meta/real):(real/meta);
+ 
+// ── CÁLCULO DE PONTOS por indicador — SISTEMA SIMPLIFICADO ──
+// O usuário digita diretamente o % ATINGIDO daquele indicador (0 a 150+).
+// Pontos do indicador = peso * (% atingido / 100)
+// Score final = soma de todos os pontos de todos os indicadores (setor + individual)
+// Se os pesos somam 100% e cada indicador foi 100% atingido, score final = 100%.
+function calcPontosSimples(peso,pctAtingido){
+  if(pctAtingido===undefined||pctAtingido===null||pctAtingido==='')return 0;
+  return peso*(parseFloat(pctAtingido)/100);
 }
-function calcPontos(peso,ating){
-  if(ating>=1.2)return peso*1.2;
-  if(ating>=1.1)return peso*1.1;
-  if(ating>=1.0)return peso*1.0;
-  if(ating>=0.9)return peso*0.9;
-  if(ating>=0.8)return peso*0.8;
-  return 0;
+function faixaCor(pct){
+  if(pct>=100)return 'var(--gn)';
+  if(pct>=80)return 'var(--au)';
+  return 'var(--rd)';
 }
-function faixaCor(ating){
-  if(ating>=1.0)return 'var(--vd)';
-  if(ating>=0.8)return 'var(--ou)';
-  return 'var(--vm)';
-}
-function faixaLabel(ating){
-  if(ating>=1.2)return '120%+';
-  if(ating>=1.1)return '110–120%';
-  if(ating>=1.0)return '100–110%';
-  if(ating>=0.9)return '90–100%';
-  if(ating>=0.8)return '80–90%';
+function faixaLabel(pct){
+  if(pct>=120)return '120%+';
+  if(pct>=110)return '110–120%';
+  if(pct>=100)return '100–110%';
+  if(pct>=90)return '90–100%';
+  if(pct>=80)return '80–90%';
   return '<80%';
 }
 function calcScore(funcs,inds,metas,mes,ano){
-  // Score = SUM(pontos)/SUM(pesos)*100 por funcionário
   return funcs.map(f=>{
     const k='meta_'+f.chapa+'_'+mes+'_'+ano;
     const m=metas[k]||{};
     const totalPeso=inds.reduce((a,i)=>a+i.peso,0)||100;
     let totalPontos=0;
     const detalhes=inds.map((ind,i)=>{
-      const real=parseFloat(m['real_'+i])||0;
-      const metaV=ind.meta;
-      const ating=calcAtingimento(metaV,real,ind.melhor);
-      const pts=calcPontos(ind.peso,ating);
+      const pct=m['real_'+i]!==undefined&&m['real_'+i]!==''?parseFloat(m['real_'+i]):null;
+      const pts=pct!==null?calcPontosSimples(ind.peso,pct):0;
       totalPontos+=pts;
-      return{...ind,real,ating,pts};
+      return{...ind,pct,pts};
     });
-    const score=totalPeso>0?totalPontos/totalPeso*100:0;
-    // Prêmio: mesmo escalonamento mas sobre valor base
+    const score=totalPontos; // já é direto a soma em %
     const base=S.cfgMeta.premioBase||400;
-    const premio=score>=120?base*1.2:score>=110?base*1.1:score>=100?base*1.0:score>=90?base*0.9:score>=80?base*0.8:0;
+    const premio=base*(Math.min(score,150)/100);
     return{f,score,totalPontos,totalPeso,premio,detalhes};
   });
 }
@@ -1604,10 +1656,8 @@ function renderMetasDetail(){
   if(S.cfgMeta.titulo){infoEl.style.display='flex';infoTx.innerHTML='<strong>'+S.cfgMeta.titulo+'</strong>'+(S.cfgMeta.desc?' — '+S.cfgMeta.desc:'')+(inds.length?' | <strong>'+inds.length+' indicadores</strong> configurados':'');}
   else infoEl.style.display='none';
   if(!inds.length){
-    // Modo legado: sem indicadores configurados
-    wrap.innerHTML='<div class="al alg"><span>⚙️</span><span>Configure os indicadores da carta de metas clicando em <strong>Configurar Indicadores</strong> para usar a lógica completa de pontuação por faixas (80%/90%/100%/110%/120%+).</span></div>';
-    // KPI simples
-    document.getElementById('metKpi').innerHTML=kpi('🎯',funcs.length,'Colaboradores','var(--lab)')+kpi('⚙️','—','Configure indicadores','var(--oub);border:1px solid var(--oubr)');
+    wrap.innerHTML='<div class="al alg"><span>⚙️</span><span>Configure os indicadores clicando em <strong>Configurar Indicadores</strong>. Defina o nome e o peso (%) de cada um — os pesos devem somar 100%.</span></div>';
+    document.getElementById('metKpi').innerHTML=kpi('🎯',funcs.length,'Colaboradores','var(--lab)')+kpi('⚙️','—','Configure indicadores','var(--aub);border:1px solid var(--aubr)');
     return;
   }
   const totalPeso=inds.reduce((a,i)=>a+i.peso,0);
@@ -1617,44 +1667,53 @@ function renderMetasDetail(){
   const totalPremio=resultados.reduce((a,r)=>a+r.premio,0);
   document.getElementById('metKpi').innerHTML=
     kpi('🎯',funcs.length,'Colaboradores','var(--lab)')+
-    kpi('✅',ating100,'Score ≥ 100%','var(--vdb)')+
-    kpi('📊',ating80,'Score 80–99%','var(--oub);border:1px solid var(--oubr)')+
-    kpi('🏆','R$ '+totalPremio.toLocaleString('pt-BR',{minimumFractionDigits:2}),'Total Prêmios','var(--rxb)');
+    kpi('✅',ating100,'Score ≥ 100%','var(--gnb);border:1px solid var(--gnbr)')+
+    kpi('📊',ating80,'Score 80–99%','var(--aub);border:1px solid var(--aubr)')+
+    kpi('🏆','R$ '+totalPremio.toLocaleString('pt-BR',{minimumFractionDigits:2}),'Total Prêmios','var(--pub)');
   // Aviso se pesos ≠ 100
   let avisoHTML='';
-  if(Math.abs(totalPeso-100)>0.01)avisoHTML='<div class="al wn alg" style="margin-bottom:10px"><span>⚠️</span><span>Pesos somam <strong>'+totalPeso+'%</strong> — recomendado 100%. Clique em Configurar Indicadores para ajustar.</span></div>';
-  // Header dos indicadores
-  let thInds=inds.map((ind,i)=>'<th style="text-align:right;min-width:110px;white-space:normal">'+ind.nome+'<br><span style="font-size:9px;color:#555;font-weight:400">Peso '+ind.peso+'% | Meta '+ind.meta+(ind.melhor==='q'?'↓':'↑')+'</span></th>').join('');
-  let html=avisoHTML+'<div class="tw"><table><thead><tr>'+
+  if(Math.abs(totalPeso-100)>0.01)avisoHTML='<div class="al alwn" style="margin-bottom:10px"><span>⚠️</span><span>Os pesos dos indicadores somam <strong>'+totalPeso+'%</strong> (deveria ser 100%). Ajuste em <strong>Configurar Indicadores</strong> para que o score final represente 100% corretamente.</span></div>';
+  // Header dos indicadores — mostra apenas o PESO de cada um
+  let thInds=inds.map((ind,i)=>'<th style="text-align:center;min-width:120px;white-space:normal">'+ind.nome+'<br><span class="b bg" style="margin-top:3px;display:inline-block">Peso '+ind.peso+'%</span></th>').join('');
+  let html=avisoHTML+'<div class="al alg" style="margin-bottom:10px"><span>✏️</span><span>Digite o <strong>% atingido</strong> de cada indicador (ex: bateu a meta = <strong>100</strong>; superou em 20% = <strong>120</strong>; fez metade = <strong>50</strong>). Os pontos somam automaticamente até formar o score final.</span></div><div class="tw"><table><thead><tr>'+
     '<th style="min-width:200px">Colaborador</th>'+
     thInds+
-    '<th style="text-align:center">Score Total</th>'+
+    '<th style="text-align:center;min-width:100px">Score Final</th>'+
     '<th style="text-align:right">Prêmio</th>'+
     '</tr></thead><tbody>';
   resultados.forEach(({f,score,premio,detalhes})=>{
     const k='meta_'+f.chapa+'_'+mes+'_'+ano;
     const m=S.metas[k]||{};
-    const corScore=faixaCor(score/100);
+    const corScore=faixaCor(score);
     let tdInds=detalhes.map((det,i)=>{
-      const corA=det.meta>0&&(m['real_'+i]!==undefined&&m['real_'+i]!=='')?faixaCor(det.ating):'#555';
-      return '<td style="text-align:right">'+
-        '<input class="vi" type="number" step="0.01" min="0" data-km="'+k+'" data-campo="real_'+i+'" value="'+(m['real_'+i]!==undefined?m['real_'+i]:'')+'" oninput="uM(this)" placeholder="—" style="width:90px">'+
-        (m['real_'+i]!==undefined&&m['real_'+i]!==''?'<div style="font-size:10px;color:'+corA+';margin-top:2px;text-align:right">'+Math.round(det.ating*100)+'% · '+det.pts.toFixed(1)+'pts</div>':'')+'</td>';
+      const preenchido=m['real_'+i]!==undefined&&m['real_'+i]!=='';
+      const corA=preenchido?faixaCor(det.pct):'#555';
+      return '<td style="text-align:center">'+
+        '<div style="display:inline-flex;align-items:center;gap:3px">'+
+        '<input class="vi-pct" type="number" step="1" min="0" max="200" data-km="'+k+'" data-campo="real_'+i+'" value="'+(m['real_'+i]!==undefined?m['real_'+i]:'')+'" oninput="uMLive(this)" onblur="uM(this)" onkeydown="if(event.key===\'Enter\'){this.blur();}" placeholder="0" style="width:64px;text-align:center">'+
+        '<span style="font-size:11px;color:#666">%</span></div>'+
+        (preenchido?'<div style="font-size:10px;color:'+corA+';margin-top:3px;font-weight:700">'+det.pts.toFixed(1)+' pts</div>':'')+'</td>';
     }).join('');
     html+='<tr>'+
       '<td><strong style="color:#fff">'+f.nome+'</strong><br><code style="font-size:10px">'+f.chapa+'</code><br><span style="font-size:10px;color:#555">'+f.cargo+'</span></td>'+
       tdInds+
-      '<td style="text-align:center">'+(score>0?'<div style="font-size:14px;font-weight:900;color:'+corScore+'">'+score.toFixed(1)+'%</div><div style="font-size:10px;color:#555">'+faixaLabel(score/100)+'</div>':'<span style="color:#555">—</span>')+'</td>'+
-      '<td style="text-align:right;font-weight:700;color:'+(premio>0?'var(--ou)':'#444')+'">'+(premio>0?'R$ '+premio.toLocaleString('pt-BR',{minimumFractionDigits:2}):'—')+'</td></tr>';
+      '<td style="text-align:center">'+(score>0?'<div style="font-size:16px;font-weight:900;color:'+corScore+'">'+score.toFixed(1)+'%</div><div style="font-size:9px;color:#555">'+faixaLabel(score)+'</div>':'<span style="color:#555">—</span>')+'</td>'+
+      '<td style="text-align:right;font-weight:700;color:'+(premio>0?'var(--au)':'#444')+'">'+(premio>0?'R$ '+premio.toLocaleString('pt-BR',{minimumFractionDigits:2}):'—')+'</td></tr>';
   });
   html+='</tbody></table></div>';
   wrap.innerHTML=html;
 }
-function uM(inp){
+function uMLive(inp){
+  // Salva o valor e atualiza só a cor do próprio campo, sem re-renderizar (mantém o foco ao digitar)
   const k=inp.dataset.km,campo=inp.dataset.campo,v=inp.value;
   if(!S.metas[k])S.metas[k]={};
   S.metas[k][campo]=v!==''?parseFloat(v):undefined;
-  inp.classList.toggle('ok',v!=='');
+  inp.classList.remove('ok','low');
+  if(v!==''){inp.classList.add(parseFloat(v)>=100?'ok':'low');}
+}
+function uM(inp){
+  // Recalcula o score e re-renderiza a tabela — chamado ao sair do campo (blur) ou Enter
+  uMLive(inp);
   renderMetasDetail();
 }
 function uMNota(sel){const k=sel.dataset.km;if(!S.metas[k])S.metas[k]={};S.metas[k].nota=sel.value;const c={'BOM':'var(--vd)','MÉDIO':'var(--ou)','RUIM':'var(--vm)','':''};sel.style.color=c[sel.value]||'#ddd';}
@@ -1682,13 +1741,68 @@ function expMetas(){
   const resultados=calcScore(funcs,inds,S.metas,mes,ano);
   const rows=resultados.map(({f,score,premio,detalhes})=>{
     const row={CHAPA:f.chapa,NOME:f.nome,DEPTO:f.depto,FILIAL:f.filial,MES:mes,ANO:ano};
-    detalhes.forEach((det,i)=>{row['META_'+i+'_'+det.nome.toUpperCase().replace(/ /g,'_')]=det.meta;row['REAL_'+i]=det.real;row['ATING_'+i+'_%']=Math.round(det.ating*100);row['PONTOS_'+i]=+det.pts.toFixed(2);});
+    detalhes.forEach((det,i)=>{row['PESO_'+i+'_'+det.nome.toUpperCase().replace(/ /g,'_')]=det.peso;row['PCT_ATINGIDO_'+i]=det.pct!==null?det.pct:'';row['PONTOS_'+i]=+det.pts.toFixed(2);});
     row.SCORE_TOTAL=+score.toFixed(2);row.PREMIO=+premio.toFixed(2);
     return row;
   });
   const ws=XLSX.utils.json_to_sheet(rows),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Metas');XLSX.writeFile(wb,'CartaMetas_'+S.metaDepAtual+'_'+MESES[mes]+'_'+ano+'.xls');toast('Exportado '+rows.length+' registros!');
 }
-
+ 
+function expMetasExport(){
+  // Exporta do Exportar MIX usando filtro xMes/xAno/xMetaDep
+  const mes=parseInt(document.getElementById('xMes').value);
+  const ano=parseInt(document.getElementById('xAno').value);
+  const depFiltro=document.getElementById('xMetaDep')?.value||'';
+  const deps=depFiltro?[depFiltro]:[...new Set(S.funcionarios.map(f=>f.depto).filter(Boolean))].sort();
+  if(!deps.length){toast('Nenhum departamento disponível.','wn');return;}
+  let allRows=[];
+  deps.forEach(dep=>{
+    const inds=S.metaIndicadores[dep]||[];
+    if(!inds.length)return;
+    const funcs=S.funcionarios.filter(f=>f.depto===dep);
+    const resultados=calcScore(funcs,inds,S.metas,mes,ano);
+    resultados.forEach(({f,score,premio,detalhes})=>{
+      const row={CHAPA:f.chapa,NOME:f.nome,DEPTO:f.depto,FILIAL:f.filial,MES:mes,ANO:ano};
+      detalhes.forEach((det,i)=>{row['IND_'+(i+1)+'_NOME']=det.nome;row['IND_'+(i+1)+'_PESO']=det.peso;row['IND_'+(i+1)+'_PCT']=det.pct!==null?det.pct:'';row['IND_'+(i+1)+'_PONTOS']=+det.pts.toFixed(2);});
+      row.SCORE_TOTAL=+score.toFixed(2);row.PREMIO=+premio.toFixed(2);
+      allRows.push(row);
+    });
+  });
+  if(!allRows.length){toast('Nenhum dado de metas encontrado para o período.','wn');return;}
+  const ws=XLSX.utils.json_to_sheet(allRows),wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Carta de Metas');
+  XLSX.writeFile(wb,'CartaMetas_'+(depFiltro||'Todos')+'_'+MESES[mes]+'_'+ano+'.xls');
+  toast('✅ Exportado '+allRows.length+' colaboradores!');
+}
+ 
+function expVerbas(){
+  const mes=parseInt(document.getElementById('xMes').value);
+  const ano=parseInt(document.getElementById('xAno').value);
+  const vb=document.getElementById('xVrb').value||'573';
+  const escopo=funcVisiveis();
+  const rows=[];
+  escopo.forEach(f=>{
+    const k=f.chapa+'_'+mes+'_'+ano+'_'+vb;
+    const val=S.lancamentos[k];
+    if(val!==undefined&&val!==''){
+      rows.push({CHAPA:f.chapa,NOME:f.nome,DEPTO:f.depto,FILIAL:f.filial,MES:mes,ANO:ano,VERBA:vb,VALOR:parseFloat(val)||0});
+    }
+  });
+  if(!rows.length){toast('Nenhuma verba lançada no período.','wn');return;}
+  const ws=XLSX.utils.json_to_sheet(rows),wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Verbas');
+  XLSX.writeFile(wb,'Verbas_'+MESES[mes]+'_'+ano+'_V'+vb+'.xls');
+  toast('✅ Exportado '+rows.length+' registros!');
+}
+ 
+function renderMix(){
+  // Preenche o select de departamentos da Carta de Metas no Exportar
+  const sel=document.getElementById('xMetaDep');
+  if(!sel)return;
+  const deps=[...new Set(S.funcionarios.map(f=>f.depto).filter(Boolean))].sort();
+  sel.innerHTML='<option value="">Todos os departamentos</option>'+deps.map(d=>'<option value="'+d+'">'+d+'</option>').join('');
+}
+ 
 // ── VER CARTA DE METAS (impressão) ──
 function verCartaMeta(){
   if(!S.metaDepAtual){toast('Selecione um departamento primeiro.','wn');return;}
@@ -1699,37 +1813,17 @@ function verCartaMeta(){
   if(!inds.length){toast('Configure os indicadores primeiro.','wn');return;}
   const resultados=calcScore(funcs,inds,S.metas,mes,ano);
   const logoSvg='<svg width="80" height="40" viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="cg" cx="60%" cy="40%" r="55%"><stop offset="0%" stop-color="#f5d76e"/><stop offset="60%" stop-color="#C9A227"/><stop offset="100%" stop-color="#8a6c10"/></radialGradient></defs><ellipse cx="175" cy="80" rx="90" ry="52" fill="#111" stroke="url(#cg)" stroke-width="2.5"/><path d="M140 30 C150 10,180 8,200 28" fill="none" stroke="url(#cg)" stroke-width="2" stroke-linecap="round"/><path d="M155 132 C165 150,185 152,200 132" fill="none" stroke="url(#cg)" stroke-width="2" stroke-linecap="round"/><path d="M88 80 L52 44 C44 36,36 50,48 56 L60 62 L48 68 C36 74,44 122,52 116 L88 80Z" fill="none" stroke="url(#cg)" stroke-width="2.5" stroke-linejoin="round"/><path d="M145 42 Q138 80 145 118" fill="none" stroke="#C9A227" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/><circle cx="228" cy="68" r="9" fill="#0a0a0a" stroke="url(#cg)" stroke-width="2"/><circle cx="228" cy="68" r="4" fill="url(#cg)"/><circle cx="230" cy="66" r="1.5" fill="#fff" opacity="0.8"/><text x="183" y="89" font-family="Arial Black,Arial,sans-serif" font-size="36" font-weight="900" fill="url(#cg)" text-anchor="middle" letter-spacing="-1">BF</text></svg>';
-  const faixas=[0.8,0.9,1.0,1.1,1.2];
-  const faixasLabel=['80%','90%','100%','110%','120%'];
   let cartasHTML=resultados.map(({f,score,premio,detalhes})=>{
     const corScore=score>=100?'#22c55e':score>=80?'#C9A227':'#ef4444';
-    const base=S.cfgMeta.premioBase||400;
-    let indRows=detalhes.map((det,i)=>{
-      const ating=Math.round(det.ating*100);
-      const corA=det.real>0?(ating>=100?'#22c55e':ating>=80?'#C9A227':'#ef4444'):'#666';
-      // Mini faixa
-      let faizasHTML=faixas.map((f2,fi)=>{
-        const active=det.ating>=f2&&(fi===faixas.length-1||det.ating<faixas[fi+1]);
-        return '<span style="padding:2px 6px;border-radius:3px;font-size:9px;font-weight:700;background:'+(active?corA:'#1e1e1e')+';color:'+(active?'#000':'#555')+'">'+faixasLabel[fi]+'</span>';
-      }).join('');
+    let indRows=detalhes.map((det)=>{
+      const preenchido=det.pct!==null;
+      const corA=preenchido?(det.pct>=100?'#22c55e':det.pct>=80?'#C9A227':'#ef4444'):'#666';
       return `<tr>
         <td style="padding:6px 8px;font-size:11px;color:#ddd">${det.nome}</td>
-        <td style="padding:6px 8px;font-size:10px;color:#777">${det.desc}</td>
-        <td style="padding:6px 8px;text-align:right;font-weight:700;color:#C9A227">${det.meta}</td>
-        <td style="padding:6px 8px;text-align:right;font-weight:700;color:${det.real>0?'#fff':'#555'}">${det.real||'—'}</td>
-        <td style="padding:6px 8px;text-align:center">${faizasHTML}</td>
-        <td style="padding:6px 8px;text-align:right;font-weight:700;color:${corA}">${det.real>0?ating+'%':'—'}</td>
+        <td style="padding:6px 8px;font-size:10px;color:#777">${det.desc||'—'}</td>
         <td style="padding:6px 8px;text-align:center;font-size:10px;color:#888">${det.peso}%</td>
-        <td style="padding:6px 8px;text-align:right;font-weight:700;color:${det.real>0?corA:'#555'}">${det.real>0?det.pts.toFixed(1):'—'}</td>
-      </tr>`;
-    }).join('');
-    let premioRows=faixas.map((f2,fi)=>{
-      const premV=base*f2;
-      const active=score/100>=f2&&(fi===faixas.length-1||score/100<faixas[fi+1]);
-      return `<tr style="background:${active?'rgba(201,162,39,.15)':'transparent'}">
-        <td style="padding:5px 8px;font-size:11px;color:${active?'#C9A227':'#666'};font-weight:${active?'700':'400'}">${faixasLabel[fi]} do score</td>
-        <td style="padding:5px 8px;text-align:right;font-weight:700;color:${active?'#C9A227':'#555'}">R$ ${premV.toLocaleString('pt-BR',{minimumFractionDigits:2})}</td>
-        <td style="padding:5px 8px;text-align:center">${active?'◀ FAIXA ATUAL':''}</td>
+        <td style="padding:6px 8px;text-align:right;font-weight:700;color:${corA}">${preenchido?det.pct+'%':'—'}</td>
+        <td style="padding:6px 8px;text-align:right;font-weight:700;color:${preenchido?corA:'#555'}">${preenchido?det.pts.toFixed(1):'—'}</td>
       </tr>`;
     }).join('');
     return `<div style="background:#0f0f0f;border:1px solid rgba(201,162,39,.3);border-radius:12px;padding:28px;margin-bottom:32px;position:relative;page-break-after:always">
@@ -1746,28 +1840,19 @@ function verCartaMeta(){
         <thead><tr style="background:#1e1e1e">
           <th style="padding:7px 8px;text-align:left;font-size:9px;color:#555;font-weight:700;text-transform:uppercase">Indicador</th>
           <th style="padding:7px 8px;text-align:left;font-size:9px;color:#555;font-weight:700;text-transform:uppercase">Descrição</th>
-          <th style="padding:7px 8px;text-align:right;font-size:9px;color:#555;font-weight:700;text-transform:uppercase">Meta</th>
-          <th style="padding:7px 8px;text-align:right;font-size:9px;color:#555;font-weight:700;text-transform:uppercase">Realizado</th>
-          <th style="padding:7px 8px;text-align:center;font-size:9px;color:#555;font-weight:700;text-transform:uppercase">Faixas</th>
-          <th style="padding:7px 8px;text-align:right;font-size:9px;color:#555;font-weight:700;text-transform:uppercase">Ating.</th>
           <th style="padding:7px 8px;text-align:center;font-size:9px;color:#555;font-weight:700;text-transform:uppercase">Peso</th>
+          <th style="padding:7px 8px;text-align:right;font-size:9px;color:#555;font-weight:700;text-transform:uppercase">% Atingido</th>
           <th style="padding:7px 8px;text-align:right;font-size:9px;color:#555;font-weight:700;text-transform:uppercase">Pontos</th>
         </tr></thead>
         <tbody>${indRows}</tbody>
         <tfoot><tr style="background:rgba(201,162,39,.08);border-top:1px solid rgba(201,162,39,.3)">
-          <td colspan="6" style="padding:7px 8px;font-size:11px;font-weight:700;color:#C9A227;text-align:right">SCORE FINAL:</td>
-          <td style="padding:7px 8px;text-align:center;font-size:11px;font-weight:900;color:${corScore}">${score.toFixed(1)}%</td>
-          <td style="padding:7px 8px"></td>
+          <td colspan="3" style="padding:7px 8px;font-size:11px;font-weight:700;color:#C9A227;text-align:right">SOMA = SCORE FINAL:</td>
+          <td colspan="2" style="padding:7px 8px;text-align:right;font-size:13px;font-weight:900;color:${corScore}">${score.toFixed(1)}%</td>
         </tr></tfoot>
       </table>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-        <div><div style="font-size:10px;font-weight:700;color:#555;text-transform:uppercase;margin-bottom:6px">Tabela de Prêmio</div>
-        <table style="width:100%;border-collapse:collapse"><thead><tr style="background:#1e1e1e"><th style="padding:5px 8px;font-size:9px;color:#555;text-align:left;font-weight:700">Faixa</th><th style="padding:5px 8px;font-size:9px;color:#555;text-align:right;font-weight:700">Valor</th><th style="padding:5px 8px;font-size:9px;color:#555;text-align:center;font-weight:700"></th></tr></thead><tbody>${premioRows}</tbody></table></div>
-        <div style="background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.3);border-radius:8px;padding:16px;display:flex;flex-direction:column;align-items:center;justify-content:center">
-          <div style="font-size:11px;color:#888;margin-bottom:4px">Prêmio a Receber</div>
-          <div style="font-size:26px;font-weight:900;color:${premio>0?'#C9A227':'#555'}">${premio>0?'R$ '+premio.toLocaleString('pt-BR',{minimumFractionDigits:2}):'R$ 0,00'}</div>
-          <div style="font-size:10px;color:#666;margin-top:4px">Score ${score.toFixed(1)}% · Faixa ${faixaLabel(score/100)}</div>
-        </div>
+      <div style="background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.3);border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:space-between">
+        <div><div style="font-size:11px;color:#888;margin-bottom:4px">O prêmio é proporcional ao score atingido (soma dos pesos × % de cada meta)</div><div style="font-size:10px;color:#666">Score ${score.toFixed(1)}% · Faixa ${faixaLabel(score)}</div></div>
+        <div style="text-align:right"><div style="font-size:11px;color:#888;margin-bottom:2px">Prêmio a Receber</div><div style="font-size:26px;font-weight:900;color:${premio>0?'#C9A227':'#555'}">${premio>0?'R$ '+premio.toLocaleString('pt-BR',{minimumFractionDigits:2}):'R$ 0,00'}</div></div>
       </div>
       <div style="margin-top:24px;display:flex;justify-content:space-between;align-items:flex-end">
         <div style="text-align:center"><div style="width:140px;height:1px;background:#333;margin-bottom:5px"></div><div style="font-size:11px;color:#ccc;font-weight:600">${f.nome}</div><div style="font-size:10px;color:#555">Colaborador</div></div>
@@ -1782,7 +1867,7 @@ function verCartaMeta(){
   </head><body>${cartasHTML}<script>setTimeout(()=>{window.print();},400);<\/script></body></html>`);
   w.document.close();
 }
-
+ 
 // ── CARTA PREMIAÇÃO ──
 function populCtDep(){
   const deps=[...new Set(S.funcionarios.map(f=>f.depto).filter(Boolean))].sort();
@@ -1816,7 +1901,7 @@ function impCarta(){
   w.document.write('<html><head><title>Carta — BrazilianFish</title><style>body{background:#0a0a0a;color:#e0e0e0;font-family:Arial,sans-serif;padding:40px;}.carta{background:#0f0f0f;border:1px solid rgba(201,162,39,.3);border-radius:10px;padding:28px;position:relative;}.ct-title{font-size:18px;font-weight:900;color:#C9A227;text-align:center;margin:12px 0;}.gdv{height:1px;background:linear-gradient(90deg,transparent,#C9A227,transparent);margin:10px 0;}.ct-body{font-size:12px;color:#ccc;line-height:1.7;}.aslin{width:130px;height:1px;background:#333;margin-bottom:5px;}.asn{font-size:11px;font-weight:600;color:#ccc;}.asc{font-size:10px;color:#666;}</style></head><body>'+el.innerHTML+'</body></html>');
   w.document.close();setTimeout(()=>{w.print();w.close();},500);
 }
-
+ 
 // ════════════════════ ABERTURA DE CONTA (BANCO) ════════════════════
 function renderBancoAdmissoes(){
   const bk=(document.getElementById('bBsk')?.value||'').toLowerCase();
@@ -1879,7 +1964,7 @@ function expBanc(){
   if(!rows.length){toast('Nenhum colaborador admitido neste período.','wn');return;}
   const ws=XLSX.utils.json_to_sheet(rows),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'AberturaConta');XLSX.writeFile(wb,'Abertura_Conta_'+MESES[mes]+'_'+ano+'.xls');toast('Exportado '+rows.length+' registros!');
 }
-
+ 
 // ── HISTÓRICO ──
 function renderHist(){
   const mod=document.getElementById('hMod').value,mes=document.getElementById('hMes').value,ano=document.getElementById('hAno').value;
@@ -1901,12 +1986,12 @@ function renderHist(){
   document.getElementById('hKpi').innerHTML=kpi('📋',l.length,'Registros','var(--oub);border:1px solid var(--oubr)');
   body.innerHTML=l.slice(0,300).map(h=>'<tr><td style="font-size:11px;color:#555">'+h.dt+'</td><td><span class="b '+(mC[h.mod]||'bgy')+'">'+(mN[h.mod]||h.mod)+'</span></td><td><strong style="color:#fff">'+h.nm+'</strong><br><code>'+h.chapa+'</code></td><td><span class="sp">'+h.setor+'</span></td><td>'+h.comp+'</td><td><span class="b bgy">'+h.usr+'</span></td><td style="text-align:right;color:var(--ou)">'+h.info+'</td></tr>').join('');
 }
-
+ 
 // ── MIX ──
 function buildMix(){const mes=parseInt(document.getElementById('xMes').value),ano=parseInt(document.getElementById('xAno').value),vb=document.getElementById('xVrb').value||'573';return S.funcionarios.map(f=>{const k=f.chapa+'_'+mes+'_'+ano+'_'+vb,v=S.lancamentos[k];return v&&v!==0?{EMPRESA:'',FILIAL:'',CHAPA:f.chapa,MATRICULA:f.ref,MES:mes,ANO:ano,TIPO_ENVELOPE:'',IDENTIFICADOR:'',VERBA:vb,QUANTIDADE:parseFloat(v),USUARIO:'',MES_SEGUINTE:''}:null;}).filter(x=>x);}
 function prevMix(){const rows=buildMix();if(!rows.length){toast('Nenhum valor.','wn');document.getElementById('mixPrev').style.display='none';document.getElementById('mixRes').style.display='none';return;}const tot=rows.reduce((a,l)=>a+l.QUANTIDADE,0),dep=new Set(rows.map(l=>{const f=S.funcionarios.find(x=>x.chapa===l.CHAPA);return f?.depto;})).size;document.getElementById('mixRes').style.display='block';document.getElementById('mixKpi').innerHTML=kpi('📋',rows.length,'Registros','var(--oub);border:1px solid var(--oubr)')+kpi('💰','R$ '+tot.toLocaleString('pt-BR',{minimumFractionDigits:2}),'Total','var(--vdb)')+kpi('📁',dep,'Deptos','var(--azb)');document.getElementById('mixPrev').style.display='block';document.getElementById('mixCnt').textContent=rows.length;document.getElementById('bMix').innerHTML=rows.slice(0,50).map(l=>'<tr><td>'+l.EMPRESA+'</td><td>'+l.FILIAL+'</td><td><code>'+l.CHAPA+'</code></td><td>'+l.MATRICULA+'</td><td>'+l.MES+'</td><td>'+l.ANO+'</td><td>'+l.TIPO_ENVELOPE+'</td><td>'+l.IDENTIFICADOR+'</td><td><strong>'+l.VERBA+'</strong></td><td style="text-align:right;color:var(--ou);font-weight:700">'+l.QUANTIDADE.toLocaleString('pt-BR',{minimumFractionDigits:2})+'</td><td>'+l.USUARIO+'</td><td>'+l.MES_SEGUINTE+'</td></tr>').join('');}
 function expMix(){const rows=buildMix();if(!rows.length){toast('Nenhum valor.','wn');return;}const ws=XLSX.utils.json_to_sheet(rows,{header:['EMPRESA','FILIAL','CHAPA','MATRICULA','MES','ANO','TIPO_ENVELOPE','IDENTIFICADOR','VERBA','QUANTIDADE','USUARIO','MES_SEGUINTE']});const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Importação');const m=document.getElementById('xMes').value,a=document.getElementById('xAno').value,v=document.getElementById('xVrb').value||'573';XLSX.writeFile(wb,'Importacao_Verbas_'+MESES[m]+'_'+a+'_V'+v+'.xls');toast('Exportado '+rows.length+' registros!');}
-
+ 
 // ── USUÁRIOS ──
 function renderUsers(){document.getElementById('bUsers').innerHTML=S.usuarios.map((u,i)=>'<tr><td><div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:6px;background:'+(u.perfil==='rh'?'linear-gradient(135deg,var(--ou),var(--ou2))':'var(--vdb)')+';color:'+(u.perfil==='rh'?'#000':'var(--vd)')+';display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900">'+u.user.slice(0,2).toUpperCase()+'</div><strong style="color:#fff">'+u.user+'</strong></div></td><td><span class="b '+(u.perfil==='rh'?'bg':'bgr')+'">'+(u.perfil==='rh'?'🔑 RH':'👤 Gestor')+'</span></td><td>'+(u.perfil==='rh'?'<em style="color:#444;font-size:11px">Acesso total</em>':(u.setores?.length?u.setores.slice(0,3).map(s=>'<span class="sp">'+s+'</span>').join('')+(u.setores.length>3?'<span class="sp">+'+( u.setores.length-3)+'</span>':''):'<em style="color:#444;font-size:11px">Nenhum depto</em>'))+'</td><td style="text-align:center"><button class="btn btgh btn-sm" onclick="editUser('+i+')">✏️</button>'+(u.user!=='rh'?'<button class="btn btdk btn-sm" onclick="delUser('+i+')" style="margin-left:5px">🗑️</button>':'')+'</td></tr>').join('');}
 function abrirMdl(){S.editU=null;document.getElementById('mTit').textContent='Novo Usuário';document.getElementById('mU').value='';document.getElementById('mP').value='';document.getElementById('mPrf').value='gestor';togSets();renderMSets();document.getElementById('moUser').classList.add('open');}
@@ -1928,227 +2013,51 @@ function savUser(){
 }
 document.getElementById('moUser').addEventListener('click',function(e){if(e.target===this)fchMdl();});
 document.getElementById('moCfgMeta').addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
-
+ 
 // ════════════════════ INDICADORES COMBINADOS (SETOR + INDIVIDUAL) ════════════════════
 // Metas do setor vêm de S.metaIndicadores[dep] e S.metas['meta_chapa_mes_ano']
 // Metas individuais ficam em S.metaInd[chapa] = [{nome,peso,meta,melhor,desc}]
 // e os realizados em S.metas['metaind_chapa_mes_ano'] = {real_0, real_1, ...}
 // Score combinado: (pontos_setor + pontos_ind) / (pesoSetor + pesoInd) * 100
-
-function initIndInd(){
-  const allDeps=deptosVisiveis();
-  const iiDep=document.getElementById('iiDep');
-  if(iiDep){
-    const v=iiDep.value;
-    iiDep.innerHTML='<option value="">Selecione...</option>'+allDeps.map(d=>'<option value="'+d+'"'+(d===v?' selected':'')+'>'+d+'</option>').join('');
-  }
-  const n=new Date();
-  const mesEl=document.getElementById('iiMes'),anoEl=document.getElementById('iiAno');
-  if(mesEl&&!mesEl.value)mesEl.value=n.getMonth()+1;
-  if(anoEl&&!anoEl.value)anoEl.value=n.getFullYear();
-  renderIndInd();
-}
-
-function onIiDepChange(){
-  const dep=document.getElementById('iiDep')?.value||'';
-  const sel=document.getElementById('iiFunc');
-  if(sel){
-    let lista=funcVisiveis();
-    if(dep)lista=lista.filter(f=>f.depto===dep);
-    sel.innerHTML='<option value="">Todos do setor</option>'+lista.map(f=>'<option value="'+f.chapa+'">'+f.nome+'</option>').join('');
-  }
-  renderIndInd();
-}
-
+ 
 function calcScoreCombinado(f, indsSetor, indsInd, metas, mes, ano){
   const ks='meta_'+f.chapa+'_'+mes+'_'+ano;
   const ms=metas[ks]||{};
   const ki='metaind_'+f.chapa+'_'+mes+'_'+ano;
   const mi=metas[ki]||{};
-
-  // Pontos setor
+ 
+  // Pontos setor: cada indicador tem % atingido digitado direto
   let pontosSetor=0, pesoSetorTotal=indsSetor.reduce((a,i)=>a+i.peso,0);
   const detSetor=indsSetor.map((ind,i)=>{
-    const real=parseFloat(ms['real_'+i])||0;
-    const ating=calcAtingimento(ind.meta,real,ind.melhor);
-    const pts=calcPontos(ind.peso,ating);
+    const pct=ms['real_'+i]!==undefined&&ms['real_'+i]!==''?parseFloat(ms['real_'+i]):null;
+    const pts=pct!==null?calcPontosSimples(ind.peso,pct):0;
     pontosSetor+=pts;
-    return{...ind,real,ating,pts,key:'real_'+i,km:ks};
+    return{...ind,real:pct,ating:pct!==null?pct/100:0,pts,key:'real_'+i,km:ks};
   });
-
+ 
   // Pontos individuais
   let pontosInd=0, pesoIndTotal=indsInd.reduce((a,i)=>a+i.peso,0);
   const detInd=indsInd.map((ind,i)=>{
-    const real=parseFloat(mi['real_'+i])||0;
-    const ating=calcAtingimento(ind.meta,real,ind.melhor);
-    const pts=calcPontos(ind.peso,ating);
+    const pct=mi['real_'+i]!==undefined&&mi['real_'+i]!==''?parseFloat(mi['real_'+i]):null;
+    const pts=pct!==null?calcPontosSimples(ind.peso,pct):0;
     pontosInd+=pts;
-    return{...ind,real,ating,pts,key:'real_'+i,km:ki};
+    return{...ind,real:pct,ating:pct!==null?pct/100:0,pts,key:'real_'+i,km:ki};
   });
-
+ 
   const pesoTotal=pesoSetorTotal+pesoIndTotal||100;
-  const score=((pontosSetor+pontosInd)/pesoTotal)*100;
+  const score=pontosSetor+pontosInd; // soma direta dos pontos = % final
   const base=S.cfgMeta.premioBase||400;
-  const premio=score>=120?base*1.2:score>=110?base*1.1:score>=100?base*1.0:score>=90?base*0.9:score>=80?base*0.8:0;
-
+  const premio=base*(Math.min(score,150)/100);
+ 
   return{f,score,pontosSetor,pontosInd,pesoSetorTotal,pesoIndTotal,pesoTotal,premio,detSetor,detInd};
 }
-
-function renderIndInd(){
-  const dep=document.getElementById('iiDep')?.value||'';
-  const chapa=document.getElementById('iiFunc')?.value||'';
-  const mes=document.getElementById('iiMes')?.value||new Date().getMonth()+1;
-  const ano=document.getElementById('iiAno')?.value||new Date().getFullYear();
-  const panel=document.getElementById('iiMainPanel'),empty=document.getElementById('iiEmpty');
-  if(!dep){panel.style.display='none';empty.style.display='block';return;}
-  panel.style.display='block';empty.style.display='none';
-
-  let funcs=S.funcionarios.filter(f=>f.depto===dep);
-  const modoSingle=!!chapa;
-  if(chapa)funcs=funcs.filter(f=>f.chapa===chapa);
-
-  const indsSetor=S.metaIndicadores[dep]||[];
-  const pesoSetorTotal=indsSetor.reduce((a,i)=>a+i.peso,0);
-
-  // Cabeçalho
-  if(modoSingle&&funcs.length){
-    const f=funcs[0];
-    const ini=f.nome.split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase();
-    document.getElementById('iiAvatar').textContent=ini;
-    document.getElementById('iiNomeDisplay').textContent=f.nome;
-    document.getElementById('iiSubDisplay').innerHTML='<code>'+f.chapa+'</code> · '+f.cargo+' · <span class="sp">'+f.depto+'</span>';
-  } else {
-    document.getElementById('iiAvatar').textContent=dep.split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase();
-    document.getElementById('iiNomeDisplay').textContent=dep;
-    document.getElementById('iiSubDisplay').innerHTML='<span class="sp">'+funcs.length+' colaboradores</span>';
-  }
-
-  // Calcular resultados
-  const resultados=funcs.map(f=>{
-    const indsInd=S.metaInd?.[f.chapa]||[];
-    return calcScoreCombinado(f,indsSetor,indsInd,S.metas,mes,ano);
-  });
-
-  const ating100=resultados.filter(r=>r.score>=100).length;
-  const ating80=resultados.filter(r=>r.score>=80&&r.score<100).length;
-  const totalPremio=resultados.reduce((a,r)=>a+r.premio,0);
-  const scoreMedio=resultados.length?resultados.reduce((a,r)=>a+r.score,0)/resultados.length:0;
-  const corMed=scoreMedio>=100?'var(--vd)':scoreMedio>=80?'var(--ou)':'var(--vm)';
-
-  document.getElementById('iiScoreResumo').innerHTML=
-    '<div style="text-align:right"><div style="font-size:10px;color:#555">'+(modoSingle?'Score':'Score Médio')+'</div>'+
-    '<div style="font-size:18px;font-weight:900;color:'+corMed+'">'+(resultados.length?scoreMedio.toFixed(1)+'%':'—')+'</div></div>';
-
-  document.getElementById('iiKpi').innerHTML=
-    (modoSingle?'':kpi('👥',funcs.length,'Colaboradores','var(--azb)'))+
-    kpi('📊',resultados.length?scoreMedio.toFixed(1)+'%':'—','Score '+(modoSingle?'Final':'Médio'),'var(--oub);border:1px solid var(--oubr)')+
-    (modoSingle?'':kpi('✅',ating100,'Score ≥ 100%','var(--vdb)'))+
-    kpi('🏆','R$ '+totalPremio.toLocaleString('pt-BR',{minimumFractionDigits:2}),'Total Prêmios','var(--rxb)');
-
-  // Aviso de pesos
-  const avisoEl=document.getElementById('iiPesoAviso');
-  const pesoIndEx=S.metaInd?.[funcs[0]?.chapa]||[];
-  const pesoIndTotal=pesoIndEx.reduce((a,i)=>a+i.peso,0);
-  const pesoGrand=pesoSetorTotal+pesoIndTotal;
-  if(pesoGrand>0&&Math.abs(pesoGrand-100)>0.01){
-    avisoEl.style.display='flex';avisoEl.className='al wn alg';
-    avisoEl.innerHTML='<span>⚠️</span><span>Pesos totais somam <strong>'+pesoGrand+'%</strong> (setor: '+pesoSetorTotal+'% + individual: '+pesoIndTotal+'%). Ajuste para totalizar 100%.</span>';
-  } else if(pesoSetorTotal===0&&pesoIndTotal===0){
-    avisoEl.style.display='flex';avisoEl.className='al alg';
-    avisoEl.innerHTML='<span>💡</span><span>Configure os indicadores do setor na <strong>Carta de Metas</strong> e os individuais em <strong>⚙️ Metas Individuais</strong>. Os pesos devem somar 100% no total.</span>';
-  } else {
-    avisoEl.style.display='none';
-  }
-
-  // Labels de peso
-  document.getElementById('iiSetorPesoLabel').textContent=pesoSetorTotal>0?'('+pesoSetorTotal+'% do score total)':'(sem indicadores configurados)';
-  document.getElementById('iiIndPesoLabel').textContent=pesoIndTotal>0?'('+pesoIndTotal+'% do score total)':'(sem indicadores individuais)';
-
-  // Bloco SETOR
-  if(!indsSetor.length){
-    document.getElementById('iiSetorGrid').innerHTML='<div class="al alg" style="margin:0"><span>⚙️</span><span>Nenhum indicador de setor configurado. Configure na <strong>Carta de Metas</strong>.</span></div>';
-  } else {
-    // Tabela setor
-    let thS=indsSetor.map((ind,i)=>'<th style="text-align:right;min-width:100px;white-space:normal">'+ind.nome+'<br><span style="font-size:9px;color:#555;font-weight:400">Peso '+ind.peso+'% | Meta '+ind.meta+(ind.melhor==='q'?'↓':'↑')+'</span></th>').join('');
-    let htmlS='<div class="tw"><table><thead><tr>'+(modoSingle?'':'<th>Colaborador</th>')+thS+'<th style="text-align:center">Score Setor</th></tr></thead><tbody>';
-    resultados.forEach(({f,pontosSetor,pesoSetorTotal,detSetor})=>{
-      const scoreS=pesoSetorTotal>0?pontosSetor/pesoSetorTotal*100:0;
-      const corS=faixaCor(scoreS/100);
-      let tdS=detSetor.map(det=>{
-        const corA=det.real>0?faixaCor(det.ating):'#555';
-        return '<td style="text-align:right">'+
-          '<input class="vi'+(det.real>0?' ok':'')+'" type="number" step="0.01" min="0" data-km="'+det.km+'" data-campo="'+det.key+'" value="'+(det.real||'')+'" oninput="uM(this)" placeholder="—" style="width:86px">'+
-          (det.real>0?'<div style="font-size:10px;color:'+corA+';margin-top:2px;text-align:right">'+Math.round(det.ating*100)+'%</div>':'')+'</td>';
-      }).join('');
-      htmlS+='<tr>'+(modoSingle?'':'<td><strong style="color:#fff;font-size:12px">'+f.nome+'</strong><br><code style="font-size:10px">'+f.chapa+'</code></td>')+tdS+
-        '<td style="text-align:center">'+(scoreS>0?'<div style="font-weight:900;color:'+corS+'">'+scoreS.toFixed(1)+'%</div>':'<span style="color:#555">—</span>')+'</td></tr>';
-    });
-    htmlS+='</tbody></table></div>';
-    document.getElementById('iiSetorGrid').innerHTML=htmlS;
-  }
-
-  // Bloco INDIVIDUAL
-  const indsIndEx=modoSingle?(S.metaInd?.[funcs[0]?.chapa]||[]):[];
-  if(!modoSingle){
-    document.getElementById('iiIndGrid').innerHTML='<div style="color:#555;font-size:12px;padding:10px 0">Selecione um colaborador específico para ver e lançar as metas individuais.</div>';
-    document.getElementById('iiIndScoreLabel').textContent='';
-  } else if(!indsIndEx.length){
-    document.getElementById('iiIndGrid').innerHTML='<div class="al alg" style="margin:0"><span>👤</span><span>Nenhuma meta individual configurada para este colaborador. Clique em <strong>⚙️ Metas Individuais</strong> para configurar.</span></div>';
-    document.getElementById('iiIndScoreLabel').textContent='';
-  } else {
-    const res=resultados[0];
-    const scoreI=res.pesoIndTotal>0?res.pontosInd/res.pesoIndTotal*100:0;
-    const corI=faixaCor(scoreI/100);
-    document.getElementById('iiIndScoreLabel').innerHTML=scoreI>0?'<span style="color:'+corI+';font-weight:900">'+scoreI.toFixed(1)+'%</span>':'—';
-    let htmlI='<div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">';
-    res.detInd.forEach(det=>{
-      const corA=det.real>0?faixaCor(det.ating):'#555';
-      htmlI+='<div style="background:#141414;border:1px solid #2a2a2a;border-radius:7px;padding:11px 14px">';
-      htmlI+='<div style="display:flex;justify-content:space-between;margin-bottom:8px">';
-      htmlI+='<span style="font-size:12px;font-weight:700;color:var(--ou)">'+det.nome+(det.desc?' <span style="color:#555;font-weight:400;font-size:10px">— '+det.desc+'</span>':'')+'</span>';
-      htmlI+='<div style="display:flex;gap:8px;font-size:10px;color:#555"><span>Peso: <strong style="color:var(--ou)">'+det.peso+'%</strong></span><span>Meta: <strong style="color:#ccc">'+det.meta+(det.melhor==='q'?'↓':'↑')+'</strong></span></div>';
-      htmlI+='</div><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">';
-      htmlI+='<div><span class="flbl">Realizado</span><input class="vi'+(det.real>0?' ok':'')+'" type="number" step="0.01" min="0" data-km="'+det.km+'" data-campo="'+det.key+'" value="'+(det.real||'')+'" oninput="uM(this)" placeholder="—" style="width:120px;margin-top:4px"></div>';
-      if(det.real>0){
-        htmlI+='<div style="margin-top:18px;text-align:center"><div style="font-size:15px;font-weight:900;color:'+corA+'">'+Math.round(det.ating*100)+'%</div><div style="font-size:10px;color:#555">'+faixaLabel(det.ating)+'</div></div>';
-        htmlI+='<div style="margin-top:18px;text-align:center"><div style="font-size:13px;font-weight:700;color:var(--az)">'+det.pts.toFixed(1)+' pts</div><div style="font-size:10px;color:#555">de '+det.peso+' pts</div></div>';
-        htmlI+='<div style="flex:1;min-width:100px;margin-top:18px"><div class="prg-b" style="height:5px"><div class="prg-f" style="width:'+Math.min(det.ating,1.2)/1.2*100+'%;background:'+corA+'"></div></div>';
-        htmlI+='<div style="display:flex;justify-content:space-between;font-size:9px;color:#444;margin-top:2px"><span>0</span><span>80%</span><span>100%</span><span>120%</span></div></div>';
-      }
-      htmlI+='</div></div>';
-    });
-    htmlI+='</div>';
-    document.getElementById('iiIndGrid').innerHTML=htmlI;
-  }
-
-  // Score final combinado (só se tiver ambos ou ao menos um)
-  const finalCard=document.getElementById('iiScoreFinalCard');
-  if(modoSingle&&resultados.length){
-    const res=resultados[0];
-    const corF=faixaCor(res.score/100);
-    finalCard.style.display='block';
-    document.getElementById('iiScoreFinalInner').innerHTML=
-      '<div><div style="font-size:11px;color:#555;margin-bottom:4px">Score Final Combinado</div>'+
-      '<div style="font-size:28px;font-weight:900;color:'+corF+'">'+res.score.toFixed(1)+'%</div>'+
-      '<div style="font-size:11px;color:#555">'+faixaLabel(res.score/100)+'</div></div>'+
-      '<div style="display:flex;gap:20px;flex-wrap:wrap">'+
-        '<div style="text-align:center"><div style="font-size:11px;color:#555">Setor</div><div style="font-size:14px;font-weight:700;color:var(--ou)">'+(res.pesoSetorTotal>0?(res.pontosSetor/res.pesoSetorTotal*100).toFixed(1)+'%':'—')+'</div><div style="font-size:10px;color:#444">'+res.pesoSetorTotal+'% do peso</div></div>'+
-        '<div style="text-align:center;color:#333;font-size:20px;padding-top:12px">+</div>'+
-        '<div style="text-align:center"><div style="font-size:11px;color:#555">Individual</div><div style="font-size:14px;font-weight:700;color:var(--az)">'+(res.pesoIndTotal>0?(res.pontosInd/res.pesoIndTotal*100).toFixed(1)+'%':'—')+'</div><div style="font-size:10px;color:#444">'+res.pesoIndTotal+'% do peso</div></div>'+
-      '</div>'+
-      '<div style="text-align:right"><div style="font-size:11px;color:#555">Prêmio Estimado</div><div style="font-size:18px;font-weight:900;color:'+(res.premio>0?'var(--ou)':'#555')+'">'+
-      (res.premio>0?'R$ '+res.premio.toLocaleString('pt-BR',{minimumFractionDigits:2}):'—')+'</div></div>';
-  } else {
-    finalCard.style.display='none';
-  }
-}
-
+ 
 function irParaCartaMetas(){
   const dep=S.metaDepAtual||'';
   go('metas');
   if(dep)setTimeout(()=>abrirDeptMetas(dep),50);
 }
-
+ 
 function salvarIndInd(){
   const dep=S.metaDepAtual||'';
   const chapa=document.getElementById('metaColabSel')?.value||'';
@@ -2165,7 +2074,7 @@ function salvarIndInd(){
   salvar();
   toast(chapa?'Metas individuais salvas!':'Metas do setor salvas!');
 }
-
+ 
 // ── MODAL CFG METAS INDIVIDUAIS ──
 function abrirCfgIndInd(){
   const chapa=document.getElementById('metaColabSel')?.value||'';
@@ -2189,28 +2098,26 @@ function abrirCfgIndInd(){
   else addIndicadorInd(null);
   document.getElementById('moCfgIndInd').classList.add('open');
 }
-
+ 
 function addIndicadorInd(ind){
   const list=document.getElementById('cfgIndList');
   const idx=list.children.length;
-  const v=(ind&&typeof ind==='object')?ind:{nome:'',desc:'',memoria:'',fonte:'',peso:'',meta:'',melhor:'p'};
+  const v=(ind&&typeof ind==='object')?ind:{nome:'',desc:'',memoria:'',fonte:'',peso:''};
   const row=document.createElement('div');
-  row.style.cssText='background:#141414;border:1px solid #2a2a2a;border-radius:8px;padding:12px 14px';
+  row.style.cssText='background:var(--s2);border:1px solid var(--s3);border-radius:9px;padding:13px 15px';
   row.innerHTML=
     '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">'+
-    '<span class="ind-label-ii" style="font-size:11px;font-weight:700;color:var(--ou)">Indicador '+(idx+1)+'</span>'+
-    '<button type="button" onclick="this.parentNode.parentNode.remove();reindexIndsInd()" style="background:var(--vmb);border:1px solid rgba(239,68,68,.3);color:var(--vm);border-radius:4px;padding:2px 8px;cursor:pointer;font-size:10px;font-family:inherit">✕ Remover</button>'+
+    '<span class="ind-label-ii" style="font-size:11px;font-weight:700;color:var(--au)">Indicador '+(idx+1)+'</span>'+
+    '<button type="button" onclick="this.parentNode.parentNode.remove();reindexIndsInd()" style="background:var(--rdb);border:1px solid var(--rdbr);color:var(--rd);border-radius:5px;padding:2px 9px;cursor:pointer;font-size:10px;font-family:inherit">✕ Remover</button>'+
     '</div>'+
-    '<div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-bottom:8px">'+
-    '<div><span class="flbl">Nome do Indicador</span><input type="text" class="ind-nome-ii" value="'+v.nome+'" placeholder="ex: NPS Clientes" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'+
-    '<div><span class="flbl">Peso (%)</span><input type="number" class="ind-peso-ii" value="'+v.peso+'" placeholder="ex: 30" min="1" max="100" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'+
-    '<div><span class="flbl">Meta (valor ref)</span><input type="number" class="ind-meta-ii" value="'+v.meta+'" placeholder="ex: 9.0" step="0.01" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'+
+    '<div style="display:grid;grid-template-columns:2fr 1fr;gap:8px;margin-bottom:8px">'+
+    '<div><span class="flbl">Nome do Indicador</span><input type="text" class="ind-nome-ii" value="'+v.nome+'" placeholder="ex: NPS Clientes, Assiduidade..." class="fi-ctrl" style="width:100%"></div>'+
+    '<div><span class="flbl">Peso no Score (%)</span><input type="number" class="ind-peso-ii" value="'+v.peso+'" placeholder="ex: 30" min="1" max="100" class="fi-ctrl" style="width:100%;font-weight:700;color:var(--au)"></div>'+
     '</div>'+
-    '<div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px">'+
-    '<div><span class="flbl">Descrição</span><input type="text" class="ind-desc-ii" value="'+v.desc+'" placeholder="ex: Pesquisa de satisfação" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'+
-    '<div><span class="flbl">Memória</span><input type="text" class="ind-mem-ii" value="'+(v.memoria||'')+'" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'+
-    '<div><span class="flbl">Fonte</span><input type="text" class="ind-fonte-ii" value="'+(v.fonte||'')+'" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"></div>'+
-    '<div><span class="flbl">Tipo</span><select class="ind-melhor-ii" style="width:100%;background:#1e1e1e;border:1.5px solid #2a2a2a;border-radius:5px;padding:6px 8px;font-size:12px;color:#ddd;outline:none;font-family:inherit"><option value="p"'+(v.melhor!=='q'?' selected':'')+'>↑ maior melhor</option><option value="q"'+(v.melhor==='q'?' selected':'')+'>↓ menor melhor</option></select></div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">'+
+    '<div><span class="flbl">Descrição</span><input type="text" class="ind-desc-ii" value="'+v.desc+'" placeholder="opcional" class="fi-ctrl" style="width:100%"></div>'+
+    '<div><span class="flbl">Memória</span><input type="text" class="ind-mem-ii" value="'+(v.memoria||'')+'" placeholder="opcional" class="fi-ctrl" style="width:100%"></div>'+
+    '<div><span class="flbl">Fonte</span><input type="text" class="ind-fonte-ii" value="'+(v.fonte||'')+'" placeholder="opcional" class="fi-ctrl" style="width:100%"></div>'+
     '</div>';
   list.appendChild(row);
 }
@@ -2232,13 +2139,11 @@ function savCfgIndInd(){
     desc:row.querySelector('.ind-desc-ii').value.trim(),
     memoria:row.querySelector('.ind-mem-ii').value.trim(),
     fonte:row.querySelector('.ind-fonte-ii').value.trim(),
-    peso:parseFloat(row.querySelector('.ind-peso-ii').value)||0,
-    meta:parseFloat(row.querySelector('.ind-meta-ii').value)||0,
-    melhor:row.querySelector('.ind-melhor-ii').value
+    peso:parseFloat(row.querySelector('.ind-peso-ii').value)||0
   })).filter(i=>i.nome);
   const pesoInd=inds.reduce((a,i)=>a+i.peso,0);
   const pesoTotal=pesoSetor+pesoInd;
-  if(inds.length&&Math.abs(pesoTotal-100)>0.01)toast('⚠️ Pesos somam '+pesoTotal+'% (setor '+pesoSetor+'% + ind '+pesoInd+'%). Ajuste para 100%.','wn');
+  if(inds.length&&Math.abs(pesoTotal-100)>0.01)toast('⚠️ Os pesos somam '+pesoTotal+'% (setor '+pesoSetor+'% + individual '+pesoInd+'%) — ideal somar 100%.','wn');
   if(!S.metaInd)S.metaInd={};
   S.metaInd[chapa]=inds;
   salvar();
