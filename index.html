@@ -503,7 +503,6 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
   <div class="cnav-sep"></div>
   <button class="cnav" onclick="go('coprt')" id="nb-coprt">🤝 Coparticipação</button>
   <button class="cnav" onclick="go('metas')" id="nb-metas">🎯 Carta de Metas</button>
-  <button class="cnav" onclick="go('premiacao')" id="nb-premiacao">🏆 Carta de Premiação</button>
   <button class="cnav" onclick="go('conta')" id="nb-conta">🏦 Abertura de Conta</button>
   <button class="cnav" onclick="go('hist')" id="nb-hist">📋 Histórico</button>
   <div class="cnav-sep"></div>
@@ -738,32 +737,6 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
 </div>
 
 <!-- CARTA DE PREMIAÇÃO -->
-<div class="page" id="p-carta">
-  <div class="pghdr">
-    <div><h1>Carta de Premiação</h1><div class="sub">Gere cartas personalizadas de reconhecimento.</div></div>
-    <div class="acts"><button class="btn btg" onclick="gerCarta()">🏆 Gerar Carta</button><button class="btn bto" onclick="impCarta()">🖨️ Imprimir</button></div>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-    <div>
-      <div class="card">
-        <div class="chdr"><div class="ctit"><div class="ci cig">⚙️</div>Configurar</div></div>
-        <div class="fld"><label>Departamento</label><select id="ctDep" style="width:100%" onchange="populCtF()"><option value="">Todos</option></select></div>
-        <div class="fld"><label>Colaborador</label><select id="ctF" style="width:100%"><option value="">Selecione...</option></select></div>
-        <div class="fld"><label>Tipo de Premiação</label><select id="ctTipo" style="width:100%"><option value="destaque">🌟 Funcionário Destaque</option><option value="vendas">🏆 Campeão de Vendas</option><option value="tempo">⭐ Tempo de Casa</option><option value="meta">🎯 Meta Atingida</option><option value="especial">🎖️ Premiação Especial</option></select></div>
-        <div class="fld"><label>Valor do Prêmio (R$)</label><input type="number" id="ctVal" placeholder="0,00"></div>
-        <div class="fld"><label>Competência</label><input type="text" id="ctComp" placeholder="ex: Junho/2026"></div>
-        <div class="fld"><label>Descrição / Motivo</label><textarea id="ctMsg" placeholder="Descreva o motivo..." style="min-height:80px;resize:vertical"></textarea></div>
-        <div class="fld"><label>Responsável</label><input type="text" id="ctAss" placeholder="Nome do responsável"></div>
-        <div class="fld"><label>Cargo</label><input type="text" id="ctCrg" placeholder="ex: Gerente de RH"></div>
-      </div>
-    </div>
-    <div>
-      <div class="card"><div class="chdr"><div class="ctit"><div class="ci cig">👁️</div>Pré-visualização</div></div>
-        <div id="ctPrev" class="carta"><div style="text-align:center;color:#444;font-size:12px;padding:36px 0">Configure e clique em "Gerar Carta"</div></div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- ABERTURA DE CONTA (BANCO) -->
 <div class="page" id="p-banco">
@@ -924,7 +897,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
 
 <script>
 const MESES=['','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-const PGN={dash:'Dashboard',lanc:'Lançar Verbas',metas:'Carta de Metas','ind-ind':'Indicadores',base:'Base FoRelaFunc2',coprt:'Coparticipação',premiacao:'Carta de Premiação',conta:'Abertura de Conta',hist:'Histórico',mix:'Exportar MIX',usuarios:'Usuários'};
+const PGN={dash:'Dashboard',lanc:'Lançar Verbas',metas:'Carta de Metas','ind-ind':'Indicadores',base:'Base FoRelaFunc2',coprt:'Coparticipação',conta:'Abertura de Conta',hist:'Histórico',mix:'Exportar MIX',usuarios:'Usuários'};
 
 const S={usuarios:[],funcionarios:[],lancamentos:{},coprt:{},metas:{},cfgMeta:{titulo:'',desc:'',b100:10,b80:5},metaIndicadores:{},metaInd:{},banco:{},hist:[],logado:null,editU:null,soP:false,metaDepAtual:null};
 
@@ -973,7 +946,7 @@ document.getElementById('loginUser').addEventListener('keydown',e=>{if(e.key==='
 // ── NAV ──
 function go(id){
   // alias mapping: nav id → page id
-  const alias={premiacao:'carta',conta:'banco',usuarios:'users',mix:'mix',hist:'hist',dash:'dash',coprt:'coprt'};
+  const alias={conta:'banco',usuarios:'users',mix:'mix',hist:'hist',dash:'dash',coprt:'coprt'};
   const pgId=alias[id]||id;
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.chipbar .cnav').forEach(b=>b.classList.remove('on'));
