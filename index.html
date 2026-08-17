@@ -6,9 +6,7 @@
 <title>BrazilianFish — DP Sistema</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-/* ══════════════════════════════════════════════════════
-   BRAZILIANFISH DP — DESIGN SYSTEM v13
-══════════════════════════════════════════════════════ */
+
 :root{
   /* Surface palette — light theme */
   --bg:       #f3f4f7;
@@ -282,7 +280,7 @@ tbody tr:last-child td{border-bottom:none;}
 /* ── Chip tag ── */
 .chip{display:inline-flex;background:var(--aub);color:var(--au);border:1px solid var(--aubr);border-radius:var(--rxs);padding:4px 10px;font-size:10px;font-weight:700;}
 
-/* ── Section header (within tables) ── */
+
 .setor-hdr{
   background:var(--s2);
   border-left:3px solid var(--au);
@@ -411,8 +409,8 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
       <div class="feat"><div class="fic">📋</div>Importar FoRelaFunc2</div>
       <div class="feat"><div class="fic">💰</div>Verbas lançadas por departamento</div>
       <div class="feat"><div class="fic">🤝</div>Coparticipação de Planos</div>
-      <div class="feat"><div class="fic">🎯</div>Carta de Metas por departamento</div>
-      <div class="feat"><div class="fic">🏆</div>Carta de Premiação</div>
+      <div class="feat"><div class="fic">🎯</div>Criar Carta de Metas por departamento</div>
+      <div class="feat"><div class="fic">🏆</div>Criar Carta de Premiação</div>
       <div class="feat"><div class="fic">🏦</div>Abertura de Conta — Admissões</div>
     </div>
     <div class="lg-copy">BrazilianFish © 2026 — DP v5.0</div>
@@ -451,7 +449,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
   <button class="cnav rh-only" onclick="go('lanc')" id="nb-lanc">✏️ Lançar Verbas</button>
   <div class="snav-lbl">Gestão de Pessoal</div>
   <button class="cnav rh-only" onclick="go('coprt')" id="nb-coprt">🤝 Coparticipação</button>
-  <button class="cnav" onclick="go('metas')" id="nb-metas">🎯 Carta de Metas</button>
+  <button class="cnav" onclick="go('metas')" id="nb-metas">🎯Criar Carta de Metas</button>
   <button class="cnav rh-only" onclick="go('conta')" id="nb-conta">🏦 Abertura de Conta</button>
   <button class="cnav rh-only" onclick="go('hist')" id="nb-hist">📋 Histórico</button>
   <div class="snav-lbl rh-only">Administração</div>
@@ -566,7 +564,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
   <div class="pghdr">
     <div><h1>Carta de Metas</h1><div class="sub">Selecione o departamento para configurar e lançar as metas da sua equipe.</div></div>
     <div class="acts" id="metasActsTop" style="display:none">
-      <button class="btn bto" onclick="abrirCfgMeta()">⚙️ Configurar Indicadores</button>
+      <button class="btn bto" onclick="abrirCfgMeta()">⚙️ Descrever Indicadores</button>
       <button class="btn btgh" onclick="expMetas()">📥 Exportar</button>
       <button class="btn bto" onclick="verCartaMeta()">🖨️ Ver Carta</button>
       <button class="btn btg" onclick="savMetas()">💾 Salvar Metas</button>
