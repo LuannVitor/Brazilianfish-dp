@@ -6,7 +6,9 @@
 <title>BrazilianFish — DP Sistema</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-
+/* ══════════════════════════════════════════════════════
+   BRAZILIANFISH DP — DESIGN SYSTEM v13
+══════════════════════════════════════════════════════ */
 :root{
   /* Surface palette — light theme */
   --bg:       #f3f4f7;
@@ -280,7 +282,7 @@ tbody tr:last-child td{border-bottom:none;}
 /* ── Chip tag ── */
 .chip{display:inline-flex;background:var(--aub);color:var(--au);border:1px solid var(--aubr);border-radius:var(--rxs);padding:4px 10px;font-size:10px;font-weight:700;}
 
-
+/* ── Section header (within tables) ── */
 .setor-hdr{
   background:var(--s2);
   border-left:3px solid var(--au);
@@ -409,8 +411,8 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
       <div class="feat"><div class="fic">📋</div>Importar FoRelaFunc2</div>
       <div class="feat"><div class="fic">💰</div>Verbas lançadas por departamento</div>
       <div class="feat"><div class="fic">🤝</div>Coparticipação de Planos</div>
-      <div class="feat"><div class="fic">🎯</div>Criar Carta de Metas por departamento</div>
-      <div class="feat"><div class="fic">🏆</div>Criar Carta de Premiação</div>
+      <div class="feat"><div class="fic">🎯</div>Carta de Metas por departamento</div>
+      <div class="feat"><div class="fic">🏆</div>Carta de Premiação</div>
       <div class="feat"><div class="fic">🏦</div>Abertura de Conta — Admissões</div>
     </div>
     <div class="lg-copy">BrazilianFish © 2026 — DP v5.0</div>
@@ -437,7 +439,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
   <div class="h-mid"><div class="bc">DP &rsaquo; <b id="hPg">Dashboard</b></div></div>
   <div class="h-r">
     <div class="uch"><div class="uav" id="uAv">RH</div><div><div class="unm" id="uNm">—</div><div class="uro" id="uRo">—</div></div></div>
-    <button class="btnout" onclick="logout()">⎋ Sair</button>
+    <button class="btn btdk btn-sm" onclick="logout()">⎋ Sair</button>
   </div>
 </header>
 
@@ -449,7 +451,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
   <button class="cnav rh-only" onclick="go('lanc')" id="nb-lanc">✏️ Lançar Verbas</button>
   <div class="snav-lbl">Gestão de Pessoal</div>
   <button class="cnav rh-only" onclick="go('coprt')" id="nb-coprt">🤝 Coparticipação</button>
-  <button class="cnav" onclick="go('metas')" id="nb-metas">🎯Criar Carta de Metas</button>
+  <button class="cnav" onclick="go('metas')" id="nb-metas">🎯 Carta de Metas</button>
   <button class="cnav rh-only" onclick="go('conta')" id="nb-conta">🏦 Abertura de Conta</button>
   <button class="cnav rh-only" onclick="go('hist')" id="nb-hist">📋 Histórico</button>
   <div class="snav-lbl rh-only">Administração</div>
@@ -564,9 +566,8 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
   <div class="pghdr">
     <div><h1>Carta de Metas</h1><div class="sub">Selecione o departamento para configurar e lançar as metas da sua equipe.</div></div>
     <div class="acts" id="metasActsTop" style="display:none">
-      <button class="btn bto" onclick="abrirCfgMeta()">⚙️ Descrever Indicadores</button>
       <button class="btn btgh" onclick="expMetas()">📥 Exportar</button>
-      <button class="btn bto" onclick="verCartaMeta()">🖨️ Ver Carta</button>
+      <button class="btn bto" onclick="verCartaMeta()">🖨️ Imprimir</button>
       <button class="btn btg" onclick="savMetas()">💾 Salvar Metas</button>
     </div>
   </div>
@@ -611,6 +612,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
               <option value="">Selecione o colaborador...</option>
             </select>
           </div>
+          <button class="btn bto btn-sm" onclick="abrirCfgMeta()">📋 Descrever Indicadores</button>
         </div>
         <div id="metaScoreResumo" style="font-size:11px;color:#555">Configure os indicadores para ver o score</div>
       </div>
@@ -634,7 +636,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
           <div class="ctit"><div class="ci cio">🏢</div>Metas do Setor
             <span id="iiSetorPesoLabel" style="font-size:11px;font-weight:400;color:#555;margin-left:6px"></span>
           </div>
-          <button class="btn bto btn-sm" onclick="setModoMeta(\'setor\')">✏️ Editar indicadores do setor</button>
+          <button class="btn bto btn-sm" onclick="abrirCfgMeta()">✏️ Editar indicadores do setor</button>
         </div>
         <div id="iiSetorGrid"></div>
       </div>
@@ -647,7 +649,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
           </div>
           <div style="display:flex;align-items:center;gap:8px">
             <div id="iiIndScoreLabel" style="font-size:12px;font-weight:700;color:#555"></div>
-            <button class="btn bto btn-sm" onclick="abrirCfgIndInd()">⚙️ Configurar</button>
+            <button class="btn bto btn-sm" onclick="abrirCfgIndInd()">📋 Descrever Metas</button>
             <button class="btn btg btn-sm" onclick="salvarIndInd()">💾 Salvar</button>
           </div>
         </div>
@@ -830,7 +832,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
 <!-- MODAL CONFIG META — INDICADORES -->
 <div class="mo" id="moCfgMeta">
   <div class="mdl" style="width:720px;max-width:97vw">
-    <div class="mhdr"><h3>⚙️ Indicadores da Carta de Metas</h3><button class="mclose" onclick="document.getElementById('moCfgMeta').classList.remove('open')">✕</button></div>
+    <div class="mhdr"><h3>📋 Descrição das Metas</h3><button class="mclose" onclick="document.getElementById('moCfgMeta').classList.remove('open')">✕</button></div>
     <div class="al alg" style="margin-bottom:12px"><span>📌</span><span>Defina o nome e o <strong>peso (%)</strong> de cada indicador. Os pesos de todos os indicadores devem somar <strong>100%</strong>. Depois, ao lançar as metas, basta digitar o <strong>% atingido</strong> de cada um — o sistema soma tudo automaticamente.</span></div>
     <div class="fld"><label>Título da Carta de Metas</label><input type="text" id="cfgTit" placeholder="ex: Carta de Metas — Produção — Junho/2026"></div>
     <div class="fld"><label>Descrição / Critérios gerais</label><textarea id="cfgDesc" placeholder="Descreva os critérios gerais..." style="min-height:50px;resize:vertical"></textarea></div>
@@ -838,7 +840,7 @@ code{font-family:'Courier New',monospace;background:var(--s2);color:var(--au3);p
     <div style="font-size:10px;font-weight:700;color:#555;margin:12px 0 8px;letter-spacing:.8px;text-transform:uppercase">Indicadores</div>
     <div id="cfgMetaList" style="display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto;padding-right:4px"></div>
     <button class="btn bto" style="margin-top:10px;width:100%" onclick="addIndicador()">+ Adicionar Indicador</button>
-    <div class="mft"><button class="btn btgh" onclick="document.getElementById('moCfgMeta').classList.remove('open')">Cancelar</button><button class="btn btg" onclick="savCfgMeta()">✅ Salvar Configuração</button></div>
+    <div class="mft"><button class="btn btgh" onclick="document.getElementById('moCfgMeta').classList.remove('open')">Cancelar</button><button class="btn btg" onclick="savCfgMeta()">✅ Salvar</button></div>
   </div>
 </div>
 
@@ -1375,7 +1377,7 @@ function renderMetasModo(){
     avisoEl.innerHTML='<span>⚠️</span><span>Os pesos somam <strong>'+pesoGrand+'%</strong> (setor: '+pesoSetorTotal+'% + individual: '+pesoIndTotal+'%) — deveria ser 100% para o score final representar o todo. Ajuste os pesos nas configurações.</span>';
   } else if(pesoSetorTotal===0&&pesoIndTotal===0){
     avisoEl.style.display='flex';avisoEl.className='al alg';
-    avisoEl.innerHTML='<span>💡</span><span>Configure os indicadores do setor em <strong>⚙️ Configurar Indicadores</strong> e os individuais em <strong>⚙️ Configurar</strong>. Os pesos de cada indicador devem somar 100% no total.</span>';
+    avisoEl.innerHTML='<span>💡</span><span>Configure os indicadores do setor em <strong>📋 Descrever Indicadores</strong> e os individuais em <strong>📋 Descrever Metas</strong>. Os pesos de cada indicador devem somar 100% no total.</span>';
   } else {avisoEl.style.display='none';}
 
   // Label pesos
@@ -1384,7 +1386,7 @@ function renderMetasModo(){
 
   // Bloco SETOR — % atingido direto
   if(!indsSetor.length){
-    document.getElementById('iiSetorGrid').innerHTML='<div class="al alg" style="margin:0"><span>⚙️</span><span>Nenhum indicador de setor. Configure em <strong>⚙️ Configurar Indicadores</strong>.</span></div>';
+    document.getElementById('iiSetorGrid').innerHTML='<div class="al alg" style="margin:0"><span>⚙️</span><span>Nenhum indicador de setor. Configure em <strong>📋 Descrever Indicadores</strong>.</span></div>';
   } else {
     let htmlS='<div class="tw"><table><thead><tr>'+
       indsSetor.map(ind=>'<th style="text-align:center;min-width:110px;white-space:normal">'+ind.nome+'<br><span class="b bg" style="margin-top:3px;display:inline-block">Peso '+ind.peso+'%</span></th>').join('')+
@@ -1406,7 +1408,7 @@ function renderMetasModo(){
 
   // Bloco INDIVIDUAL — % atingido direto
   if(!indsInd.length){
-    document.getElementById('iiIndGrid').innerHTML='<div class="al alg" style="margin:0"><span>👤</span><span>Nenhuma meta individual para este colaborador. Clique em <strong>⚙️ Configurar</strong>.</span></div>';
+    document.getElementById('iiIndGrid').innerHTML='<div class="al alg" style="margin:0"><span>👤</span><span>Nenhuma meta individual para este colaborador. Clique em <strong>📋 Descrever Metas</strong>.</span></div>';
     document.getElementById('iiIndScoreLabel').textContent='';
   } else {
     const scoreI=res.pontosInd;
@@ -1585,7 +1587,7 @@ function renderMetasDetail(){
   if(S.cfgMeta.titulo){infoEl.style.display='flex';infoTx.innerHTML='<strong>'+S.cfgMeta.titulo+'</strong>'+(S.cfgMeta.desc?' — '+S.cfgMeta.desc:'')+(inds.length?' | <strong>'+inds.length+' indicadores</strong> configurados':'');}
   else infoEl.style.display='none';
   if(!inds.length){
-    wrap.innerHTML='<div class="al alg"><span>⚙️</span><span>Configure os indicadores clicando em <strong>Configurar Indicadores</strong>. Defina o nome e o peso (%) de cada um — os pesos devem somar 100%.</span></div>';
+    wrap.innerHTML='<div class="al alg"><span>⚙️</span><span>Configure os indicadores clicando em <strong>Descrever Indicadores</strong>. Defina o nome e o peso (%) de cada um — os pesos devem somar 100%.</span></div>';
     document.getElementById('metKpi').innerHTML=kpi('🎯',funcs.length,'Colaboradores','var(--lab)')+kpi('⚙️','—','Configure indicadores','var(--aub);border:1px solid var(--aubr)');
     return;
   }
@@ -1601,10 +1603,13 @@ function renderMetasDetail(){
     kpi('🏆','R$ '+totalPremio.toLocaleString('pt-BR',{minimumFractionDigits:2}),'Total Prêmios','var(--pub)');
   // Aviso se pesos ≠ 100
   let avisoHTML='';
-  if(Math.abs(totalPeso-100)>0.01)avisoHTML='<div class="al alwn" style="margin-bottom:10px"><span>⚠️</span><span>Os pesos dos indicadores somam <strong>'+totalPeso+'%</strong> (deveria ser 100%). Ajuste em <strong>Configurar Indicadores</strong> para que o score final represente 100% corretamente.</span></div>';
+  if(Math.abs(totalPeso-100)>0.01)avisoHTML='<div class="al alwn" style="margin-bottom:10px"><span>⚠️</span><span>Os pesos dos indicadores somam <strong>'+totalPeso+'%</strong> (deveria ser 100%). Ajuste em <strong>Descrever Indicadores</strong> para que o score final represente 100% corretamente.</span></div>';
   // Header dos indicadores — mostra apenas o PESO de cada um
   let thInds=inds.map((ind,i)=>'<th style="text-align:center;min-width:120px;white-space:normal">'+ind.nome+'<br><span class="b bg" style="margin-top:3px;display:inline-block">Peso '+ind.peso+'%</span></th>').join('');
-  let html=avisoHTML+'<div class="al alg" style="margin-bottom:10px"><span>✏️</span><span>Digite o <strong>% atingido</strong> de cada indicador (ex: bateu a meta = <strong>100</strong>; superou em 20% = <strong>120</strong>; fez metade = <strong>50</strong>). Os pontos somam automaticamente até formar o score final.</span></div><div class="tw"><table><thead><tr>'+
+  let html=avisoHTML+'<div style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;margin-bottom:14px;border-radius:var(--rsm);background:linear-gradient(135deg,var(--aub),transparent);border:1.5px solid var(--au);box-shadow:0 0 0 1px rgba(0,0,0,.02)">'+
+    '<span style="font-size:20px;line-height:1">✏️</span>'+
+    '<span><div style="font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--au);margin-bottom:3px">Tarefa do gestor</div>'+
+    '<span style="font-size:13px;font-weight:600;color:var(--tx)">Digite o <strong>% atingido</strong> de cada indicador (ex: bateu a meta = <strong>100</strong>; superou em 20% = <strong>120</strong>; fez metade = <strong>50</strong>). Os pontos somam automaticamente até formar o score final.</span></span></div><div class="tw"><table><thead><tr>'+
     '<th style="min-width:200px">Colaborador</th>'+
     thInds+
     '<th style="text-align:center;min-width:100px">Score Final</th>'+
